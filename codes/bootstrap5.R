@@ -1,5 +1,6 @@
 library(shiny)
 library(htmltools)
+library(magrittr)
 
 bootstrap_5_deps <- htmltools::htmlDependency(
   name = "Bootstrap",
@@ -21,25 +22,25 @@ add_bs5_deps <- function(tag) {
   htmltools::attachDependencies(tag, deps, append = TRUE)
 }
 
-ui <- fluidPage(
-  tags$head(
-    tags$link(
-      rel = "stylesheet",
-      href = "https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css",
-      integrity = "sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I",
-      crossorigin = "anonymous"
+bs5_page <- function(..., title = NULL) {
+  tagList(
+    tags$head(
+      tags$meta(charset = "utf-8"),
+      tags$meta(
+        name = "viewport",
+        content = "
+        width=device-width,
+        initial-scale=1"
+      ),
+      tags$title(title)
     ),
-    tags$script(
-      src = "https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js",
-      integrity = "sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo",
-      crossorigin = "anonymous"
-    ),
-    tags$script(
-      src = "https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js",
-      integrity = "sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/",
-      crossorigin = "anonymous"
-    )
-  ),
+    tags$body(
+      tags$div(class = "container", ...)
+    ) %>% add_bs5_deps()
+  )
+}
+
+ui <- bs5_page(
   tags$div(
     class = "card",
     style = "width: 18rem;",
@@ -61,16 +62,16 @@ ui <- fluidPage(
   plotOutput("distPlot")
 )
 
-server <- function(input, output, session) {
-  output$distPlot <- renderPlot({
-    # Take a dependency on input$goButton. This will run once initially,
-    # because the value changes from NULL to 0.
-    input$goButton
+  server <- function(input, output, session) {
+    output$distPlot <- renderPlot({
+      # Take a dependency on input$goButton. This will run once initially,
+      # because the value changes from NULL to 0.
+      input$goButton
 
-    # Use isolate() to avoid dependency on input$obs
-    dist <- isolate(rnorm(input$obs))
-    hist(dist)
-  })
-}
+      # Use isolate() to avoid dependency on input$obs
+      dist <- isolate(rnorm(input$obs))
+      hist(dist)
+    })
+  }
 
-shinyApp(ui, server)
+  shinyApp(ui, server)

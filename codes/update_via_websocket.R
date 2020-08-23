@@ -14,8 +14,7 @@ updateObsVal <- function(value) {
 # directly through the websocket
 
 ui <- fluidPage(
-  actionButton(
-    "plop",
+  tags$button(
     "Update obs value",
     onclick = updateObsVal(4)
   ),

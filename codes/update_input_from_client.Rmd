@@ -1,0 +1,112 @@
+---
+title: "Update input from the client"
+author: "David Granjon"
+date: "8/23/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(shiny)
+library(shinyMobile)
+```
+
+## Update from server
+```{r}
+shinyApp(
+   ui = f7Page(
+     title = "Progress",
+     f7SingleLayout(
+       navbar = f7Navbar(title = "f7Progress"),
+       f7Block(
+         f7Progress(id = "pg1", value = 10, color = "blue")
+       ),
+       f7Slider(
+         inputId = "obs",
+         label = "Progress value",
+         max = 100,
+         min = 0,
+         value = 50,
+         scale = TRUE
+       )
+     )
+   ),
+   server = function(input, output, session) {
+     observeEvent(input$obs, {
+       updateF7Progress(session, id = "pg1", value = input$obs)
+     })
+   }
+ )
+```
+
+Try to change the slider input value. Under the hood, this is a 2 steps process: we send a message from R to JS via the websocket. JS updates the value of the input and Shiny is notified about the new value in the input binding. 
+
+Could we do this from the client instead and remove the R to JS step?
+
+## Update from client
+
+We could do that from the client by adding a *rangeChange* event to the main app
+instance, according to the Framework7 [documentation](https://framework7.io/docs/range-slider.html). 
+We may recover the range value with `app.range.get(el)` where `el` is the CSS selector pointing to our slider, that is `#obs`. Framework7 allows us to update any progress bar with `app.progressbar.set(el, value)`, where `el` is the progress to update and value is a number between 0 and 100. Besides, since the *rangeChange* is triggered by all ranges, we make sure that only the range specified in the target will update the progress (see `if (e.params.el === '#%s')`). In the example below, there are 2 ranges, `obs` and `obs2` and we only listen to `obs`. 
+
+```{r}
+updateF7Progress2 <- function(trigger, target) {
+  tags$head(
+    tags$script(
+      sprintf(
+        "$(function() {
+          /* need to call the app instance. Add it a rangeChange event to listen
+          to any slider change. */
+          app.on('rangeChange', function(e) {
+            // recover the id of the changed range if there are multiple ranges
+            // Only update progress if the updated range is the one we listen to...
+            if (e.params.el === '#%s') {
+              var range = app.range.get('#%s');
+              var val = range.value;
+              app.progressbar.set('#%s', val);
+            }
+          });
+        });
+        ",
+        trigger,
+        trigger,
+        target
+      )
+    )
+  )
+}
+
+
+shinyApp(
+  ui = f7Page(
+    title = "Progress",
+    f7SingleLayout(
+      navbar = f7Navbar(title = "f7Progress"),
+      updateF7Progress2(trigger = "obs", target = "pg1"),
+      #updateF7Progress2(trigger = "obs2", target = "pg1"),
+      f7Block(
+        f7Progress(id = "pg1", value = 10, color = "blue")
+      ),
+      f7Slider(
+         inputId = "obs",
+         label = "Progress value",
+         max = 100,
+         min = 0,
+         value = 50,
+         scale = TRUE
+      ),
+      f7Slider(
+         inputId = "obs2",
+         label = "Progress value",
+         max = 100,
+         min = 0,
+         value = 10,
+         scale = TRUE
+      )
+    )
+  ),
+  server = function(input, output, session) {}
+)
+```
+
+Compared to the server approach, the slider updates the range for all intermediate values, ie there is no debounce policy. In the server approach, the update event only occurs when the mouse is released. There is no much impact here.

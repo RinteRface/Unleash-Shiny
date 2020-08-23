@@ -7,8 +7,8 @@ library(shiny)
 
 ui <- fluidPage(
   actionButton(
-  "reconnect",
-  "Show reconnect",
+  "notif",
+  "Show notification",
   onclick = "Shiny.notifications.show({
       html: '<strong>Oups</strong>',
       type: 'error',

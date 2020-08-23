@@ -1,0 +1,139 @@
+---
+title: "Get rid of renderUI"
+author: "David Granjon"
+date: "8/23/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(shiny)
+library(bs4Dash)
+```
+
+## With renderUI
+
+`renderUI`will make the entire dropdown menu re-render each time something changes in the renderUI expression, which may not be optimal. For instance in React, we only re-render what needs to be updated!
+
+```{r}
+shinyApp(
+  ui = bs4DashPage(
+    navbar = bs4DashNavbar(
+      rightUi = uiOutput("menu", container = tags$li)
+    ),
+    sidebar = bs4DashSidebar(),
+    controlbar = bs4DashControlbar(),
+    footer = bs4DashFooter(),
+    title = "test",
+    body = bs4DashBody()
+  ),
+  server = function(input, output, session) {
+    output$menu <- renderUI({
+      dropdownMenu(
+        show = FALSE,
+        status = "danger",
+        src = "https://www.google.fr",
+        dropdownMenuItem(
+          message = "message 2",
+          from = "Nono Gueye",
+          src = "https://adminlte.io/themes/v3/dist/img/user3-128x128.jpg",
+          time = "yesterday",
+          status = "success",
+          type = "message"
+        )
+      )
+    })
+  }
+)
+```
+
+## With JS
+You might insert items in the dropdown with JavaScript. I must acknowledge it' s not as easy as with `renderUI` but you don't re-render the main container each time since it is directly inserted in the UI. If it does not make a lot of sense here because your item number is limited and the HTML tag is not giant, the speed impact is probably ridiculous. Yet for very complex UI's it might have a significant impact. Clicking on the action button will add an extra item to the current list.
+
+Create the item in an `observeEvent`, convert it to a character (important) and send it to JavaScript through the shiny session R6 object. I give it a name 'add-item' to be able to identify it from JavaScript
+
+```{r}
+observeEvent(input$add, {
+  item <- dropdownMenuItem(
+    inputId = paste0("triggerAction_", input$add),
+    message = paste("message", input$add),
+    from = "Divad Nojnarg",
+    src = "https://adminlte.io/themes/v3/dist/img/user3-128x128.jpg",
+    time = "today",
+    status = "danger",
+    type = "message"
+  )
+  session$sendCustomMessage("add-item", message = as.character(item))
+})
+```
+
+
+I recover the sent message on the JS side with `Shiny.addCustomMessageHandler`. I need to parse the string to HTML with `$.parseHTML` and insert it where I want. I also update dropdown menu item counter as well as the icon text since the dropdown menu is not re-rendered
+
+```{javascript}
+$(function() {
+  Shiny.addCustomMessageHandler('add-item', function(message) {
+    // convert string to HTML
+    var itemTag = $.parseHTML(message)[0];
+    $(itemTag).insertBefore($('.dropdown-item.dropdown-footer'));
+    // since we do not re-render the dropdown, we must update its item counter
+    var $items = $('button.dropdown-item').length;
+    $('.dropdown-item.dropdown-header').html($items + ' Items');
+    $('.nav-item.dropdown').find('.navbar-badge').html($items);
+  });
+});
+```
+
+The whole code below.
+
+```{r}
+shinyApp(
+  ui = bs4DashPage(
+    navbar = bs4DashNavbar(
+      rightUi = dropdownMenu(
+        show = FALSE,
+        status = "danger",
+        src = "https://www.google.fr"
+      )
+    ),
+    sidebar = bs4DashSidebar(),
+    controlbar = bs4DashControlbar(),
+    footer = bs4DashFooter(),
+    title = "test",
+    body = bs4DashBody(
+      tags$head(
+        tags$script(
+          "$(function() {
+            Shiny.addCustomMessageHandler('add-item', function(message) {
+              // convert string to HTML
+              var itemTag = $.parseHTML(message)[0];
+              $(itemTag).insertBefore($('.dropdown-item.dropdown-footer'));
+              // since we do not re-render the dropdown, we must update its item counter
+              var $items = $('button.dropdown-item').length;
+              $('.dropdown-item.dropdown-header').html($items + ' Items');
+              $('.nav-item.dropdown').find('.navbar-badge').html($items);
+            });
+          });
+          "
+        )
+      ),
+      actionButton("add", "Add dropdown item")
+    )
+  ),
+  server = function(input, output, session) {
+    
+    observeEvent(input$add, {
+      item <- dropdownMenuItem(
+        inputId = paste0("triggerAction_", input$add),
+        message = paste("message", input$add),
+        from = "Divad Nojnarg",
+        src = "https://adminlte.io/themes/v3/dist/img/user3-128x128.jpg",
+        time = "today",
+        status = "danger",
+        type = "message"
+      )
+      session$sendCustomMessage("add-item", message = as.character(item))
+    })
+  }
+)
+```

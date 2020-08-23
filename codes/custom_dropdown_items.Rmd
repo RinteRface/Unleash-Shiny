@@ -1,0 +1,160 @@
+---
+title: "Custom Dropdown Menu Items"
+author: "David Granjon"
+date: "3/24/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(shiny)
+library(shinydashboard)
+```
+
+## Intro
+Have you ever wondered how to make shinydashboard `dropdownMenu` items (`messageItem`, `notificationItem`, `taskItem`) behaving like `actionButton` in Shiny?
+
+
+### What is an action button?
+
+Below is the code of the `actionButton`
+
+```{r}
+actionButton <- function (inputId, label, icon = NULL, width = NULL, ...)  {
+  value <- restoreInput(id = inputId, default = NULL)
+  tags$button(
+    id = inputId, 
+    style = if (!is.null(width)) paste0("width: ", validateCssUnit(width), ";"), 
+    type = "button", 
+    class = "btn btn-default action-button", 
+    `data-val` = value, 
+    list(validateIcon(icon), label), ...
+  )
+}
+```
+
+The button HTML tag has some attributes: id, style, type, class, `data-val`, label and children passed via `...`
+
+### How does it work?
+When the app starts, the action button has the value 0 and each click will increment its value by 1. 
+How is this behaviour created? For each Shiny input element (radio, slider), there is an associated JavaScript magic file, called input binding, which you can find [here](https://github.com/rstudio/shiny/tree/master/srcjs). In our case, we are only interested in the action button binding:
+
+```javascript
+var actionButtonInputBinding = new InputBinding();
+$.extend(actionButtonInputBinding, {
+  find: function(scope) {
+    return $(scope).find(".action-button");
+  },
+  getValue: function(el) {
+    return $(el).data('val') || 0;
+  },
+  // ... other methods
+});
+```
+
+What you see above is **not** the whole script since the goal is not to explain how an input binding works (It has already been done [before](https://shiny.rstudio.com/articles/building-inputs.html)). Instead, we will focus on the first method, that is `find`. The `find` method will look for **all** elements having the class **.action-button**, making it possible to define multiple action buttons at the same time.
+
+Consequently, if we go back to the previous section, the `actionButton` contains **.action-button** in its class and will be considered by the binding (I aknowledge, this is not really interesting/surprising, at the moment). The input binding also needs the id attribute from the HTML tag. When bound, you can access it with input$... and perform actions on the server side.
+
+### Apply it to other elements
+What is interesting is that all elements having the class .action-button will be considered by the same shiny input binding. 
+
+Disclaimer: some HTML tags will not be compatible with this approach
+
+
+## Application
+
+Let's apply this to the shinydashboard element we want to customize!
+
+### Transform the `taskItem` function
+Let's first have a look at the original function:
+
+```{r}
+taskItem <- function (text, value = 0, color = "aqua", href = NULL) 
+{
+    validateColor(color)
+    if (is.null(href)) 
+        href <- "#"
+    tags$li(a(href = href, h3(text, tags$small(class = "pull-right", 
+        paste0(value, "%"))), div(class = "progress xs", div(class = paste0("progress-bar progress-bar-", 
+        color), style = paste0("width: ", value, "%"), role = "progressbar", 
+        `aria-valuenow` = value, `aria-valuemin` = "0", `aria-valuemax` = "100", 
+        span(class = "sr-only", paste0(value, "% complete"))))))
+}
+```
+
+The most important part of this tag is that this item contains a link `a`, which we can seamlessly transform in an action button. If you remember, we **only** need 2 things:
+
+- add the action-button class to the tag
+- add an id attribute to access the input value later
+
+Below is our new functions:
+
+```{r}
+taskItem2 <- function (inputId = NULL, text, value = 0, color = "aqua") {
+  # validateColor(color) # this is not exported by shinydashboard
+  tags$li(
+    a(
+      id = inputId,
+      class = "action-button",
+      href = "#",
+      h3(text,
+         tags$small(class = "pull-right", paste0(value, "%"))
+      ),
+      div(class = "progress xs",
+          div(
+            class = paste0("progress-bar progress-bar-", color),
+            style = paste0("width: ", value, "%"),
+            role = "progressbar",
+            `aria-valuenow` = value,
+            `aria-valuemin` = "0",
+            `aria-valuemax` = "100",
+            span(class = "sr-only", paste0(value, "% complete"))
+          )
+      )
+    )
+  )
+}
+```
+
+**inputId** is a new parameter with NULL value by default. Besides, we removed the **href** parameter that conflicts with the new inputId. You could keep it but warn your users to choose either inputId or href.
+
+### Add it to a shinydashboard example
+
+```{r, eval=TRUE}
+library(shiny)
+shinyApp(
+  ui = dashboardPage(
+    dashboardHeader(
+      dropdownMenu(
+        type = "tasks", 
+        badgeStatus = "danger",
+        taskItem2(
+          inputId = "mytask",
+          value = 20, 
+          color = "aqua",
+          text = "Click me!"
+        ),
+        taskItem(
+          value = 40, 
+          color = "green",
+          text = "Basic item"
+        )
+      )
+    ),
+    dashboardSidebar(),
+    dashboardBody(),
+    title = "Dashboard example"
+  ),
+  server = function(input, output) {
+    observeEvent(input$mytask, {
+     showModal(modalDialog(
+        title = "Important message",
+        "This is an important message!"
+      ))
+    })
+  }
+)
+```
+
+Now, each time you click on the first task item, a modal will show! Enjoy and stay safe ;)

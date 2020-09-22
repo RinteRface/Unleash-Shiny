@@ -1,0 +1,26 @@
+@import url('https://fonts.googleapis.com/css?family=Raleway|Ubuntu+Mono&display=swap');
+
+body{
+  font-family: 'Raleway', sans-serif;
+}
+
+h1,h2,h3,h4{
+  font-family: 'Raleway', sans-serif;
+}
+
+pre, code{
+  font-family: 'Ubuntu Mono', monospace;
+}
+
+.center{
+  list-style-position: inside;
+}
+
+.pull-left {
+  float: left;
+  width: 47%;
+}
+.pull-right {
+  float: right;
+  width: 47%;
+}

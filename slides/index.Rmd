@@ -1,0 +1,43 @@
+---
+title: "Unleash Shiny"
+subtitle: "R/Pharma - Advanced Shiny Workshop"
+author: "David Granjon & John Coene"
+date: "13-03-2020"
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    css: [default, "assets/style.css"]
+    nature:
+      ratio: "16:9"
+      highlightStyle: default
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r, include = FALSE}
+if(!requireNamespace("emo", quietly = TRUE))
+  remotes::install_github("hadley/emo")
+
+library(emo)
+```
+
+class: inverse, center
+
+# 4 hours
+
+We're in for 4 hours of fun!
+
+- Grab a coffee
+- Make yourself comfortable
+
+---
+
+class: center
+
+## Plan
+
+1. Quick intro on shiny under the hood
+2. Custom inputs
+3. Pause
+4. Custom outputs
+5. Q & A

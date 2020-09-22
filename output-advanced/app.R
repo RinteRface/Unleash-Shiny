@@ -41,13 +41,10 @@ boxxyOutput <- function(id){
   htmltools::attachDependencies(el, deps)
 }
 
+# must return a function
 renderBoxxy <- function(expr, env = parent.frame(), quoted = FALSE) {
   # Convert the expression + environment into a function
-  func <- shiny::exprToFunction(expr, env, quoted)
-
-  function(){
-    func()
-  }
+  shiny::exprToFunction(expr, env, quoted)
 }
 
 ui <- bulmaPage(
@@ -59,8 +56,8 @@ ui <- bulmaPage(
 server <- function(input, output){
 
   boxes <- data.frame(
-    titles = c("Beans", "Potatoes", "Cakes", "Flowers"),
-    values = sample(1:1000, 4)
+    titles = c("Beans", "Potatoes", "Cakes", "Flowers", "More cakes"),
+    values = sample(1:1000, 5)
   )
 
   output$test <- renderBoxxy({

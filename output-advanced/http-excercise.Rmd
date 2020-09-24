@@ -1,0 +1,84 @@
+---
+title: "Shiny HTTP response"
+author: "John Coene"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+Start from the application we put together previously (below).
+
+```r
+ui <- fluidPage(
+  verbatimTextOutput("intro")
+)
+
+server <- function(input, output, session){
+
+  path <- session$registerDataObj(
+    "pharma", cars,
+    function(data, req){
+      res <- jsonlite::toJSON(data)
+      shiny:::httpResponse(200L, "application/json", res)
+    }
+  )
+
+  output$intro <- renderPrint(path)
+
+}
+
+shinyApp(ui, server)
+```
+
+The idea of this exercise is to 1) familiarise yourself more with the function and 2) improve upon it.
+
+The function that `registerDataObj` takes accepts `req`, the request, from which the `QUERY_STRING` can be obtained. The query string contains the URL parameter used when accessing the application, you might have indirectly used them with shiny's bookmarking state system. Essentially one can pass parameters to a URL so they can be retrieved from the `QUERY_STRING`.
+
+`http://127.0.0.1:3000?name=bob&data=cars`
+
+Shiny comes with a function to parse the `QUERY_STRING` and obtain a structured list. 
+
+```r
+parseQueryString(req$QUERY_STRING)
+```
+
+```
+$name
+[1] "bob"
+
+$data
+[1] "cars"
+```
+
+The original application has been slightly modified
+
+1. It accepts a list as `data` input `list(cars = cars, mtcars = mtcars)`
+2. It parses the query string
+
+What you should do it make it such that it uses a parameter of your choosing (e.g.: `dataset`) to define the dataset that is used. Then use that parameter in the browser when testing the application to see if it works.
+
+```r
+ui <- fluidPage(
+  verbatimTextOutput("intro")
+)
+
+server <- function(input, output, session){
+
+  path <- session$registerDataObj(
+    "pharma", 
+    # place other datasets if you want
+    list(cars = cars, mtcars = mtcars), 
+    function(data, req){
+      query <- parseQueryString(req$QUERY_STRING)
+
+      # get a parameter from the query and return the dataset
+
+      shiny:::httpResponse(200L, "application/json", res)
+    }
+  )
+
+  output$intro <- renderPrint(path)
+
+}
+
+shinyApp(ui, server)
+```

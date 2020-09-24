@@ -141,6 +141,26 @@ a>code {
   width: 47%;
 }
 
+.pull-left-30 {
+  float: left;
+  width: 27%;
+}
+
+.pull-right-30 {
+  float: right;
+  width: 27%;
+}
+
+.pull-left-70 {
+  float: left;
+  width: 67%;
+}
+
+.pull-right-70 {
+  float: right;
+  width: 67%;
+}
+
 .pull-right~* {
   clear: both;
 }
@@ -256,4 +276,35 @@ table.dataTable.display tbody tr:hover {
 
 .countdown {
   user-select: none;
+}
+
+.rstudio{
+  color:#4f4f4f;
+  bottom: 7%;
+  left: 5%;
+  position: absolute;
+}
+
+.rstudio-comment{
+  color:#4f4f4f;
+  bottom: 5%;
+  left: 5%;
+  position: absolute;
+}
+
+.confusing{
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0,0,0,0.9);
+  position: absolute;
+  z-index:9999;
+  right: 0;
+}
+
+.confusing-text{
+  margin: auto;
+  width: 100%;
+  text-align: center;
+  padding-top: 20%;
+  color: white;
 }

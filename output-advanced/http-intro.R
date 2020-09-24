@@ -1,5 +1,7 @@
 library(shiny)
 
+library(shiny)
+
 ui <- fluidPage(
   verbatimTextOutput("intro")
 )
@@ -7,15 +9,9 @@ ui <- fluidPage(
 server <- function(input, output, session){
 
   path <- session$registerDataObj(
-    "pharma", list(cars = cars, mtcars = mtcars),
-    function(data, req){
-
-      query <- parseQueryString(req$QUERY_STRING)
-
-      df <- data[[query$dataset]]
-
-      res <- jsonlite::toJSON(df)
-      shiny:::httpResponse(200L, "application/json", enc2utf8(res))
+    "test", cars, function(data, req){
+      print(parseQueryString(req$QUERY_STRING))
+      shiny:::httpResponse(200L, "application/json", "hello")
     }
   )
 

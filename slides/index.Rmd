@@ -1,43 +1,373 @@
 ---
 title: "Unleash Shiny"
 subtitle: "R/Pharma - Advanced Shiny Workshop"
-author: "David Granjon & John Coene"
+author: "David Granjon (Novartis) & John Coene (World Economic Forum)"
 date: "13-03-2020"
 output:
   xaringan::moon_reader:
     lib_dir: libs
-    css: [default, "assets/style.css"]
+    css: ["assets/css/style.css", "assets/css/xaringan-extra.css", "https://cdn.jsdelivr.net/npm/devices.css@0.1.15/dist/devices.min.css"]
+    includes:
+      after_body: assets/html/includes.html
+    mathjax: false
     nature:
       ratio: "16:9"
-      highlightStyle: default
+      highlightStyle: docco
       highlightLines: true
       countIncrementalSlides: false
 ---
 
-```{r, include = FALSE}
+<style>
+.title-slide {
+  background-image: url(assets/img/bg/front_cover.jpg);
+}
+</style>
+
+```{r setup, include = FALSE}
 if(!requireNamespace("emo", quietly = TRUE))
   remotes::install_github("hadley/emo")
 
 library(emo)
+library(countdown)
+library(shiny)
+library(htmltools)
+xaringanExtra::use_xaringan_extra(c("tile_view", "animate_css", "tachyons"))
+xaringanExtra::use_extra_styles(
+  hover_code_line = TRUE,         #<<
+  mute_unhighlighted_code = TRUE  #<<
+)
 ```
 
-class: inverse, center
+```{r js4shiny, echo=FALSE}
+js4shiny::html_setup(stylize = c("fonts", "variables", "code"))
+```
 
-# 4 hours
+# About us
+
+.flex.tc[
+.w-30.mr3[
+<img class="br-100" src="assets/img/people/david.jpg" />
+.f5[David]
+
+.small[Data Scientist at Novartis]
+.small[[RinteRface](https://rinterface.com/) founder]
+.small[Known for: `{shinydashboardPlus}`, `{bs4Dash}` and `{shinyMobile}`]
+
+.gray[&commat;divadnojnarg]
+]
+
+.w-30.mr3[
+<img class="br-100" src="assets/img/people/john.jpg" />
+.f5[John]
+
+.small[Data scientist at the World Economic Forum]
+.small[Known for: `{echarts4r}`]
+
+.gray[&commat;jdatap]
+]
+
+
+.w-30.mr3[
+<img class="br-100" src="assets/img/people/colin.jpg" />
+.f5[Colin]
+
+.small[Shiny Expert at ThinkR]
+.small[Known for: `{golem}`, https://engineering-shiny.org/]
+
+.gray[&commat;_ColinFay]
+]
+
+
+]
+
+---
+# Plan
 
 We're in for 4 hours of fun!
 
 - Grab a coffee
 - Make yourself comfortable
-
----
-
-class: center
-
-## Plan
+- Ask questions!  
 
 1. Quick intro on shiny under the hood
 2. Custom inputs
 3. Pause
 4. Custom outputs
 5. Q & A
+
+---
+
+# Workshop Material
+
+.f5.w-70.mh-a.mt4[
+```r
+devtools::install_github(
+  "RinteRface/charpente",
+  dependencies = TRUE
+)
+```
+
+.tc.mt4[
+[Rstudio Cloud](https://rstudio.cloud/)
+]
+]
+
+---
+class: center
+
+# Shiny or not Shiny?
+<div class="device device-iphone-8 device-spacegray" style="position: absolute; left: 0; right: 0;
+top: 0; bottom: 0; margin: auto; max-width: 100%; max-height: 100%; transform: scale(0.6);">
+<div class="device-frame">
+<iframe width="100%" src="https://shiny.john-coene.com/coronavirus/" allowfullscreen="" frameborder="0" height="100%" scrolling="auto"></iframe>
+</div>
+<div class="device-stripe"></div>
+<div class="device-header"></div>
+<div class="device-sensors"></div>
+<div class="device-btns"></div>
+<div class="device-power"></div>
+</div>
+
+---
+# Shiny or not Shiny?
+
+<div class="device device-macbook-pro device-spacegray" style="position: absolute; left: 0; right: 0;
+top: 0; bottom: 0; margin: auto; max-width: 100%; max-height: 100%; transform: scale(1);">
+<div class="device-frame">
+<iframe width="100%" src="https://themeon.net/nifty/v2.9.1/widgets.html" allowfullscreen="" frameborder="0" height="100%" scrolling="auto"></iframe>
+</div>
+<div class="device-stripe"></div>
+<div class="device-header"></div>
+<div class="device-sensors"></div>
+<div class="device-btns"></div>
+<div class="device-power"></div>
+</div>
+
+---
+
+# Shiny or not Shiny?
+
+<div class="device device-macbook-pro device-spacegray" style="position: absolute; left: 0; right: 0;
+top: 0; bottom: 0; margin: auto; max-width: 100%; max-height: 100%; transform: scale(1);">
+<div class="device-frame">
+<iframe width="100%" src="https://dgranjon.shinyapps.io/shinyMons/" allowfullscreen="" frameborder="0" height="100%" scrolling="auto"></iframe>
+</div>
+<div class="device-stripe"></div>
+<div class="device-header"></div>
+<div class="device-sensors"></div>
+<div class="device-btns"></div>
+<div class="device-power"></div>
+</div>
+
+---
+
+# A simple Shiny app
+
+#### No HTML/CSS/JS and it just works `r ji("fear")`! What kind of **magic** is this?
+
+<iframe src="https://gallery.shinyapps.io/050-kmeans-example" height="400px" width="100%"></iframe>
+
+
+---
+
+<video style="position: fixed;
+  right: 0;
+  bottom: 0;
+  min-width: 100%;
+  min-height: 100%;
+  width: 100%; "loop="" autoplay="" poster="assets/img/bg/virtual_patient.png">
+<source src="assets/movies/VirtualPatient.mp4" type="video/mp4">
+</video>
+
+---
+class: break center middle
+background-image: url('assets/img/bg/part1.jpg')
+background-size: cover
+
+<h2 class="white n">Part1. Shiny and the Web</h1>
+
+---
+class: header_background
+# A. Shiny generates HTML from R
+## Warmup 1
+1. Run the following code:
+
+```{r, eval=FALSE}
+p("Hello World")
+```
+
+2. Copy and paste this code to the R console. What do you observe?
+
+---
+class: header_background
+# A.1.1 Introduction to HTML: **tags**
+## The simplest HTML skeleton
+.pull-left.w-70.mh-a[
+```html
+<!DOCTYPE HTML>
+<html>
+  <head>
+  <!-- head content here -->
+  </head>
+  <body>
+  <!-- body content here -->
+  </body>
+</html>
+```
+
+]
+
+.pull-right.small[
+There are 2 types of **tags**:
+  - paired-tags:`<div></div>`
+  - self closing tags: `<img/>`
+  
+We classify them by usage:
+
+  - structural tags: `<head></head>`, `<body></body>`
+  - control tags: `<script></script>`, `<button></button>`
+  - formatting tags: `<font></font>`
+  
+Block vs inline:
+
+  - `<div><p>Hello World</p></div>`: .green[Good]
+  - `<span><div><p>Hello World</p></div></span>`: .red[not good]
+
+]
+
+---
+class: header_background
+# A.1.2 Introduction to HTML: **attributes**
+## Attributes specify the tags properties
+.pull-left.w-70.mh-a[
+```html
+<div class="awesome-item" id="myitem"></div>
+<!-- the class awesome-item may be applied to multiple tags -->
+<span class="awesome-item"></span>
+```
+
+]
+
+
+.pull-right[
+The most common attributes:
+  - **class** may be shared between multiple tags
+  - **id** is unique
+  - non standards attributes like `data-toggle`
+  
+Attributes are used by CSS and JavaScript to interact with the web page!
+]
+
+---
+class: header_background
+# A.2.1 About the Document Object Model
+## Visualizing the DOM with the HTML inspector
+
+.pull-left[
+DOM is a convenient representation (tree) of the HTML document 
+Inspect the code of any web page with Firefox or Chrome:
+
+  - after a right click and selecting inspect
+  - after clicking on F12 (windows), fn + F12 (Mac)
+]
+
+.pull-right[
+```{r html-dom, echo=FALSE, fig.cap='DOM representation', out.width='50%'}
+knitr::include_graphics("assets/img/html_DOM.png")
+```
+]
+
+--- 
+class: header_background
+# A.2.2 About the DOM: exercise
+## Warmup 2
+.pull-left.w-70.mh-a[
+```r
+library(shiny)
+ui <- fluidPage(p("Hello World"))
+server <- function(input, output) {}
+shinyApp(ui, server)
+```
+]
+
+.pull-right[
+  - Run the above app, right click on the only text element and select inspect
+  - In the `Elements` panel, double click between the `<p></p>` tag to edit the current text. Press enter when finished
+]
+
+---
+class: header_background
+# B. Discover Shiny dependencies
+## Warmup 3
+
+Let's play `r ji("play")`:
+
+  1. Run the app `runExample("01_hello")`
+  2. Open the HTML inspector
+  3. Delete the bootstrap.min.css and ion.rangeSlider.css
+  4. Conclusions
+
+
+---
+class: header_background
+# C. Unleash `{htmltools}` 
+`{htmltools}` is a R package designed to:
+  - Generate HTML tags from R
+  - Handle web dependencies: add, remove, resolve, ...
+
+Historically, `{htmltools}` was extracted out of `{shiny}` to extend it. That's why, both packages
+have many common functions! 
+
+At the moment, `{htmltools}` does not have any user guide, although being an important package for all web things
+[![](https://cranlogs.r-pkg.org/badges/htmltools)](https://cran.r-project.org/package=htmltools)
+
+---
+class: header_background
+# C.1.1 Handle dependencies
+## How would you include JS/CSS in a Shiny app?
+
+.pull-left.w-70.mh-a.small[
+Works but not **portable**
+
+```r
+fluidPage(
+  tags$head(
+    tags$style(...),
+    tags$script(src = "path-to-script"),
+    tags$script(
+      "$(function() {
+       // JS logic ...
+      });
+      "
+    )
+  )
+)
+```
+]
+
+.pull-right.w-70.mh-a.small[
+With `{htmltools}`, we define the dependency, then attach it to a tag with `tagList`:
+
+```r
+use_bs4_dep <- function(tag) {
+  bs4_dep <- htmlDependency(
+    name = "Bootstrap 4",
+    version = "1.0",
+    src = c(href = "https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/"),
+    stylesheet = "bootstrap.min.css"
+  )
+  tagList(tag, bs4_dep)
+}
+use_bs4_dep(fluidPage())
+```
+]
+
+---
+class: header_background
+# C.1.2 Handle dependencies
+## Exercise 1
+
+Open `htmltools_deps.Rmd` and complete exercise 1
+
+`r countdown(10)`
+

@@ -15,7 +15,7 @@ library(bs4Dash)
 
 `renderUI`will make the entire dropdown menu re-render each time something changes in the renderUI expression, which may not be optimal. For instance in React, we only re-render what needs to be updated!
 
-```{r}
+```{r, eval=FALSE}
 shinyApp(
   ui = bs4DashPage(
     navbar = bs4DashNavbar(
@@ -48,27 +48,138 @@ shinyApp(
 ```
 
 ## With JS
-You might insert items in the dropdown with JavaScript. I must acknowledge it' s not as easy as with `renderUI` but you don't re-render the main container each time since it is directly inserted in the UI. If it does not make a lot of sense here because your item number is limited and the HTML tag is not giant, the speed impact is probably ridiculous. Yet for very complex UI's it might have a significant impact. Clicking on the action button will add an extra item to the current list.
 
-Create the item in an `observeEvent`, convert it to a character (important) and send it to JavaScript through the shiny session R6 object. I give it a name 'add-item' to be able to identify it from JavaScript
+### Why don't we just go for `insertUI()`?
+Let's try below
 
-```{r}
-observeEvent(input$add, {
-  item <- dropdownMenuItem(
-    inputId = paste0("triggerAction_", input$add),
-    message = paste("message", input$add),
-    from = "Divad Nojnarg",
-    src = "https://adminlte.io/themes/v3/dist/img/user3-128x128.jpg",
-    time = "today",
-    status = "danger",
-    type = "message"
-  )
-  session$sendCustomMessage("add-item", message = as.character(item))
-})
+```{r, eval=FALSE}
+shinyApp(
+  ui = bs4DashPage(
+    navbar = bs4DashNavbar(
+      rightUi = dropdownMenu(
+        show = FALSE,
+        status = "danger",
+        src = "https://www.google.fr"
+      )
+    ),
+    sidebar = bs4DashSidebar(),
+    controlbar = bs4DashControlbar(),
+    footer = bs4DashFooter(),
+    title = "test",
+    body = bs4DashBody(actionButton("add", "Add dropdown item"))
+  ),
+  server = function(input, output, session) {
+    
+    observeEvent(input$add, {
+      insertUI(
+        selector = ".dropdown-menu > .dropdown-divider",
+        where = "afterEnd",
+        ui = dropdownMenuItem(
+          inputId = paste0("triggerAction_", input$add),
+          message = paste("message", input$add),
+          from = "Divad Nojnarg",
+          src = "https://adminlte.io/themes/v3/dist/img/user3-128x128.jpg",
+          time = "today",
+          status = "danger",
+          type = "message"
+        )
+      )
+    }, priority = 2)
+  }
+)
 ```
 
+Well, if the item is inserted, the item counter as well as the dropdown text are not! We may fix that
+by adding extra `insertUI()` and `removeUI()` to replace those parts of the interface (`insertUI()` does not update
+the targeted item). Moreover, you we must set correct priority to each observeEvent (try to remove them, it will fail) to ensure that _remove_ happens before _insert_. 
 
-I recover the sent message on the JS side with `Shiny.addCustomMessageHandler`. I need to parse the string to HTML with `$.parseHTML` and insert it where I want. I also update dropdown menu item counter as well as the icon text since the dropdown menu is not re-rendered
+```{r, eval=FALSE}
+shinyApp(
+  ui = bs4DashPage(
+    navbar = bs4DashNavbar(
+      rightUi = dropdownMenu(
+        show = FALSE,
+        status = "danger",
+        src = "https://www.google.fr"
+      )
+    ),
+    sidebar = bs4DashSidebar(),
+    controlbar = bs4DashControlbar(),
+    footer = bs4DashFooter(),
+    title = "test",
+    body = bs4DashBody(actionButton("add", "Add dropdown item"))
+  ),
+  server = function(input, output, session) {
+    
+    observeEvent(input$add, {
+      insertUI(
+        selector = ".dropdown-menu > .dropdown-item.dropdown-footer",
+        where = "beforeBegin",
+        ui = dropdownMenuItem(
+          inputId = paste0("triggerAction_", input$add),
+          message = paste("message", input$add),
+          from = "Divad Nojnarg",
+          src = "https://adminlte.io/themes/v3/dist/img/user3-128x128.jpg",
+          time = "today",
+          status = "danger",
+          type = "message"
+        )
+      )
+    })
+    
+    # remove old badge
+    observeEvent(input$add, {
+      removeUI(selector = ".badge-danger.navbar-badge")
+    }, priority = 1)
+    
+    # insert new badge
+    observeEvent(input$add, {
+      insertUI(
+        selector = "[data-toggle=\"dropdown\"]",
+        where = "beforeEnd",
+        ui = tags$span(class = "badge badge-danger navbar-badge", input$add)
+      )
+    })
+    
+    
+    # remove old text counter
+    observeEvent(input$add, {
+      removeUI(selector = ".dropdown-item.dropdown-header")
+    }, priority = 1)
+    
+    # insert new text counter
+    observeEvent(input$add, {
+      insertUI(
+        selector = ".dropdown-menu",
+        where = "afterBegin",
+        ui = tags$span(class="dropdown-item dropdown-header", sprintf("%s Items", input$add))
+      )
+    })
+    
+  }
+)
+```
+
+So many `observeEvent` for a simple action! Imagine if we had 10 similar tasks... Isn't there a way to do all of this at once, thereby reducing the server code?
+
+### Pure JS solution
+
+In the following we'll do most of the work in JavaScript. I must acknowledge it' s not as easy as with `renderUI()` nor `insertUI()`.
+
+We create the `insertDropdownItem` function with 2 parameters:
+
+- item 
+- session
+
+item is convert to a character (important) and sent to JavaScript through the shiny session R6 object. We give it a type, that is 'add-item', to be able to identify it from JavaScript with `Shiny.addCustomMessageHandler`.
+
+```{r, eval=FALSE}
+insertDropdownItem <- function(item, session = shiny::getDefaultReactiveDomain()) {
+  session$sendCustomMessage("add-item", message = as.character(item))
+}
+```
+
+We recover the sent message on the JS side with `Shiny.addCustomMessageHandler`, then parse the string to HTML with `$.parseHTML` and insert it before the footer (that is the next UI element of the dropdown body). We also update dropdown menu item counter as well as the icon text since the dropdown menu is not re-rendered.
 
 ```{javascript}
 $(function() {
@@ -86,7 +197,7 @@ $(function() {
 
 The whole code below.
 
-```{r}
+```{r, eval=FALSE}
 shinyApp(
   ui = bs4DashPage(
     navbar = bs4DashNavbar(
@@ -123,17 +234,23 @@ shinyApp(
   server = function(input, output, session) {
     
     observeEvent(input$add, {
-      item <- dropdownMenuItem(
-        inputId = paste0("triggerAction_", input$add),
-        message = paste("message", input$add),
-        from = "Divad Nojnarg",
-        src = "https://adminlte.io/themes/v3/dist/img/user3-128x128.jpg",
-        time = "today",
-        status = "danger",
-        type = "message"
+      insertDropdownItem(
+        dropdownMenuItem(
+          inputId = paste0("triggerAction_", input$add),
+          message = paste("message", input$add),
+          from = "Divad Nojnarg",
+          src = "https://adminlte.io/themes/v3/dist/img/user3-128x128.jpg",
+          time = "today",
+          status = "danger",
+          type = "message"
+        )
       )
-      session$sendCustomMessage("add-item", message = as.character(item))
     })
   }
 )
 ```
+
+As shown above, this solution significantly lightens the server code since everything may be done
+on the JS side in 1 step. 
+
+We might improve the previous function by adding the possibility to insert multiple items. 

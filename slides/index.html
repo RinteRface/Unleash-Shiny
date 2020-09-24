@@ -3,10 +3,24 @@
   <head>
     <title>Unleash Shiny</title>
     <meta charset="utf-8" />
-    <meta name="author" content="David Granjon &amp; John Coene" />
-    <script src="libs/header-attrs-2.3/header-attrs.js"></script>
-    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
-    <link rel="stylesheet" href="assets/style.css" type="text/css" />
+    <meta name="author" content="David Granjon (Novartis) &amp; John Coene (World Economic Forum)" />
+    <link href="libs/tile-view-0.2.3.9000/tile-view.css" rel="stylesheet" />
+    <script src="libs/tile-view-0.2.3.9000/tile-view.js"></script>
+    <link href="libs/animate.css-3.7.2/animate.xaringan.css" rel="stylesheet" />
+    <link href="libs/tachyons-4.12.0/tachyons.min.css" rel="stylesheet" />
+    <link href="libs/xaringanExtra-extra-styles-0.2.3.9000/xaringanExtra-extra-styles.css" rel="stylesheet" />
+    <link href="libs/js4shiny-0.0.28/css/_variables-fonts.css" rel="stylesheet" />
+    <link href="libs/js4shiny-0.0.28/css/_variables.css" rel="stylesheet" />
+    <link href="libs/js4shiny-0.0.28/css/code.css" rel="stylesheet" />
+    <link href="libs/js4shiny-0.0.28/jsonview/jsonview.css" rel="stylesheet" />
+    <script src="libs/js4shiny-0.0.28/jsonview/jsonview.min.js"></script>
+    <link href="libs/js4shiny-redirectConsoleLog-0.0.28/jslog.css" rel="stylesheet" />
+    <script src="libs/js4shiny-redirectConsoleLog-0.0.28/redirectConsoleLog.js"></script>
+    <link href="libs/countdown-0.3.5/countdown.css" rel="stylesheet" />
+    <script src="libs/countdown-0.3.5/countdown.js"></script>
+    <link rel="stylesheet" href="assets/css/style.css" type="text/css" />
+    <link rel="stylesheet" href="assets/css/xaringan-extra.css" type="text/css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/devices.css@0.1.15/dist/devices.min.css" type="text/css" />
   </head>
   <body>
     <textarea id="source">
@@ -14,39 +28,360 @@ class: center, middle, inverse, title-slide
 
 # Unleash Shiny
 ## R/Pharma - Advanced Shiny Workshop
-### David Granjon &amp; John Coene
+### David Granjon (Novartis) &amp; John Coene (World Economic Forum)
 ### 13-03-2020
 
 ---
 
 
+&lt;style&gt;
+.title-slide {
+  background-image: url(assets/img/bg/front_cover.jpg);
+}
+&lt;/style&gt;
 
 
-class: inverse, center
 
-# 4 hours
+
+
+# About us
+
+.flex.tc[
+.w-30.mr3[
+&lt;img class="br-100" src="assets/img/people/david.jpg" /&gt;
+.f5[David]
+
+.small[Data Scientist at Novartis]
+.small[[RinteRface](https://rinterface.com/) founder]
+.small[Known for: `{shinydashboardPlus}`, `{bs4Dash}` and `{shinyMobile}`]
+
+.gray[&amp;commat;divadnojnarg]
+]
+
+.w-30.mr3[
+&lt;img class="br-100" src="assets/img/people/john.jpg" /&gt;
+.f5[John]
+
+.small[Data scientist at the World Economic Forum]
+.small[Known for: `{echarts4r}`]
+
+.gray[&amp;commat;jdatap]
+]
+
+
+.w-30.mr3[
+&lt;img class="br-100" src="assets/img/people/colin.jpg" /&gt;
+.f5[Colin]
+
+.small[Shiny Expert at ThinkR]
+.small[Known for: `{golem}`, https://engineering-shiny.org/]
+
+.gray[&amp;commat;_ColinFay]
+]
+
+
+]
+
+---
+# Plan
 
 We're in for 4 hours of fun!
 
 - Grab a coffee
 - Make yourself comfortable
-
----
-
-class: center
-
-## Plan
+- Ask questions!  
 
 1. Quick intro on shiny under the hood
 2. Custom inputs
 3. Pause
 4. Custom outputs
+5. Q &amp; A
+
+---
+
+# Workshop Material
+
+.f5.w-70.mh-a.mt4[
+```r
+devtools::install_github(
+  "RinteRface/charpente",
+  dependencies = TRUE
+)
+```
+
+.tc.mt4[
+[Rstudio Cloud](https://rstudio.cloud/)
+]
+]
+
+---
+class: center
+
+# Shiny or not Shiny?
+&lt;div class="device device-iphone-8 device-spacegray" style="position: absolute; left: 0; right: 0;
+top: 0; bottom: 0; margin: auto; max-width: 100%; max-height: 100%; transform: scale(0.6);"&gt;
+&lt;div class="device-frame"&gt;
+&lt;iframe width="100%" src="https://shiny.john-coene.com/coronavirus/" allowfullscreen="" frameborder="0" height="100%" scrolling="auto"&gt;&lt;/iframe&gt;
+&lt;/div&gt;
+&lt;div class="device-stripe"&gt;&lt;/div&gt;
+&lt;div class="device-header"&gt;&lt;/div&gt;
+&lt;div class="device-sensors"&gt;&lt;/div&gt;
+&lt;div class="device-btns"&gt;&lt;/div&gt;
+&lt;div class="device-power"&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+---
+# Shiny or not Shiny?
+
+&lt;div class="device device-macbook-pro device-spacegray" style="position: absolute; left: 0; right: 0;
+top: 0; bottom: 0; margin: auto; max-width: 100%; max-height: 100%; transform: scale(1);"&gt;
+&lt;div class="device-frame"&gt;
+&lt;iframe width="100%" src="https://themeon.net/nifty/v2.9.1/widgets.html" allowfullscreen="" frameborder="0" height="100%" scrolling="auto"&gt;&lt;/iframe&gt;
+&lt;/div&gt;
+&lt;div class="device-stripe"&gt;&lt;/div&gt;
+&lt;div class="device-header"&gt;&lt;/div&gt;
+&lt;div class="device-sensors"&gt;&lt;/div&gt;
+&lt;div class="device-btns"&gt;&lt;/div&gt;
+&lt;div class="device-power"&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+---
+
+# Shiny or not Shiny?
+
+&lt;div class="device device-macbook-pro device-spacegray" style="position: absolute; left: 0; right: 0;
+top: 0; bottom: 0; margin: auto; max-width: 100%; max-height: 100%; transform: scale(1);"&gt;
+&lt;div class="device-frame"&gt;
+&lt;iframe width="100%" src="https://dgranjon.shinyapps.io/shinyMons/" allowfullscreen="" frameborder="0" height="100%" scrolling="auto"&gt;&lt;/iframe&gt;
+&lt;/div&gt;
+&lt;div class="device-stripe"&gt;&lt;/div&gt;
+&lt;div class="device-header"&gt;&lt;/div&gt;
+&lt;div class="device-sensors"&gt;&lt;/div&gt;
+&lt;div class="device-btns"&gt;&lt;/div&gt;
+&lt;div class="device-power"&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+---
+
+# A simple Shiny app
+
+#### No HTML/CSS/JS and it just works 😨! What kind of **magic** is this?
+
+&lt;iframe src="https://gallery.shinyapps.io/050-kmeans-example" height="400px" width="100%"&gt;&lt;/iframe&gt;
+
+
+---
+
+&lt;video style="position: fixed;
+  right: 0;
+  bottom: 0;
+  min-width: 100%;
+  min-height: 100%;
+  width: 100%; "loop="" autoplay="" poster="assets/img/bg/virtual_patient.png"&gt;
+&lt;source src="assets/movies/VirtualPatient.mp4" type="video/mp4"&gt;
+&lt;/video&gt;
+
+---
+class: break center middle
+background-image: url('assets/img/bg/part1.jpg')
+background-size: cover
+
+&lt;h2 class="white n"&gt;Part1. Shiny and the Web&lt;/h1&gt;
+
+---
+class: header_background
+# A. Shiny generates HTML from R
+## Warmup 1
+1. Run the following code:
+
+
+```r
+p("Hello World")
+```
+
+2. Copy and paste this code to the R console. What do you observe?
+
+---
+class: header_background
+# A.1.1 Introduction to HTML: **tags**
+## The simplest HTML skeleton
+.pull-left.w-70.mh-a[
+```html
+&lt;!DOCTYPE HTML&gt;
+&lt;html&gt;
+  &lt;head&gt;
+  &lt;!-- head content here --&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+  &lt;!-- body content here --&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+```
+
+]
+
+.pull-right.small[
+There are 2 types of **tags**:
+  - paired-tags:`&lt;div&gt;&lt;/div&gt;`
+  - self closing tags: `&lt;img/&gt;`
+  
+We classify them by usage:
+
+  - structural tags: `&lt;head&gt;&lt;/head&gt;`, `&lt;body&gt;&lt;/body&gt;`
+  - control tags: `&lt;script&gt;&lt;/script&gt;`, `&lt;button&gt;&lt;/button&gt;`
+  - formatting tags: `&lt;font&gt;&lt;/font&gt;`
+  
+Block vs inline:
+
+  - `&lt;div&gt;&lt;p&gt;Hello World&lt;/p&gt;&lt;/div&gt;`: .green[Good]
+  - `&lt;span&gt;&lt;div&gt;&lt;p&gt;Hello World&lt;/p&gt;&lt;/div&gt;&lt;/span&gt;`: .red[not good]
+
+]
+
+---
+class: header_background
+# A.1.2 Introduction to HTML: **attributes**
+## Attributes specify the tags properties
+.pull-left.w-70.mh-a[
+```html
+&lt;div class="awesome-item" id="myitem"&gt;&lt;/div&gt;
+&lt;!-- the class awesome-item may be applied to multiple tags --&gt;
+&lt;span class="awesome-item"&gt;&lt;/span&gt;
+```
+
+]
+
+
+.pull-right[
+The most common attributes:
+  - **class** may be shared between multiple tags
+  - **id** is unique
+  - non standards attributes like `data-toggle`
+  
+Attributes are used by CSS and JavaScript to interact with the web page!
+]
+
+---
+class: header_background
+# A.2.1 About the Document Object Model
+## Visualizing the DOM with the HTML inspector
+
+.pull-left[
+DOM is a convenient representation (tree) of the HTML document 
+Inspect the code of any web page with Firefox or Chrome:
+
+  - after a right click and selecting inspect
+  - after clicking on F12 (windows), fn + F12 (Mac)
+]
+
+.pull-right[
+&lt;div class="figure"&gt;
+&lt;img src="assets/img/html_DOM.png" alt="DOM representation" width="50%" /&gt;
+&lt;p class="caption"&gt;DOM representation&lt;/p&gt;
+&lt;/div&gt;
+]
+
+--- 
+class: header_background
+# A.2.2 About the DOM: exercise
+## Warmup 2
+.pull-left.w-70.mh-a[
+```r
+library(shiny)
+ui &lt;- fluidPage(p("Hello World"))
+server &lt;- function(input, output) {}
+shinyApp(ui, server)
+```
+]
+
+.pull-right[
+  - Run the above app, right click on the only text element and select inspect
+  - In the `Elements` panel, double click between the `&lt;p&gt;&lt;/p&gt;` tag to edit the current text. Press enter when finished
+]
+
+---
+class: header_background
+# B. Discover Shiny dependencies
+## Warmup 3
+
+Let's play 🎮:
+
+  1. Run the app `runExample("01_hello")`
+  2. Open the HTML inspector
+  3. Delete the bootstrap.min.css and ion.rangeSlider.css
+  4. Conclusions
+
+
+---
+class: header_background
+# C. Unleash `{htmltools}` 
+`{htmltools}` is a R package designed to:
+  - Generate HTML tags from R
+  - Handle web dependencies: add, remove, resolve, ...
+
+Historically, `{htmltools}` was extracted out of `{shiny}` to extend it. That's why, both packages
+have many common functions! 
+
+At the moment, `{htmltools}` does not have any user guide, although being an important package for all web things
+[![](https://cranlogs.r-pkg.org/badges/htmltools)](https://cran.r-project.org/package=htmltools)
+
+---
+class: header_background
+# C.1.1 Handle dependencies
+## How would you include JS/CSS in a Shiny app?
+
+.pull-left.w-70.mh-a.small[
+Works but not **portable**
+
+```r
+fluidPage(
+  tags$head(
+    tags$style(...),
+    tags$script(src = "path-to-script"),
+    tags$script(
+      "$(function() {
+       // JS logic ...
+      });
+      "
+    )
+  )
+)
+```
+]
+
+.pull-right.w-70.mh-a.small[
+With `{htmltools}`, we define the dependency, then attach it to a tag with `tagList`:
+
+```r
+use_bs4_dep &lt;- function(tag) {
+  bs4_dep &lt;- htmlDependency(
+    name = "Bootstrap 4",
+    version = "1.0",
+    src = c(href = "https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/"),
+    stylesheet = "bootstrap.min.css"
+  )
+  tagList(tag, bs4_dep)
+}
+use_bs4_dep(fluidPage())
+```
+]
+
+---
+class: header_background
+# C.1.2 Handle dependencies
+## Exercise 1
+
+Open `htmltools_deps.Rmd` and complete exercise 1
+
+<div class="countdown" id="timer_5f6cae42" style="right:0;bottom:0;" data-warnwhen="0">
+<code class="countdown-time"><span class="countdown-digits minutes">10</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+</div>
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
 <script>var slideshow = remark.create({
 "ratio": "16:9",
-"highlightStyle": "default",
+"highlightStyle": "docco",
 "highlightLines": true,
 "countIncrementalSlides": false
 });
@@ -132,6 +467,122 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
   }
   preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
 })(document);</script>
+<script>
+  (function (d) {
+    d.addEventListener('DOMContentLoaded', function () {
+      // find code chunks that get special colors
+      const langSpecial = ['r', 'js', 'yaml', 'json', 'bash', 'html', 'css']
+      const codeSpecial = d.querySelectorAll(langSpecial.map(l => 'pre code.' + l))
+
+      // find code chunks with highlighted lines
+      const hlines = d.querySelectorAll('.remark-code-line-highlighted')
+      const preHLParents = []
+
+      const findPreParent = function (line, p = 0) {
+        if (p > 1) return null // traverse up no further than grandparent
+        const el = line.parentElement
+        if (el.tagName === 'PRE') {
+          return el
+        } else {
+          return findPreParent(el, ++p)
+        }
+      }
+
+      // add the code language to the parent <pre> element
+      for (const code of codeSpecial) {
+        const pre = findPreParent(code)
+        const codeLang = code.className.split(' ').filter(c => langSpecial.includes(c))
+        pre.classList += ` ${codeLang}`
+      }
+
+      // add remark-code-has-line-highlighted to parent <pre> element
+      for (const line of hlines) {
+        const pre = findPreParent(line)
+        if (pre && !preHLParents.includes(pre)) preHLParents.push(pre)
+      }
+      preHLParents.forEach(p => p.classList += ' remark-code-has-line-highlighted')
+
+      slideshow.on('afterShowSlide', function (slide) {
+        replaceIframePlaceholders()
+      })
+
+      replaceIframePlaceholders()
+    })
+  })(document)
+
+function replaceIframePlaceholders () {
+  document
+  .querySelectorAll('.remark-slides-area .remark-visible div[data-iframe]')
+  .forEach(el => replaceIframePlaceholder(el))
+}
+
+function replaceIframePlaceholder (el) {
+  const iframe = document.createElement('iframe')
+  if (el.childNodes) {
+    el.childNodes.forEach(e => iframe.appendChild(e))
+  }
+  iframe.src = el.dataset.src
+  iframe.classList = el.classList
+  el.parentElement.replaceChild(iframe, el)
+}
+</script>
+  <style>
+  .remark-code-has-line-highlighted .remark-code-line:not(.remark-code-line-highlighted) {
+    opacity: 0.4;
+  }
+
+.remark-code-line-highlighted {
+  background-color: inherit; /* Override highlight color */
+    /* font-weight: 500; */
+}
+
+/* Line Hover Indicator */
+  .remark-code-line:hover {
+    font-weight: bold;
+    opacity: 1 !important;
+  }
+
+.remark-code-line:hover:before {
+  content: "\25B6";
+  color: #6d7e8a;
+    position: absolute;
+  transform: translateX(-1.2em);
+  animation: hover 0.66s alternate 8 cubic-bezier(0.445, 0.05, 0.55, 0.95);
+}
+
+@keyframes hover {
+  0% {
+    transform: translateX(-1.2em);
+  }
+  100% {
+    transform: translateX(-0.8em);
+  }
+}
+</style>
+<script type='text/javascript'>
+
+var slideElements
+
+  function getElementForSlide(slide) {
+    slideElements = slideElements || document.querySelectorAll('.remark-slide')
+    return slideElements[slide.getSlideIndex()]
+  }
+
+  slideshow.on('showSlide', function (slide) {
+    Array.from(getElementForSlide(slide).querySelectorAll('video, audio')).forEach(function (vid) {
+      vid.loop = false
+      vid.currentTime = 0
+      vid.play()
+    })
+  })
+
+  slideshow.on('hideSlide', function (slide) {
+    Array.from(getElementForSlide(slide).querySelectorAll('video, audio')).forEach(function (vid) {
+      vid.pause()
+    })
+  })
+
+</script>
 
 <script>
 slideshow._releaseMath = function(el) {
@@ -157,7 +608,7 @@ slideshow._releaseMath(document);
 (function () {
   var script = document.createElement('script');
   script.type = 'text/javascript';
-  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  script.src  = 'FALSE';
   if (location.protocol !== 'file:' && /^https?:/.test(script.src))
     script.src  = script.src.replace(/^https?:/, '');
   document.getElementsByTagName('head')[0].appendChild(script);

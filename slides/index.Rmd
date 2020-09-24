@@ -422,8 +422,10 @@ Some tags like `<nav></nav>` need the `tags$` prefix before (`tags` is a list of
 ---
 class: header_background
 # C.2.2 Automate the conversion? 
-.center.mt4[
-![]("assets/img/thug_life.png")
+.center[
+```{r thug-life, echo=FALSE, out.width='10%'}
+knitr::include_graphics("assets/img/thug_life.png")
+```
 ]
 
 This process is not interesting and time consuming! Tools exist:
@@ -505,3 +507,14 @@ class: header_background
 Open `htmltools_HTML_to_R.Rmd` and complete exercise 1 and 2
 
 `r countdown(15)`
+
+
+---
+class: header_background
+# D. Practice: bulma
+In the following, you'll reconstruct the `{shinyBulma}` package step by step!
+.center[
+```{r shinybulma, echo=FALSE, out.width='25%'}
+knitr::include_graphics("assets/img/shinybulma.svg")
+```
+]

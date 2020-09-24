@@ -31,11 +31,29 @@ library(emo)
 library(countdown)
 library(shiny)
 library(htmltools)
+library(charpente)
+library(XML)
 xaringanExtra::use_xaringan_extra(c("tile_view", "animate_css", "tachyons"))
 xaringanExtra::use_extra_styles(
   hover_code_line = TRUE,         #<<
   mute_unhighlighted_code = TRUE  #<<
 )
+
+# lighten cli messages for better slide rendering
+html_2_R <- function(html, prefix = FALSE) {
+  r_output <- html %>%
+   htmlParse() %>%
+    getNodeSet("/html/body/*") %>%
+    `[[`(1) %>%
+    charpente:::render_node(prefix = prefix)
+
+  if (exists("r_output")) {
+    cli::cli_code(styler::style_text(r_output))
+  } else {
+    cli::cli_alert_danger("Failed to convert code.")
+  }
+}
+
 ```
 
 ```{r js4shiny, echo=FALSE}
@@ -371,3 +389,119 @@ Open `htmltools_deps.Rmd` and complete exercise 1
 
 `r countdown(10)`
 
+---
+class: header_background
+# C.2.1 From HTML to R `r ji("wizard")`
+## HTML VS R
+.pull-left.w-70.mh-a[
+In HTML, we have:
+```html
+<div class="divclass" id = "daddy">
+  <h1>A child</h1>
+  <span class="child" id="baby">Crying</span>
+</div>
+```
+]
+
+.pull-right.w-70.mh-a[
+The corresponding R code is 
+
+```{r}
+mytag <- div(
+  class = "divclass",
+  id = "daddy",
+  h1("A child"),
+  span(class = "child", id = "baby", "Crying")
+)
+```
+]
+
+Some tags like `<nav></nav>` need the `tags$` prefix before (`tags` is a list of functions). The `withTags` function to use `tags$<tagName>`
+
+
+---
+class: header_background
+# C.2.2 Automate the conversion? 
+.center.mt4[
+![]("assets/img/thug_life.png")
+]
+
+This process is not interesting and time consuming! Tools exist:
+
+  - html2R [Shiny app](https://alandipert.shinyapps.io/html2r/) converts HTML to R (thanks Alan Dipert)
+  - `{charpente}` does the same from the R console with `html_2_R` 
+  
+.small[
+```{r}
+html_2_R('<div class="divclass" id = "daddy"></div>')
+```
+]
+
+
+---
+class: header_background
+# C.2.3 Accessing R tags attributes
+How to access name, attributes, children?
+
+We could use `str(mytag)` to inspect the structure of the R object.
+
+.small[
+```{r}
+mytag$attribs 
+mytag$children 
+```
+]
+
+---
+class: header_background
+# C.2.4 Manipulate R tags
+## Add new attributes
+There are 2 methods:
+ - `tagAppendAttributes(tag, list of attributes)` is preferred
+ -`tag$attribs[["new-attribute"]] <- value`
+
+## Add child/children
+`tagAppendChild(tag, child)`, `tagAppendChildren(tag, list of children)`
+
+There exist other functions but we'll not use them.
+
+
+---
+class: header_background
+# C.2.4 Programmatically create children elements
+Let's create 5 `span` tags:
+
+.pull-left.w-70.mh-a[
+```r
+div(
+  span(1),
+  span(2),
+  span(3),
+  span(4),
+  span(5)
+)
+```
+
+What about 100 tags `r ji("fear")`?
+
+]
+
+.pull-right.w-70.mh-a[
+Let's do some functional programming!
+```r
+# base R
+div(lapply(1:5, function(i) span(i)))
+# purrr + %>%
+map(1:5, function(i) span(i)) %>% div()
+```
+]
+
+
+---
+class: header_background
+# C.2.4 Wrap up
+## Exercise 2
+
+Open `htmltools_HTML_to_R.Rmd` and complete exercise 1 and 2
+
+`r countdown(15)`

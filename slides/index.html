@@ -304,7 +304,7 @@ class: header_background
 # B. Discover Shiny dependencies
 ## Warmup 3
 
-Let's play 🎮:
+Let's play ⏯:
 
   1. Run the app `runExample("01_hello")`
   2. Open the HTML inspector
@@ -373,8 +373,156 @@ class: header_background
 
 Open `htmltools_deps.Rmd` and complete exercise 1
 
-<div class="countdown" id="timer_5f6cae42" style="right:0;bottom:0;" data-warnwhen="0">
+<div class="countdown" id="timer_5f6cc016" style="right:0;bottom:0;" data-warnwhen="0">
 <code class="countdown-time"><span class="countdown-digits minutes">10</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+</div>
+
+---
+class: header_background
+# C.2.1 From HTML to R 🧙‍♂️
+## HTML VS R
+.pull-left.w-70.mh-a[
+In HTML, we have:
+```html
+&lt;div class="divclass" id = "daddy"&gt;
+  &lt;h1&gt;A child&lt;/h1&gt;
+  &lt;span class="child" id="baby"&gt;Crying&lt;/span&gt;
+&lt;/div&gt;
+```
+]
+
+.pull-right.w-70.mh-a[
+The corresponding R code is 
+
+
+```r
+mytag &lt;- div(
+  class = "divclass",
+  id = "daddy",
+  h1("A child"),
+  span(class = "child", id = "baby", "Crying")
+)
+```
+]
+
+Some tags like `&lt;nav&gt;&lt;/nav&gt;` need the `tags$` prefix before (`tags` is a list of functions). The `withTags` function to use `tags$&lt;tagName&gt;`
+
+
+---
+class: header_background
+# C.2.2 Automate the conversion? 
+.center.mt4[
+![]("assets/img/thug_life.png")
+]
+
+This process is not interesting and time consuming! Tools exist:
+
+  - html2R [Shiny app](https://alandipert.shinyapps.io/html2r/) converts HTML to R (thanks Alan Dipert)
+  - `{charpente}` does the same from the R console with `html_2_R` 
+  
+.small[
+
+```r
+html_2_R('&lt;div class="divclass" id = "daddy"&gt;&lt;/div&gt;')
+```
+
+```
+## div(
+##   class = "divclass",
+##   id = "daddy"
+## )
+```
+]
+
+
+---
+class: header_background
+# C.2.3 Accessing R tags attributes
+How to access name, attributes, children?
+
+We could use `str(mytag)` to inspect the structure of the R object.
+
+.small[
+
+```r
+mytag$attribs 
+```
+
+```
+## $class
+## [1] "divclass"
+## 
+## $id
+## [1] "daddy"
+```
+
+```r
+mytag$children 
+```
+
+```
+## [[1]]
+## &lt;h1&gt;A child&lt;/h1&gt;
+## 
+## [[2]]
+## &lt;span class="child" id="baby"&gt;Crying&lt;/span&gt;
+```
+]
+
+---
+class: header_background
+# C.2.4 Manipulate R tags
+## Add new attributes
+There are 2 methods:
+ - `tagAppendAttributes(tag, list of attributes)` is preferred
+ -`tag$attribs[["new-attribute"]] &lt;- value`
+
+## Add child/children
+`tagAppendChild(tag, child)`, `tagAppendChildren(tag, list of children)`
+
+There exist other functions but we'll not use them.
+
+
+---
+class: header_background
+# C.2.4 Programmatically create children elements
+Let's create 5 `span` tags:
+
+.pull-left.w-70.mh-a[
+```r
+div(
+  span(1),
+  span(2),
+  span(3),
+  span(4),
+  span(5)
+)
+```
+
+What about 100 tags 😱?
+
+]
+
+.pull-right.w-70.mh-a[
+Let's do some functional programming!
+```r
+# base R
+div(lapply(1:5, function(i) span(i)))
+# purrr + %&gt;%
+map(1:5, function(i) span(i)) %&gt;% div()
+```
+]
+
+
+---
+class: header_background
+# C.2.4 Wrap up
+## Exercise 2
+
+Open `htmltools_HTML_to_R.Rmd` and complete exercise 1 and 2
+
+<div class="countdown" id="timer_5f6cc0ef" style="right:0;bottom:0;" data-warnwhen="0">
+<code class="countdown-time"><span class="countdown-digits minutes">15</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>

@@ -771,6 +771,72 @@ knitr::include_graphics("assets/img/shiny-find-inputs.png")
 ```
 ]
 
+---
+class: header_background
+# B.1.2 The Shiny input system
+## The binding steps: **initialize**
+Upon app initialization, Shiny calls the `initializeInputs` function that takes all input bindings and call their **initialize** method. This is useful if you work with "sophisticated " API like [Framework7](https://framework7.io/). We won't have time to cover this topic here...
+
+---
+class: header_background
+# B.1.2 The Shiny input system
+## The binding steps: **get the value**
+This step ensures that R **gets** the input **value** at any time. The jQuery `val` method allows to get the current value.
+
+```js
+getValue: function(el) {
+  return $(el).val();
+}
+```
+1. Run the following and open the HTML inspector
+2. Update the text content
+3. What happens? Why?
+
+```r
+customTextInputExample(2)
+```
+
+---
+class: header_background
+# B.1.2 The Shiny input system
+## The binding steps: **set and update**
+.small[
+`setValue(el, value)` is used to set the input value. It called within `receiveMessage(el, data)`, which is the JS part of all the R `updateInput` functions.
+]
+
+.pull-left.w-50.small[
+```js
+setValue: function(el, value) {
+  $(el).val(value);
+}
+
+receiveMessage: function(el, data) {
+  console.log(data);
+  if (data.hasOwnProperty('value')) {
+    this.setValue(el, data.value);
+  }
+  // other parameters to update...
+}
+```
+
+Run the following and open the HTML inspector. Why doesn't the output value change?
+
+```r
+updateCustomTextInputExample(3)
+```
+]
+
+.pull-right.w-50[
+```{r shiny-update-input, echo=FALSE, out.width='100%'}
+knitr::include_graphics("assets/img/shiny-update-inputs.png")
+```
+]
+
+---
+class: header_background
+# B.1.2 The Shiny input system
+## The binding steps: **set and update**
+
 
 ---
 class: header_background

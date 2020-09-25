@@ -223,7 +223,7 @@ p("Hello World")
 class: header_background
 # A.1.1 Introduction to HTML: **tags**
 ## The simplest HTML skeleton
-.pull-left.w-70.mh-a[
+.pull-left.mh-a[
 ```html
 <!DOCTYPE HTML>
 <html>
@@ -260,7 +260,7 @@ Block vs inline:
 class: header_background
 # A.1.2 Introduction to HTML: **attributes**
 ## Attributes specify the tags properties
-.pull-left.w-70.mh-a[
+.pull-left.mh-a[
 ```html
 <div class="awesome-item" id="myitem"></div>
 <!-- the class awesome-item may be applied to multiple tags -->
@@ -284,15 +284,14 @@ class: header_background
 # A.2.1 About the Document Object Model
 ## Visualizing the DOM with the HTML inspector
 
-.pull-left[
-DOM is a convenient representation (tree) of the HTML document 
-Inspect the code of any web page with Firefox or Chrome:
+.pull-left.w-50[
+DOM is a convenient representation (tree) of the HTML document. We inspect the code of any web page with Firefox or Chrome:
 
   - after a right click and selecting inspect
-  - after clicking on F12 (windows), fn + F12 (Mac)
+  - after clicking on **F12** (windows), **fn + F12** (Mac)
 ]
 
-.pull-right[
+.pull-right.w-50[
 ```{r html-dom, echo=FALSE, fig.cap='DOM representation', out.width='50%'}
 knitr::include_graphics("assets/img/html_DOM.png")
 ```
@@ -302,7 +301,7 @@ knitr::include_graphics("assets/img/html_DOM.png")
 class: header_background
 # A.2.2 About the DOM: exercise
 ## Warmup 2
-.pull-left.w-70.mh-a[
+.pull-left.w-50.mh-a[
 ```r
 library(shiny)
 ui <- fluidPage(p("Hello World"))
@@ -311,7 +310,7 @@ shinyApp(ui, server)
 ```
 ]
 
-.pull-right[
+.pull-right.w-50[
   - Run the above app, right click on the only text element and select inspect
   - In the `Elements` panel, double click between the `<p></p>` tag to edit the current text. Press enter when finished
 ]
@@ -347,7 +346,7 @@ class: header_background
 # C.1.1 Handle dependencies
 ## How would you include JS/CSS in a Shiny app?
 
-.pull-left.w-70.mh-a.small[
+.pull-left.w-30.mh-a.small[
 Works but not **portable**
 
 ```r
@@ -396,7 +395,7 @@ Open `htmltools_deps.Rmd` and complete exercise 1
 class: header_background
 # C.2.1 From HTML to R `r ji("wizard")`
 ## HTML VS R
-.pull-left.w-70.mh-a[
+.pull-left.w-50.mh-a[
 In HTML, we have:
 ```html
 <div class="divclass" id = "daddy">
@@ -406,7 +405,7 @@ In HTML, we have:
 ```
 ]
 
-.pull-right.w-70.mh-a[
+.pull-right.w-50.mh-a[
 The corresponding R code is 
 
 ```{r}
@@ -517,12 +516,272 @@ class: header_background
 # D. Practice: bulma
 In the following, you'll reconstruct the `{shinyBulma}` package step by step!
 .center[
-```{r shinybulma, echo=FALSE, out.width='25%'}
+```{r shinybulma, echo=FALSE, out.width='20%'}
 knitr::include_graphics("assets/img/shinybulma.svg")
 ```
 ]
 
+Main tasks:
+  - Import [bulma](https://bulma.io/) dependencies
+  - Generate the main `page` function 
+  
+Lets' start! Open `shinyBulma.Rmd` and enjoy `r ji("monkey")`
+
 ---
+class: break center middle
+background-image: url('assets/img/bg/part2.jpg')
+background-size: cover
+
+<h2 class="white n">Part2. Develop Shiny Custom Inputs</h1>
+
+---
+class: header_background
+# A.1 Inputs are key to interactivity
+.pull-left.w-50.mh-a.mt4[
+**Inputs** are key elements of web applications. They drive user interactions like:
+
+  - configure parameters
+  - fill and submit a form
+  - ...
+
+<br>
+
+`{shiny}` brings various inputs like `sliderInput`, `numericInput`, ...
+  
+]
+
+.pull-right.w-50.mt4[
+<div class="device device-iphone-8 device-spacegray" style="position: absolute; left: 50;
+top: 50; bottom: 0; margin: auto; max-width: 100%; max-height: 100%; transform: scale(0.6);">
+<div class="device-frame">
+<iframe width="100%" src="https://gallery.shinyapps.io/081-widgets-gallery" allowfullscreen="" frameborder="0" height="100%" scrolling="auto"></iframe>
+</div>
+<div class="device-stripe"></div>
+<div class="device-header"></div>
+<div class="device-sensors"></div>
+<div class="device-btns"></div>
+<div class="device-power"></div>
+</div>
+]
+
+<br>
+
+.center[
+How does all this even work `r ji("fairy")`?
+]
+
+---
+class: header_background
+# A.2 Shiny heavily relies on JavaScript (JS)
+.pull-left.w-50.mt4[
+JS source may be found [here](https://github.com/rstudio/shiny/tree/master/srcjs).
+In short all these files are **concatenated** to create one very big `shiny.js` responsible for:
+
+  - registering input/output
+  - handling every single input/output action
+  - initializing and controlling the **websocket** `r ji("socks")` (the whaaaat?)
+  - handling alerts/modals/notifications
+  - ...
+
+.center[
+```{r shiny-homer-gif, echo=FALSE, out.width='25%'}
+knitr::include_graphics("assets/img/shiny-input-homer.gif")
+```
+]
+  
+]
+
+.pull-right.w-50.mt4[
+```{r shiny-js-sources, echo=FALSE, out.width='100%'}
+knitr::include_graphics("assets/img/shiny-js-sources.png")
+```
+]
+
+---
+class: header_background
+# A.3.1 R and JS
+Let's consider the following app
+.pull-left.w-50.small[
+```r
+ui <- fluidPage(
+  textInput("text", "My text", "Some text"),
+  actionButton("update", "Update")
+)
+
+server <- function(input, output, session) {
+  observeEvent(input$update, {
+    updateTextInput(session, "text", value = "Updated text")
+  })
+}
+
+shinyApp(ui, server)
+```
+]
+
+.pull-right.w-50[
+Waiiit!!
+
+  - How does JS knows that R wants to update the text value `r ji("question")` 
+  - How does Shiny knows when to send back the updated text to R `r ji("question")`
+]
+
+---
+class: header_background
+# A.3.2 The websocket
+This is the magic piece allowing **bidirectional** communication between R and JavaScript. The technology behind is provided by `{httpuv}` and `{websocket}`.
+
+.pull-left.w-50[
+1. Run the previous app
+2. Open the HTML inspector
+3. Select the `Network` tab
+4. Search for websocket
+5. Play with the app and observe!
+]
+
+.pull-right.w-50[
+```{r inspect-websocket, echo=FALSE, out.width='100%'}
+knitr::include_graphics("assets/img/inspect-websocket.png")
+```
+]
+
+---
+class: header_background
+# A.3.3 From R to JS
+On the R side, we have the `session` magic. `session` is actually an instance of the `ShinySession` R6 class. It has several methods like:
+  - `sendCustomMessage` send R messages to JS
+  - `sendInputMessage` send R messages to **input bindings**
+  
+<br>
+  
+`updateTextInput` is a customized `session$sendInputMessage`:
+
+.small[
+```r
+updateTextInput <- function (session, inputId, label = NULL, value = NULL) 
+{
+    message <- dropNulls(list(label = label, value = value))
+    session$sendInputMessage(inputId, message)
+}
+```
+]
+
+---
+class: header_background
+# A.3.4 From JS to R
+`Shiny` is also a JavaScript object! 
+
+.pull-left.w-50.small[
+Run this app and open the HTML inspector
+
+```r
+ui <- fluidPage(
+  tags$script(
+    "$(function() {
+      console.log(Shiny);
+    });
+    "
+  )
+)
+server <- function(input, output) {}
+shinyApp(ui, server)
+```
+
+]
+
+.pull-right.w-50[
+```{r shiny-object, echo=FALSE, out.width='90%'}
+knitr::include_graphics("assets/img/shiny-object.png")
+```
+]
+
+`Shiny.addCustomMessageHandler` is the JS part of `session$sendCustomMessage`.
+For Shiny inputs, it is slightly more complex `r ji("demon")`!
+
+---
+class: header_background
+# A.4 Practice 1: Bulma JS for Shiny
+In this part you'll need to fork the `{shinybulma}` [repository](https://github.com/RinteRface/shinybulma) and work on the `bulma-js` branch. We split the audience in 4 groups (1 instructor per group). Each group will choose between:
+
+  - Notifications, doc [here](https://bulmajs.tomerbe.co.uk/docs/0.11/2-core-components/notification/)
+  - Modal, doc [here](https://bulmajs.tomerbe.co.uk/docs/0.11/2-core-components/modal/)
+  
+John and I will review the PR after the workshop!
+
+`r countdown(20)`
+
+
+---
+class: header_background
+# B.1.1 The Shiny input system
+## Input tag structure
+Input tags have various HTML structure.
+
+```html
+<input id = inputId type = "text" class = "input-text" value = value>
+```
+
+The simplest is probably the text input:
+
+ - **id** guarantees the input **uniqueness**. We will see very soon that all instances of the same input share a unique **input binding**, therefore id is mandatory
+ - **type** define the input type
+ - **class** is generally targeted by JavaScript
+ - **value** holds the input value
+
+---
+class: header_background
+# B.1.2 The Shiny input system
+## Binding Shiny inputs
+An input binding: 
+ - Allows Shiny to **identify** each **instance** of a given input 
+ - Describes what you may do with it. For instance, a slider input must **update** whenever the range is dragged or when the left and right arrows of the keyboard are pressed. 
+ - **Receives messages** from R ...
+ - ... tells **when** Shiny have to update the value for R
+ 
+🗒 Bindings rely on a JS class defined in the input_binding.js [file](https://github.com/rstudio/shiny/blob/master/srcjs/input_binding.js)
+
+In the following, we'll need `devtools::install_github("DivadNojnarg/OSUICode")`
+
+---
+class: header_background
+# B.1.2 The Shiny input system
+## The binding steps: **find**
+The idea is to **locate** the input in the DOM. 
+
+.pull-left.w-50.small[
+We generally filter by **class**, **scope** being the **document**.
+
+```js
+find: function(scope) {
+  console.log($(scope).find('.input-text'));
+  return $(scope).find('.input-text');
+}
+```
+
+Run the following and open the HTML inspector.
+
+```r
+library(OSUICode)
+customTextInputExample(1)
+```
+]
+
+.pull-right.w-50[
+```{r shiny-find-input, echo=FALSE, out.width='100%'}
+knitr::include_graphics("assets/img/shiny-find-inputs.png")
+```
+]
+
+
+---
+class: header_background
+# B Practice 2: Box on Steroids for `{shinydashboard}`
+Boxes are a center element of `{shinydashboard}`. Yet the latter only exploit 10% of their
+capability. Your mission: unleash the AdminLTE API to deliver box on steroids!
+
+`r countdown(20)`
+
+---
+
 class: header_background
 # S. Multi page applications `r ji("page")` `r ji("page")` `r ji("page")`
 

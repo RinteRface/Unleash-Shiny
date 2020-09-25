@@ -71,7 +71,7 @@ js4shiny::html_setup(stylize = c("fonts", "variables", "code"))
 .f5[David]
 
 .small[Data Scientist at Novartis]
-.small[[RinteRface](https://rinterface.com/) founder]
+.small[RinteRface founder]
 .small[Known for: `{shinydashboardPlus}`, `{bs4Dash}` and `{shinyMobile}`]
 
 .gray[&commat;divadnojnarg]
@@ -97,8 +97,6 @@ js4shiny::html_setup(stylize = c("fonts", "variables", "code"))
 
 .gray[&commat;_ColinFay]
 ]
-
-
 ]
 
 ---
@@ -120,16 +118,15 @@ We're in for 4 hours of fun!
 
 # Workshop Material
 
-.f5.w-70.mh-a.mt4[
+To reproduce the workshop on your computer, install the following packages:
+.f5.w-70.mh-a.mt4.small[
 ```r
-devtools::install_github(
-  "RinteRface/charpente",
-  dependencies = TRUE
-)
+devtools::install_github("RinteRface/charpente", dependencies = TRUE)
+devtools::install_github("DivadNojnarg/OSUICode")
 ```
 
 .tc.mt4[
-[Rstudio Cloud](https://rstudio.cloud/)
+For a plug and play experience, prefer [Rstudio Cloud](https://rstudio.cloud/)
 ]
 ]
 
@@ -205,7 +202,7 @@ class: break center middle
 background-image: url('assets/img/bg/part1.jpg')
 background-size: cover
 
-<h2 class="white n">Part1. Shiny and the Web</h1>
+<h2 class="white n">Part 1. Custom Templates with Shiny</h1>
 
 ---
 class: header_background
@@ -532,7 +529,7 @@ class: break center middle
 background-image: url('assets/img/bg/part2.jpg')
 background-size: cover
 
-<h2 class="white n">Part2. Develop Shiny Custom Inputs</h1>
+<h2 class="white n">Part 2. Unleash Shiny's Interactivity </h1>
 
 ---
 class: header_background
@@ -699,7 +696,7 @@ For Shiny inputs, it is slightly more complex `r ji("demon")`!
 
 ---
 class: header_background
-# A.4 Practice 1: Bulma JS for Shiny
+# A.4 Bulma JS for Shiny
 In this part you'll need to fork the `{shinybulma}` [repository](https://github.com/RinteRface/shinybulma) and work on the `bulma-js` branch. We split the audience in 4 groups (1 instructor per group). Each group will choose between:
 
   - Notifications, doc [here](https://bulmajs.tomerbe.co.uk/docs/0.11/2-core-components/notification/)
@@ -743,8 +740,7 @@ In the following, we'll need `devtools::install_github("DivadNojnarg/OSUICode")`
 
 ---
 class: header_background
-# B.1.2 The Shiny input system
-## The binding steps: **find**
+# B.2.1 The binding steps: **find**
 The idea is to **locate** the input in the DOM. 
 
 .pull-left.w-50.small[
@@ -773,21 +769,23 @@ knitr::include_graphics("assets/img/shiny-find-inputs.png")
 
 ---
 class: header_background
-# B.1.2 The Shiny input system
-## The binding steps: **initialize**
+# B.2.2 The binding steps: **initialize**
 Upon app initialization, Shiny calls the `initializeInputs` function that takes all input bindings and call their **initialize** method. This is useful if you work with "sophisticated " API like [Framework7](https://framework7.io/). We won't have time to cover this topic here...
 
 ---
 class: header_background
-# B.1.2 The Shiny input system
-## The binding steps: **get the value**
+# B.2.3 The binding steps: **get the value**
 This step ensures that R **gets** the input **value** at any time. The jQuery `val` method allows to get the current value.
 
+.pull-left.w-50[
 ```js
 getValue: function(el) {
   return $(el).val();
 }
 ```
+]
+
+.pull-right.w-50[
 1. Run the following and open the HTML inspector
 2. Update the text content
 3. What happens? Why?
@@ -795,11 +793,11 @@ getValue: function(el) {
 ```r
 customTextInputExample(2)
 ```
+]
 
 ---
 class: header_background
-# B.1.2 The Shiny input system
-## The binding steps: **set and update**
+# B.2.4 The binding steps: **set and update**
 .small[
 `setValue(el, value)` is used to set the input value. It called within `receiveMessage(el, data)`, which is the JS part of all the R `updateInput` functions.
 ]
@@ -834,15 +832,69 @@ knitr::include_graphics("assets/img/shiny-update-inputs.png")
 
 ---
 class: header_background
-# B.1.2 The Shiny input system
-## The binding steps: **set and update**
+# B.2.5 The binding steps: **subscribe**
 
+.pull-left.w-70.small.mt2[
+`subscribe(el, callback)` **listens** to **events** defining Shiny to update the input value and make it available in the app. For a text input, we might have:
+
+```js
+subscribe: function(el, callback) {
+  // when updated
+  $(el).on('change.customTextBinding', function(event) {
+    callback(false);
+  });
+  
+  // keyboard, copy and paste, ...
+  $(el).on('keyup.customTextBinding input.customTextBinding', function(event) {
+    callback(true);
+  });
+}
+```
+]
+
+.pull-right.w-30.small.mt2[
+Run the following demonstration.
+```r
+updateCustomTextInputExample(4)
+updateCustomTextInputExample(5)
+```
+]
+
+**callback()** tells to update the input on the server (R). If true, a **rate policy** is applied!
 
 ---
 class: header_background
-# B Practice 2: Box on Steroids for `{shinydashboard}`
+# B.2.6 The binding steps: **rate policies**
+As mentioned before, `callback(true)` will set rate policy for the given **event listener**. Setting a rate policy is relevant when we don’t want to flood the server with tons of update requests.
+
+.pull-left.w-50.small[
+```js
+getRatePolicy: function() {
+  return {
+    // Can be 'debounce' or 'throttle'
+    policy: 'debounce',
+    delay: 500
+  };
+}
+```
+]
+
+.pull-right.w-50.small[
+Below, the text input only updates after releasing the keyboard for 250ms.
+
+```r
+updateCustomTextInputExample(6)
+```
+]
+
+---
+class: header_background
+# B.3 Box on Steroids!
+.mt-4[
 Boxes are a center element of `{shinydashboard}`. Yet the latter only exploit 10% of their
 capability. Your mission: unleash the AdminLTE API to deliver box on steroids!
+]
+
 
 `r countdown(20)`
 

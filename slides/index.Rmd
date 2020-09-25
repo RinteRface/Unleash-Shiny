@@ -131,6 +131,16 @@ For a plug and play experience, prefer [Rstudio Cloud](https://rstudio.cloud/)
 ]
 
 ---
+class: break center middle
+background-image: url('assets/img/bg/intro.jpg')
+background-size: cover
+
+.center[
+<h3 class="white absolute bottom">Introduction</h3>
+]
+
+
+---
 class: center
 
 # Shiny or not Shiny?
@@ -202,7 +212,7 @@ class: break center middle
 background-image: url('assets/img/bg/part1.jpg')
 background-size: cover
 
-<h2 class="white n">Part 1. Custom Templates with Shiny</h1>
+<h3 class="white absolute bottom center">Part 1. Custom Templates with Shiny</h3>
 
 ---
 class: header_background
@@ -232,7 +242,6 @@ class: header_background
   </body>
 </html>
 ```
-
 ]
 
 .pull-right.small[
@@ -250,7 +259,6 @@ Block vs inline:
 
   - `<div><p>Hello World</p></div>`: .green[Good]
   - `<span><div><p>Hello World</p></div></span>`: .red[not good]
-
 ]
 
 ---
@@ -263,7 +271,6 @@ class: header_background
 <!-- the class awesome-item may be applied to multiple tags -->
 <span class="awesome-item"></span>
 ```
-
 ]
 
 
@@ -272,9 +279,9 @@ The most common attributes:
   - **class** may be shared between multiple tags
   - **id** is unique
   - non standards attributes like `data-toggle`
-  
-Attributes are used by CSS and JavaScript to interact with the web page!
 ]
+
+Attributes are used by **CSS** and **JavaScript** to **interact** with the web page!
 
 ---
 class: header_background
@@ -289,7 +296,7 @@ DOM is a convenient representation (tree) of the HTML document. We inspect the c
 ]
 
 .pull-right.w-50[
-```{r html-dom, echo=FALSE, fig.cap='DOM representation', out.width='50%'}
+```{r html-dom, echo=FALSE, out.width='50%'}
 knitr::include_graphics("assets/img/html_DOM.png")
 ```
 ]
@@ -298,19 +305,16 @@ knitr::include_graphics("assets/img/html_DOM.png")
 class: header_background
 # A.2.2 About the DOM: exercise
 ## Warmup 2
-.pull-left.w-50.mh-a[
+
 ```r
 library(shiny)
 ui <- fluidPage(p("Hello World"))
 server <- function(input, output) {}
 shinyApp(ui, server)
 ```
-]
 
-.pull-right.w-50[
-  - Run the above app, right click on the only text element and select inspect
-  - In the `Elements` panel, double click between the `<p></p>` tag to edit the current text. Press enter when finished
-]
+1. Run the above app, right click on the only text element and select inspect
+2. In the `Elements` panel, double click between the `<p></p>` tag to edit the current text. Press enter when finished
 
 ---
 class: header_background
@@ -529,7 +533,7 @@ class: break center middle
 background-image: url('assets/img/bg/part2.jpg')
 background-size: cover
 
-<h2 class="white n">Part 2. Unleash Shiny's Interactivity </h1>
+<h3 class="white absolute bottom center">Part 2. Unleash Shiny's Interactivity </h3>
 
 ---
 class: header_background

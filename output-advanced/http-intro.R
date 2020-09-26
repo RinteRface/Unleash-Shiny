@@ -1,19 +1,27 @@
 library(shiny)
 
 ui <- fluidPage(
-  verbatimTextOutput("intro")
+  uiOutput("intro")
 )
 
 server <- function(input, output, session){
 
+  # serve the response
   path <- session$registerDataObj(
-    "test", cars, function(data, req){
-      print(parseQueryString(req$QUERY_STRING))
-      shiny:::httpResponse(200L, "application/json", "hello")
-    }
+    ## CODE HERE
   )
 
-  output$intro <- renderPrint(path)
+  # print path
+  output$intro <- renderUI({
+    
+    # print so we can see the path clearly
+    print(path) 
+
+    # print it big so we can see it
+    h1(
+      tags$a(path, href = path)
+    )
+  })
 
 }
 

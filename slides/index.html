@@ -300,7 +300,7 @@ class: header_background
 # B. Discover Shiny dependencies
 ## Warmup 3
 
-Let's play ⏯:
+Let's play ▶️:
 
   1. Run the app `runExample("01_hello")`
   2. Open the HTML inspector
@@ -368,7 +368,7 @@ class: header_background
 
 Open `htmltools_deps.Rmd` and complete exercise 1
 
-<div class="countdown" id="timer_5f6f5799" style="right:0;bottom:0;" data-warnwhen="0">
+<div class="countdown" id="timer_5f6f73b3" style="right:0;bottom:0;" data-warnwhen="0">
 <code class="countdown-time"><span class="countdown-digits minutes">10</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
 
@@ -516,7 +516,7 @@ class: header_background
 
 Open `htmltools_HTML_to_R.Rmd` and complete exercise 1 and 2
 
-<div class="countdown" id="timer_5f6f56a2" style="right:0;bottom:0;" data-warnwhen="0">
+<div class="countdown" id="timer_5f6f7537" style="right:0;bottom:0;" data-warnwhen="0">
 <code class="countdown-time"><span class="countdown-digits minutes">15</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
 
@@ -703,7 +703,7 @@ In this part you'll need to fork the `{shinybulma}` [repository](https://github.
   
 John and I will review the PR after the workshop!
 
-<div class="countdown" id="timer_5f6f54ad" style="right:0;bottom:0;" data-warnwhen="0">
+<div class="countdown" id="timer_5f6f75f6" style="right:0;bottom:0;" data-warnwhen="0">
 <code class="countdown-time"><span class="countdown-digits minutes">20</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
 
@@ -904,7 +904,7 @@ capability. Your mission: unleash the AdminLTE API to deliver box on steroids! O
 ]
 
 
-<div class="countdown" id="timer_5f6f54ec" style="right:0;bottom:0;" data-warnwhen="0">
+<div class="countdown" id="timer_5f6f73aa" style="right:0;bottom:0;" data-warnwhen="0">
 <code class="countdown-time"><span class="countdown-digits minutes">20</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
 
@@ -917,13 +917,13 @@ background-size: cover
 
 ---
 class: header_background
-# A. Multi page applications 📄 📄 📃
+# A. Multi page applications 📃 📄 📄
 
 "Traditional" applications and websites
 
 .pull-left.w-70.mh-a[
-<div id="htmlwidget-d8a65669487ab2c9e320" style="width:100%;height:432px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-d8a65669487ab2c9e320">{"x":{"diagram":"\nstrict digraph{\n  graph[rankdir=LR fontsize = 10]\n  node [shape=record fontsize=10];\n  s [label=\"Server\" color=cornflowerBlue];\n  c [label=\"Client\" color=gold];\n  c -> s [color=dimGray arrowsize=.3 label=request fontsize = 9];\n  s -> c [color=dimGray arrowsize=.3 label=response fontsize = 9];\n\n  c1 [label=\"Client\" color=gold];\n  c1 -> s [color=dimGray arrowsize=.3 label=request fontsize = 9];\n  s -> c1 [color=dimGray arrowsize=.3 label=response fontsize = 9];\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-721b63c5438d1ef6dfef" style="width:100%;height:432px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-721b63c5438d1ef6dfef">{"x":{"diagram":"\nstrict digraph{\n  graph[rankdir=LR fontsize = 10]\n  node [shape=record fontsize=10];\n  s [label=\"Server\" color=cornflowerBlue];\n  c [label=\"Client\" color=gold];\n  c -> s [color=dimGray arrowsize=.3 label=request fontsize = 9];\n  s -> c [color=dimGray arrowsize=.3 label=response fontsize = 9];\n\n  c1 [label=\"Client\" color=gold];\n  c1 -> s [color=dimGray arrowsize=.3 label=request fontsize = 9];\n  s -> c1 [color=dimGray arrowsize=.3 label=response fontsize = 9];\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 ]
 
 .pull-right.w-70.mh-a[
@@ -935,6 +935,8 @@ class: header_background
   - Client requests `/about`, server gives a different response
   - Client requests `/products`, server gives a yet a different response
   - and so on
+
+  💡 Think {plumber}
 ]
 
 ---
@@ -944,8 +946,8 @@ class: header_background
 A more recent web development.
 
 .pull-left.w-70.mh-a[
-<div id="htmlwidget-64e6cf03033aa9cb6f4f" style="width:100%;height:432px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-64e6cf03033aa9cb6f4f">{"x":{"diagram":"\ndigraph{\n  graph[rankdir=LR fontsize = 10]\n  node [shape=record fontsize=10];\n  s [label=\"Server\" color=cornflowerBlue];\n  c1 [label=\"Client\" color=gold];\n  c2 [label=\"Client\" color=gold];\n  c3 [label=\"Client\" color=gold];\n  c1 -> s [dir=both color=dimGray arrowsize=.3 label=messages fontsize = 9];\n  c2 -> s [dir=both color=dimGray arrowsize=.3 label=messages fontsize = 9];\n  c3 -> s [dir=both color=dimGray arrowsize=.3 label=messages fontsize = 9];\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-8a51b29d92836d4080dd" style="width:100%;height:432px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-8a51b29d92836d4080dd">{"x":{"diagram":"\ndigraph{\n  graph[rankdir=LR fontsize = 10]\n  node [shape=record fontsize=10];\n  s [label=\"Server\" color=cornflowerBlue];\n  c1 [label=\"Client\" color=gold];\n  c2 [label=\"Client\" color=gold];\n  c3 [label=\"Client\" color=gold];\n  c1 -> s [dir=both color=dimGray arrowsize=.3 label=messages fontsize = 9];\n  c2 -> s [dir=both color=dimGray arrowsize=.3 label=messages fontsize = 9];\n  c3 -> s [dir=both color=dimGray arrowsize=.3 label=messages fontsize = 9];\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 ]
 
 .pull-right.w-70.mh-a[
@@ -978,9 +980,9 @@ _(no other `/page` is ever visited)_
 
 ---
 class: header_background
-# A.1.3 Serving an HTTP response
+# A.1.3 HTTP response
 
-Let's discover how to serve an HTTP response with shiny.
+Let's discover how to serve an HTTP response with `registerDataObj`.
 
 .pull-left[
 ```r
@@ -996,18 +998,38 @@ path &lt;- session$registerDataObj(
   Arguments
 1. `name`: the name of the endpoint
 2. `data`: data objects of use in `filterFunc`
-3. `filterFunc`: Filter function, accepst `data` and `request`
+3. `filterFunc`: Function, accepts `data` and `request`
 ]
 
 __Notes__ 
 
-1. Served from the `session` object, hence it
+1. Served from the `session` object: _only valid for that session_, hence it
 2. Returns a `path`
 3. `filterFunc` must return a valid response
 
 ---
 class: header_background
-# A.1.3 Serving an HTTP response
+# A.1.3.1 HTTP response __filterFunc__
+
+Let's delve into the `filterFunc`: what does an HTTP response look like with shiny?
+
+```r
+shiny:::httpResponse(
+  status = 200,
+  content_type = "text/html", 
+  content = "&lt;h1&gt;Hello!&lt;/h1&gt;"
+)
+```
+
+1. `status` - you probably have heard of `404`. OK response = `200`
+2. `content_type` - type of content the browser should display
+4. `content` - content to display in browser
+
+__Note__: `httpResponse` is not exported, hence the `:::`
+
+---
+class: header_background
+# A.1.3.2 HTTP response __example__
 
 Shiny allows publishing any R object as a URL endpoint _unique to the session._
 
@@ -1020,7 +1042,7 @@ session$registerDataObj(
   function(data, req) {
     res &lt;- jsonlite::toJSON(cars)
     shiny:::httpResponse(
-      200L,               # status
+      200,                # status
       "application/json", # header 
       res                 # response
     )
@@ -1045,12 +1067,13 @@ session$registerDataObj(
 ```
 ]
 
+
 ---
 class: header_background
-# A.1.3 Serving an HTTP response
+# A.1.3.3 Serving an HTTP response
 
 &lt;div class="confusing"&gt;
-&lt;h1 class="confusing-text"&gt;Too complicated!&lt;/h1&gt;
+&lt;h1 class="confusing-text"&gt;Too confusing!&lt;/h1&gt;
 &lt;/div&gt;
 
 Shiny allows publishing any R object as a URL endpoint _unique to the session._
@@ -1094,8 +1117,181 @@ class: break center middle
 background-image: url('https://rstudio.com/assets/img/og/rstudio-og-fb-1.jpg')
 background-size: cover
 
-&lt;h3 class="white n rstudio"&gt;Intermission&lt;/h3&gt;
+&lt;h3 class="white n rstudio"&gt;Code along&lt;/h3&gt;
 &lt;p class="rstudio-comment"&gt;Open &lt;code&gt;http-intro.R&lt;/code&gt;&lt;/p&gt;
+
+---
+class: header_background
+# B.1 💡 The grand idea
+
+Serve data with an HTTP response, read it with JavaScript to produce the HTML output
+
+<div id="htmlwidget-e2fa636bba433b405976" style="width:100%;height:432px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-e2fa636bba433b405976">{"x":{"diagram":"\ndigraph{\n\n  graph[rankdir=LR fontsize = 10]\n  \n  node [shape=record fontsize=10];\n  server [label=\"Server\" color=cornflowerBlue];\n  json [label=\"JSON\" color=black];\n  javascript [label=\"JavaScript\" color=gold];\n  html [label=\"HTML output\" color=black]\n\n  server -> json [label=\"response\"]\n  json -> javascript [label=\"fetch\"]\n  javascript -> html\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+
+---
+class: header_background
+# B.2 Custom outputs
+
+Examples:
+
+.pull-left[
+- `plot`
+- `plotOutput`
+- `renderPlot`
+
+
+- `datatable`
+- `datatableOutput`
+- `renderDatatable`
+]
+
+.pull-right[
+- `table`
+- `tableOutput`
+- `renderTable`
+
+
+- `plotly`
+- `plotlyOutput`
+- `renderPlotly`
+]
+
+Always comprises of __3 functions:__
+
+1. One function to create the output
+2. One function to render it in shiny
+4. One function to create the UI
+
+---
+class: header_background
+# B.3 Level
+
+Let's make bulma's "level layout" a custom output!
+
+&lt;img src="assets/img/level.png" class="shade"/&gt;
+
+🔗 &lt;a href="https://bulma.io/documentation/layout/level/#centered-level"&gt;bulma.io/documentation/layout/level&lt;/a&gt;
+
+```html
+&lt;nav class="level"&gt;
+  &lt;div class="level-item has-text-centered"&gt;
+    &lt;div&gt;
+      &lt;p class="heading"&gt;Tweets&lt;/p&gt;
+      &lt;p class="title"&gt;3,456&lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/nav&gt;
+```
+
+---
+class: header_background
+# B.4.1 Level __functions__
+
+Meet the "box"
+
+1. `box`
+2. `renderBox`
+3. `boxOutput`
+
+The three function's we're about to write together to produce the "level layout."
+
+---
+class: header_background
+# B.4.2 Level __box__
+
+## Box
+
+The `box` function.
+
+### Usage
+
+`box(data, title, value)`
+
+### Value
+
+Returns a data.frame
+
+---
+class: header_background
+# B.4.3 Level __boxOutput__
+
+## boxOutput
+
+The `boxOutput` function to place in the shiny UI.
+
+### Usage
+
+`boxOutput(id)`
+
+### Value
+
+Returns a `&lt;nav&gt;` tag bearing input `id`
+
+---
+class: header_background
+# B.4.3 Level __renderBox__
+
+## renderBox
+
+The `renderBox` function to render `box` in shiny. 
+
+### Usage
+
+`renderBox(expr, env = parent.frame(), quoted = FALSE)`
+
+### Value
+
+Returns a function
+---
+class: header_background
+# B.4.4 Level __binding__ 
+
+Much of the JavaScript works just like inputs, albeit simpler!
+
+Only two methods:
+
+1. `find` - same as for inputs.
+2. `renderValue` - renders the output
+
+---
+class: header_background
+# B.4.4 Level __skeleton__ 
+
+Eerily similar to inputs: 1) initialise, 2) extend, 3) register.
+
+```js
+var boxBinding = new Shiny.OutputBinding();
+
+$.extend(boxBinding, {
+  find: function(scope) {
+    return $(scope).find(".box");
+  },
+  renderValue: function(el, data) {
+    // TODO
+  }
+});
+
+Shiny.outputBindings.register(boxBinding, "pharma.box");
+```
+
+---
+class: break center middle
+background-image: url('https://rstudio.com/assets/img/og/rstudio-og-fb-1.jpg')
+background-size: cover
+
+&lt;h3 class="white n rstudio"&gt;Code along&lt;/h3&gt;
+&lt;p class="rstudio-comment"&gt;Open &lt;code&gt;output&lt;/code&gt;directory&lt;/p&gt;
+
+---
+class: header_background
+# B.5 Tinker
+
+The "box" could be made much more useful and interesting
+
+- The `box` function could accept a model and extract interesting statistics
+- The output could use other JavaScript package to [animate the numbers](https://inorganik.github.io/countUp.js/) for instance
+- Or the value could be colored dependening on threshold (e.g.: confidence)
 
 ---
 class: break center middle
@@ -1177,6 +1373,39 @@ shinyApp(
 ]
 
 ---
+class: header_background
+# How to send notifications from JS?
+
+Don't forget that `Shiny` is a JS object having the **`notifications.show`** method!
+We add **`onclick`** to an `actionButton`.
+
+.small[
+
+```r
+ui &lt;- fluidPage(
+  actionButton(
+  "notif",
+  "Show notification",
+  onclick = "Shiny.notifications.show({
+      html: '&lt;strong&gt;Oups&lt;/strong&gt;',
+      type: 'error',
+      duration: 2000
+    });"
+  )
+)
+
+server &lt;- function(input, output, session) {}
+shinyApp(ui, server)
+```
+]
+
+---
+class: header_background
+# Update inputs from JS (not R)?
+
+.center[
+Open `update_input_from_client.Rmd`.
+]
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>

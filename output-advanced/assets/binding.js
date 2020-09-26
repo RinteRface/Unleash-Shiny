@@ -1,4 +1,4 @@
-var boxxyBinding = new Shiny.OutputBinding();
+var boxBinding = new Shiny.OutputBinding();
 
 createElement = function(row){
   var div = document.createElement('DIV');
@@ -9,17 +9,17 @@ createElement = function(row){
   return div;
 }
 
-$.extend(boxxyBinding, {
+$.extend(boxBinding, {
   find: function(scope) {
-    return $(scope).find(".boxxy");
+    return $(scope).find(".box");
   },
   renderValue: function(el, data) {
 
     let base_url = window.location.href;
-    let url = base_url  + data.uri;
+    let url = base_url  + data;
 
     console.log(url);
-    console.log(data.uri);
+    console.log(data);
 
     fetch(url)
       .then(response => response.json())
@@ -33,4 +33,4 @@ $.extend(boxxyBinding, {
   }
 });
 
-Shiny.outputBindings.register(boxxyBinding, "john.boxxy");
+Shiny.outputBindings.register(boxBinding, "pharma.box");

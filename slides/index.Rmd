@@ -42,6 +42,7 @@ xaringanExtra::use_extra_styles(
   hover_code_line = TRUE,         #<<
   mute_unhighlighted_code = TRUE  #<<
 )
+xaringanExtra::use_panelset()
 
 # lighten cli messages for better slide rendering
 html_2_R <- function(html, prefix = FALSE) {
@@ -1095,3 +1096,75 @@ background-image: url('assets/img/bg/part4.jpg')
 background-size: cover
 
 <h3 class="white absolute bottom center">Part 4. Shiny's Hidden Gems</h3>
+
+
+---
+class: header_background
+# How to get the last changed input?
+
+.panelset[
+.panel[.panel-name[R Code]
+
+.small[
+```{r, eval=FALSE}
+ui <- fluidPage(
+  textInput('txt_a', 'Input Text A'),
+  textInput('txt_b', 'Input Text B'),
+  uiOutput('txt_c_out'),
+  verbatimTextOutput("show_last")
+)
+
+server <- function(input, output, session) {
+  output$txt_c_out <- renderUI(textInput('txt_c', 'Input Text C'))
+  values <- reactiveValues(lastUpdated = NULL)
+  observe({
+    lapply(names(input), function(x) {
+      observe({
+        input[[x]]
+        values$lastUpdated <- x
+      })
+    })
+  })
+  output$show_last <- renderPrint(values$lastUpdated)
+}
+```
+]
+]
+
+.panel[.panel-name[JS]
+
+We leverage `Shiny.setInputValue` and Shiny JS [events](https://shiny.rstudio.com/articles/js-events.html). **`shiny:inputchanged`**
+fires **each time** an input is **changed**!
+
+```js
+$(document).on('shiny:inputchanged', function(event) {
+  Shiny.setInputValue('pleaseStayHome', {name: event.name, value: event.value, type: event.binding.name.split('.')[1]});
+});
+```
+
+On the R side, we listen to `input$pleaseStayHome`. That's it!
+
+]
+
+.panel[.panel-name[I am just lazy `r ji("shrug")`]
+The `{shinylogs}` package developed by [dreamRs](https://github.com/dreamRs/shinylogs) contains this feature:
+
+```{r, eval = FALSE}
+shinyApp(
+  ui = fluidPage(
+    numericInput("n", "n", 1),
+    sliderInput("s", "s", min = 0, max = 10, value = 5),
+    verbatimTextOutput("lastChanged")
+  ),
+  server = function(input, output, session) {
+    # specific to shinylogs
+    track_usage(storage_mode = store_null())
+    output$lastChanged <- renderPrint(input$`.shinylogs_lastInput`)
+  }
+)
+```
+
+]
+]
+
+---

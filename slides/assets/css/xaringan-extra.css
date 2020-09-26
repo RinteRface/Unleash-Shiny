@@ -524,6 +524,17 @@ pre.css::after {
   transform: rotate(-90deg);
 }
 
+/* hardcoded color */
+pre.r::after {
+  content: 'r';
+  color: #674a80;
+}
+
+/* hardcoded color */
+pre.r {
+  border-color: #674a80;
+}
+
 pre.pre-hide-filetype,
 .pre-hide-filetype pre::after {
   content: '';

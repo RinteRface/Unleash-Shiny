@@ -13,7 +13,7 @@ library(bs4Dash)
 
 ## With renderUI
 
-`renderUI`will make the entire dropdown menu re-render each time something changes in the renderUI expression, which may not be optimal. For instance in React, we only re-render what needs to be updated!
+`renderUI` will make the entire dropdown menu re-render each time something changes in the renderUI expression, which may not be optimal. For instance in React, we only re-render what needs to be updated!
 
 ```{r, eval=FALSE}
 shinyApp(

@@ -41,6 +41,7 @@ class: center, middle, inverse, title-slide
 &lt;style&gt;
 .title-slide {
   background-image: url(assets/img/bg/front_cover.jpg);
+  background-size: cover;
 }
 &lt;/style&gt;
 
@@ -304,7 +305,7 @@ class: header_background
 # B. Discover Shiny dependencies
 ## Warmup 3
 
-Let's play ▶️:
+Let's play 🎮:
 
   1. Run the app `runExample("01_hello")`
   2. Open the HTML inspector
@@ -373,7 +374,7 @@ class: header_background
 
 Open `htmltools_deps.Rmd` and complete exercise 1
 
-<div class="countdown" id="timer_5f6e83f5" style="right:0;bottom:0;" data-warnwhen="0">
+<div class="countdown" id="timer_5f6e8705" style="right:0;bottom:0;" data-warnwhen="0">
 <code class="countdown-time"><span class="countdown-digits minutes">10</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
 
@@ -521,7 +522,7 @@ class: header_background
 
 Open `htmltools_HTML_to_R.Rmd` and complete exercise 1 and 2
 
-<div class="countdown" id="timer_5f6e856d" style="right:0;bottom:0;" data-warnwhen="0">
+<div class="countdown" id="timer_5f6e8675" style="right:0;bottom:0;" data-warnwhen="0">
 <code class="countdown-time"><span class="countdown-digits minutes">15</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
 
@@ -712,7 +713,7 @@ In this part you'll need to fork the `{shinybulma}` [repository](https://github.
   
 John and I will review the PR after the workshop!
 
-<div class="countdown" id="timer_5f6e85b2" style="right:0;bottom:0;" data-warnwhen="0">
+<div class="countdown" id="timer_5f6e86b1" style="right:0;bottom:0;" data-warnwhen="0">
 <code class="countdown-time"><span class="countdown-digits minutes">20</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
 
@@ -902,20 +903,33 @@ capability. Your mission: unleash the AdminLTE API to deliver box on steroids!
 ]
 
 
-<div class="countdown" id="timer_5f6e8453" style="right:0;bottom:0;" data-warnwhen="0">
+<div class="countdown" id="timer_5f6e8720" style="right:0;bottom:0;" data-warnwhen="0">
 <code class="countdown-time"><span class="countdown-digits minutes">20</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
 
 ---
+class: break center middle
+background-image: url('assets/img/bg/part3.jpg')
+background-size: cover
 
+&lt;h3 class="white absolute bottom center"&gt;Part 3. Custom Outputs&lt;/h3&gt;
+
+---
+class: break center middle
+background-image: url('assets/img/bg/part4.jpg')
+background-size: cover
+
+&lt;h3 class="white absolute bottom center"&gt;Part 4. Shiny's Hidden Gems&lt;/h3&gt;
+
+---
 class: header_background
-# S. Multi page applications 📃 📄 📃
+# S. Multi page applications 📄 📃 📄
 
 "Traditional" applications and websites
 
 .pull-left.w-70.mh-a[
-<div id="htmlwidget-04a2d94605235f1ba965" style="width:100%;height:432px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-04a2d94605235f1ba965">{"x":{"diagram":"\nstrict digraph{\n  graph[rankdir=LR fontsize = 10]\n  node [shape=record fontsize=10];\n  s [label=\"Server\" color=cornflowerBlue];\n  c [label=\"Client\" color=gold];\n  c -> s [color=dimGray arrowsize=.3 label=request fontsize = 9];\n  s -> c [color=dimGray arrowsize=.3 label=response fontsize = 9];\n\n  c1 [label=\"Client\" color=gold];\n  c1 -> s [color=dimGray arrowsize=.3 label=request fontsize = 9];\n  s -> c1 [color=dimGray arrowsize=.3 label=response fontsize = 9];\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-1b532b8ef0b5677f9c7a" style="width:100%;height:432px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-1b532b8ef0b5677f9c7a">{"x":{"diagram":"\nstrict digraph{\n  graph[rankdir=LR fontsize = 10]\n  node [shape=record fontsize=10];\n  s [label=\"Server\" color=cornflowerBlue];\n  c [label=\"Client\" color=gold];\n  c -> s [color=dimGray arrowsize=.3 label=request fontsize = 9];\n  s -> c [color=dimGray arrowsize=.3 label=response fontsize = 9];\n\n  c1 [label=\"Client\" color=gold];\n  c1 -> s [color=dimGray arrowsize=.3 label=request fontsize = 9];\n  s -> c1 [color=dimGray arrowsize=.3 label=response fontsize = 9];\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 ]
 
 .pull-right.w-70.mh-a[
@@ -931,13 +945,13 @@ class: header_background
 
 ---
 class: header_background
-# S.1.1 Single page applications 📃
+# S.1.1 Single page applications 📄
 
 A more recent web development.
 
 .pull-left.w-70.mh-a[
-<div id="htmlwidget-5d880a97eb54cce8c7c7" style="width:100%;height:432px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-5d880a97eb54cce8c7c7">{"x":{"diagram":"\ndigraph{\n  graph[rankdir=LR fontsize = 10]\n  node [shape=record fontsize=10];\n  s [label=\"Server\" color=cornflowerBlue];\n  c1 [label=\"Client\" color=gold];\n  c2 [label=\"Client\" color=gold];\n  c3 [label=\"Client\" color=gold];\n  c1 -> s [dir=both color=dimGray arrowsize=.3 label=messages fontsize = 9];\n  c2 -> s [dir=both color=dimGray arrowsize=.3 label=messages fontsize = 9];\n  c3 -> s [dir=both color=dimGray arrowsize=.3 label=messages fontsize = 9];\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-28020a62ce42933e424f" style="width:100%;height:432px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-28020a62ce42933e424f">{"x":{"diagram":"\ndigraph{\n  graph[rankdir=LR fontsize = 10]\n  node [shape=record fontsize=10];\n  s [label=\"Server\" color=cornflowerBlue];\n  c1 [label=\"Client\" color=gold];\n  c2 [label=\"Client\" color=gold];\n  c3 [label=\"Client\" color=gold];\n  c1 -> s [dir=both color=dimGray arrowsize=.3 label=messages fontsize = 9];\n  c2 -> s [dir=both color=dimGray arrowsize=.3 label=messages fontsize = 9];\n  c3 -> s [dir=both color=dimGray arrowsize=.3 label=messages fontsize = 9];\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 ]
 
 .pull-right.w-70.mh-a[

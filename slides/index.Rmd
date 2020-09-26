@@ -20,6 +20,7 @@ output:
 <style>
 .title-slide {
   background-image: url(assets/img/bg/front_cover.jpg);
+  background-size: cover;
 }
 </style>
 
@@ -902,7 +903,20 @@ capability. Your mission: unleash the AdminLTE API to deliver box on steroids!
 `r countdown(20)`
 
 ---
+class: break center middle
+background-image: url('assets/img/bg/part3.jpg')
+background-size: cover
 
+<h3 class="white absolute bottom center">Part 3. Custom Outputs</h3>
+
+---
+class: break center middle
+background-image: url('assets/img/bg/part4.jpg')
+background-size: cover
+
+<h3 class="white absolute bottom center">Part 4. Shiny's Hidden Gems</h3>
+
+---
 class: header_background
 # S. Multi page applications `r ji("page")` `r ji("page")` `r ji("page")`
 

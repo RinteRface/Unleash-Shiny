@@ -1002,6 +1002,35 @@ _(no other `/page` is ever visited)_
 class: header_background
 # A.1.3 Serving an HTTP response
 
+Let's discover how to serve an HTTP response with `registerDataObj`.
+
+.pull-left[
+```r
+path <- session$registerDataObj(
+  name,
+  data,
+  filterFunc
+)
+```
+]
+
+.pull-right[
+  Arguments
+1. `name`: the name of the endpoint
+2. `data`: data objects of use in `filterFunc`
+3. `filterFunc`: Filter function, accepst `data` and `request`
+]
+
+__Notes__ 
+
+1. Served from the `session` object, hence it
+2. Returns a `path`
+3. `filterFunc` must return a valid response
+
+---
+class: header_background
+# A.1.3 Serving an HTTP response
+
 Shiny allows publishing any R object as a URL endpoint _unique to the session._
 
 .pull-left-70[

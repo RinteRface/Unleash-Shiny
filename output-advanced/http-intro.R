@@ -1,7 +1,5 @@
 library(shiny)
 
-library(shiny)
-
 ui <- fluidPage(
   verbatimTextOutput("intro")
 )

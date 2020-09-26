@@ -907,7 +907,7 @@ class: header_background
 # B.3 Box on Steroids!
 .mt-4[
 Boxes are a center element of `{shinydashboard}`. Yet the latter only exploit 10% of their
-capability. Your mission: unleash the AdminLTE API to deliver box on steroids!
+capability. Your mission: unleash the AdminLTE API to deliver box on steroids! Open `box_on_steroids.Rmd`.
 ]
 
 

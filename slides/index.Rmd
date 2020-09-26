@@ -1192,3 +1192,11 @@ server <- function(input, output, session) {}
 shinyApp(ui, server)
 ```
 ]
+
+---
+class: header_background
+# Update inputs from JS (not R)?
+
+.center[
+Open `update_input_from_client.Rmd`.
+]

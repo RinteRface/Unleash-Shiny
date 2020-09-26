@@ -910,15 +910,8 @@ background-size: cover
 <h3 class="white absolute bottom center">Part 3. Custom Outputs</h3>
 
 ---
-class: break center middle
-background-image: url('assets/img/bg/part4.jpg')
-background-size: cover
-
-<h3 class="white absolute bottom center">Part 4. Shiny's Hidden Gems</h3>
-
----
 class: header_background
-# S. Multi page applications `r ji("page")` `r ji("page")` `r ji("page")`
+# A. Multi page applications `r ji("page")` `r ji("page")` `r ji("page")`
 
 "Traditional" applications and websites
 
@@ -954,7 +947,7 @@ strict digraph{
 
 ---
 class: header_background
-# S.1.1 Single page applications `r ji("page")`
+# A.1.1 Single page applications `r ji("page")`
 
 A more recent web development.
 
@@ -989,7 +982,7 @@ digraph{
 
 ---
 class: header_background
-# S.1.2 What about shiny?
+# A.1.2 What about shiny?
 
 So which one of those does shiny use?
 
@@ -1006,7 +999,7 @@ _(no other `/page` is ever visited)_
 
 ---
 class: header_background
-# S.1.3 Serving an HTTP response
+# A.1.3 Serving an HTTP response
 
 Shiny allows publishing any R object as a URL endpoint _unique to the session._
 
@@ -1046,7 +1039,7 @@ session$registerDataObj(
 
 ---
 class: header_background
-# S.1.3 Serving an HTTP response
+# A.1.3 Serving an HTTP response
 
 <div class="confusing">
 <h1 class="confusing-text">Too complicated!</h1>
@@ -1095,3 +1088,10 @@ background-size: cover
 
 <h3 class="white n rstudio">Intermission</h3>
 <p class="rstudio-comment">Open <code>http-intro.R</code></p>
+
+---
+class: break center middle
+background-image: url('assets/img/bg/part4.jpg')
+background-size: cover
+
+<h3 class="white absolute bottom center">Part 4. Shiny's Hidden Gems</h3>

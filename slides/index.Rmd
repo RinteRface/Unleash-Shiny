@@ -72,8 +72,6 @@ js4shiny::html_setup(stylize = c("fonts", "variables", "code"))
 .f5[David]
 
 .small[Data Scientist at Novartis]
-.small[RinteRface founder]
-.small[Known for: `{shinydashboardPlus}`, `{bs4Dash}` and `{shinyMobile}`]
 
 .gray[&commat;divadnojnarg]
 ]
@@ -83,7 +81,6 @@ js4shiny::html_setup(stylize = c("fonts", "variables", "code"))
 .f5[John]
 
 .small[Data scientist at the World Economic Forum]
-.small[Known for: `{echarts4r}` and `{waiter}`]
 
 .gray[&commat;jdatap]
 ]
@@ -94,7 +91,6 @@ js4shiny::html_setup(stylize = c("fonts", "variables", "code"))
 .f5[Colin]
 
 .small[Shiny Expert at ThinkR]
-.small[Known for: `{golem}`, https://engineering-shiny.org/]
 
 .gray[&commat;_ColinFay]
 ]
@@ -333,11 +329,10 @@ Let's play `r ji("play")`:
 class: header_background
 # C. Unleash `{htmltools}` 
 `{htmltools}` is a R package designed to:
-  - Generate HTML tags from R
-  - Handle web dependencies: add, remove, resolve, ...
+  - **Generate** HTML tags from R
+  - Handle **web dependencies**: add, remove, resolve, ...
 
-Historically, `{htmltools}` was extracted out of `{shiny}` to extend it. That's why, both packages
-have many common functions! 
+Historically, `{htmltools}` was extracted out of `{shiny}` to extend it. That's why, both packages have many common functions! 
 
 At the moment, `{htmltools}` does not have any user guide, although being an important package for all web things
 [![](https://cranlogs.r-pkg.org/badges/htmltools)](https://cran.r-project.org/package=htmltools)
@@ -474,9 +469,9 @@ There exist other functions but we'll not use them.
 ---
 class: header_background
 # C.2.4 Programmatically create children elements
-Let's create 5 `span` tags:
+.mt2[Let's create 5 `span` tags!]
 
-.pull-left.w-70.mh-a[
+.pull-left.w-70.mt4.mh-a[
 ```r
 div(
   span(1),
@@ -491,8 +486,8 @@ What about 100 tags `r ji("fear")`?
 
 ]
 
-.pull-right.w-70.mh-a[
-Let's do some functional programming!
+.pull-right.w-70.mt4.mh-a[
+With some **functional** programming!
 ```r
 # base R
 div(lapply(1:5, function(i) span(i)))
@@ -515,7 +510,7 @@ Open `htmltools_HTML_to_R.Rmd` and complete exercise 1 and 2
 ---
 class: header_background
 # D. Practice: bulma
-In the following, you'll reconstruct the `{shinyBulma}` package step by step!
+In the following, you'll reconstruct the `{shinybulma}` package step by step!
 .center[
 ```{r shinybulma, echo=FALSE, out.width='20%'}
 knitr::include_graphics("assets/img/shinybulma.svg")
@@ -526,7 +521,7 @@ Main tasks:
   - Import [bulma](https://bulma.io/) dependencies
   - Generate the main `page` function 
   
-Lets' start! Open `shinyBulma.Rmd` and enjoy `r ji("monkey")`
+Lets' start! Open `shinybulma.Rmd` and enjoy `r ji("monkey")`
 
 ---
 class: break center middle
@@ -628,51 +623,11 @@ Waiiit!!
 
 ---
 class: header_background
-# A.3.2 The websocket
-This is the magic piece allowing **bidirectional** communication between R and JavaScript. The technology behind is provided by `{httpuv}` and `{websocket}`.
-
-.pull-left.w-50[
-1. Run the previous app
-2. Open the HTML inspector
-3. Select the `Network` tab
-4. Search for websocket
-5. Play with the app and observe!
-]
-
-.pull-right.w-50[
-```{r inspect-websocket, echo=FALSE, out.width='100%'}
-knitr::include_graphics("assets/img/inspect-websocket.png")
-```
-]
-
----
-class: header_background
-# A.3.3 From R to JS
-On the R side, we have the `session` magic. `session` is actually an instance of the `ShinySession` R6 class. It has several methods like:
-  - `sendCustomMessage` send R messages to JS
-  - `sendInputMessage` send R messages to **input bindings**
-  
-<br>
-  
-`updateTextInput` is a customized `session$sendInputMessage`:
-
-.small[
-```r
-updateTextInput <- function (session, inputId, label = NULL, value = NULL) 
-{
-    message <- dropNulls(list(label = label, value = value))
-    session$sendInputMessage(inputId, message)
-}
-```
-]
-
----
-class: header_background
-# A.3.4 From JS to R
-`Shiny` is also a JavaScript object! 
+# A.3.4 The Shiny JS object
+Did you know that `Shiny` is also a JavaScript object `r ji("question")` 
 
 .pull-left.w-50.small[
-Run this app and open the HTML inspector
+Run this app and open the HTML inspector.
 
 ```r
 ui <- fluidPage(
@@ -695,8 +650,46 @@ knitr::include_graphics("assets/img/shiny-object.png")
 ```
 ]
 
+---
+class: header_background
+# A.3.2 The websocket
+This is the magic piece allowing **bidirectional** communication between R and JavaScript. The technology behind is provided by `{httpuv}` and `{websocket}`.
+
+.pull-left.w-50[
+1. Run the previous app
+2. Open the HTML inspector
+3. Select the `Network` tab
+4. Search for websocket
+5. Play with the app and observe!
+]
+
+.pull-right.w-50[
+```{r inspect-websocket, echo=FALSE, out.width='100%'}
+knitr::include_graphics("assets/img/inspect-websocket.png")
+```
+]
+
+---
+class: header_background
+# A.3.3 From R to JS, from JS to R
+
+On the R side `session` is an instance of the `ShinySession` R6 class allowing to send **messages** to JS.
+.pull-left.w-50.small[
+2 main methods:
+  - **`sendCustomMessage`** sends R messages to JS
+  - **`sendInputMessage`** sends R messages to **input bindings**
+
+<br>
+
 `Shiny.addCustomMessageHandler` is the JS part of `session$sendCustomMessage`.
-For Shiny inputs, it is slightly more complex `r ji("demon")`!
+Both are linked by the **type** parameter!
+]
+
+.pull-right.w-50[
+```{r from-R-to-JS, echo=FALSE, out.width='100%'}
+knitr::include_graphics("assets/img/shiny-custom-message.png")
+```
+]
 
 ---
 class: header_background

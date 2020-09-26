@@ -285,23 +285,12 @@ Attributes are used by **CSS** and **JavaScript** to **interact** with the web p
 class: header_background
 # A.2.1 About the Document Object Model
 
-.pull-left.w-50.mt4[
+.pull-left.w-50.mt4.small[
 DOM is a convenient representation (tree) of the HTML document. We inspect the code of any web page with Firefox or Chrome:
 
   - after a right click and selecting inspect
   - after clicking on **F12** (windows), **fn + F12** (Mac)
-]
-
-.pull-right.w-50.mt4[
-```{r html-dom, echo=FALSE, out.width='50%'}
-knitr::include_graphics("assets/img/html_DOM.png")
-```
-]
-
---- 
-class: header_background
-# A.2.2 Manipulating the DOM
-
+  
 ```r
 library(shiny)
 ui <- fluidPage(p("Hello World"))
@@ -309,8 +298,15 @@ server <- function(input, output) {}
 shinyApp(ui, server)
 ```
 
-1. Run the above app, right click on the only text element and select inspect
-2. In the `Elements` panel, double click between the `<p></p>` tag to edit the current text. Press enter when finished
+  1. Run the above app, right click on the only text element and select inspect
+  2. In the `Elements` panel, double click between the `<p></p>` tag to edit the current text. Press enter when finished
+]
+
+.pull-right.w-50.mt4[
+```{r html-dom, echo=FALSE, out.width='85%'}
+knitr::include_graphics("assets/img/html_DOM.png")
+```
+]
 
 ---
 class: header_background

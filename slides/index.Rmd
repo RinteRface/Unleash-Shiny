@@ -1168,3 +1168,27 @@ shinyApp(
 ]
 
 ---
+class: header_background
+# How to send notifications from JS?
+
+Don't forget that `Shiny` is a JS object having the **`notifications.show`** method!
+We add **`onclick`** to an `actionButton`.
+
+.small[
+```{r shiny-notif, eval=FALSE}
+ui <- fluidPage(
+  actionButton(
+  "notif",
+  "Show notification",
+  onclick = "Shiny.notifications.show({
+      html: '<strong>Oups</strong>',
+      type: 'error',
+      duration: 2000
+    });"
+  )
+)
+
+server <- function(input, output, session) {}
+shinyApp(ui, server)
+```
+]

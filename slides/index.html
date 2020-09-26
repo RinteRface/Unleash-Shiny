@@ -177,7 +177,7 @@ top: 0; bottom: 0; margin: auto; max-width: 100%; max-height: 100%; transform: s
 
 # A simple Shiny app
 
-#### No HTML/CSS/JS and it just works 😱! What kind of **magic** is this?
+#### No HTML/CSS/JS and it just works 😨! What kind of **magic** is this?
 
 &lt;iframe src="https://gallery.shinyapps.io/050-kmeans-example" height="400px" width="100%"&gt;&lt;/iframe&gt;
 
@@ -305,7 +305,7 @@ class: header_background
 # B. Discover Shiny dependencies
 ## Warmup 3
 
-Let's play 🎮:
+Let's play ⏯:
 
   1. Run the app `runExample("01_hello")`
   2. Open the HTML inspector
@@ -374,7 +374,7 @@ class: header_background
 
 Open `htmltools_deps.Rmd` and complete exercise 1
 
-<div class="countdown" id="timer_5f6e8705" style="right:0;bottom:0;" data-warnwhen="0">
+<div class="countdown" id="timer_5f6f3eb7" style="right:0;bottom:0;" data-warnwhen="0">
 <code class="countdown-time"><span class="countdown-digits minutes">10</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
 
@@ -500,7 +500,7 @@ div(
 )
 ```
 
-What about 100 tags 😨?
+What about 100 tags 😱?
 
 ]
 
@@ -522,7 +522,7 @@ class: header_background
 
 Open `htmltools_HTML_to_R.Rmd` and complete exercise 1 and 2
 
-<div class="countdown" id="timer_5f6e8675" style="right:0;bottom:0;" data-warnwhen="0">
+<div class="countdown" id="timer_5f6f3f46" style="right:0;bottom:0;" data-warnwhen="0">
 <code class="countdown-time"><span class="countdown-digits minutes">15</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
 
@@ -713,7 +713,7 @@ In this part you'll need to fork the `{shinybulma}` [repository](https://github.
   
 John and I will review the PR after the workshop!
 
-<div class="countdown" id="timer_5f6e86b1" style="right:0;bottom:0;" data-warnwhen="0">
+<div class="countdown" id="timer_5f6f4094" style="right:0;bottom:0;" data-warnwhen="0">
 <code class="countdown-time"><span class="countdown-digits minutes">20</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
 
@@ -895,6 +895,17 @@ updateCustomTextInputExample(6)
 ]
 
 ---
+class: header_background center
+# B.2.7 The binding steps: Recap
+
+.mt-50[
+&lt;video width="80%" style="margin-top: 25px;"&gt;
+&lt;source src="assets/movies/input-binding-steps.mov" type="video/mp4"&gt;
+&lt;/video&gt;
+]
+
+
+---
 class: header_background
 # B.3 Box on Steroids!
 .mt-4[
@@ -903,7 +914,7 @@ capability. Your mission: unleash the AdminLTE API to deliver box on steroids!
 ]
 
 
-<div class="countdown" id="timer_5f6e8720" style="right:0;bottom:0;" data-warnwhen="0">
+<div class="countdown" id="timer_5f6f417d" style="right:0;bottom:0;" data-warnwhen="0">
 <code class="countdown-time"><span class="countdown-digits minutes">20</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
 
@@ -915,21 +926,14 @@ background-size: cover
 &lt;h3 class="white absolute bottom center"&gt;Part 3. Custom Outputs&lt;/h3&gt;
 
 ---
-class: break center middle
-background-image: url('assets/img/bg/part4.jpg')
-background-size: cover
-
-&lt;h3 class="white absolute bottom center"&gt;Part 4. Shiny's Hidden Gems&lt;/h3&gt;
-
----
 class: header_background
-# S. Multi page applications 📄 📃 📄
+# A. Multi page applications 📄 📃 📃
 
 "Traditional" applications and websites
 
 .pull-left.w-70.mh-a[
-<div id="htmlwidget-1b532b8ef0b5677f9c7a" style="width:100%;height:432px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-1b532b8ef0b5677f9c7a">{"x":{"diagram":"\nstrict digraph{\n  graph[rankdir=LR fontsize = 10]\n  node [shape=record fontsize=10];\n  s [label=\"Server\" color=cornflowerBlue];\n  c [label=\"Client\" color=gold];\n  c -> s [color=dimGray arrowsize=.3 label=request fontsize = 9];\n  s -> c [color=dimGray arrowsize=.3 label=response fontsize = 9];\n\n  c1 [label=\"Client\" color=gold];\n  c1 -> s [color=dimGray arrowsize=.3 label=request fontsize = 9];\n  s -> c1 [color=dimGray arrowsize=.3 label=response fontsize = 9];\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-308845f8c1869797e388" style="width:100%;height:432px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-308845f8c1869797e388">{"x":{"diagram":"\nstrict digraph{\n  graph[rankdir=LR fontsize = 10]\n  node [shape=record fontsize=10];\n  s [label=\"Server\" color=cornflowerBlue];\n  c [label=\"Client\" color=gold];\n  c -> s [color=dimGray arrowsize=.3 label=request fontsize = 9];\n  s -> c [color=dimGray arrowsize=.3 label=response fontsize = 9];\n\n  c1 [label=\"Client\" color=gold];\n  c1 -> s [color=dimGray arrowsize=.3 label=request fontsize = 9];\n  s -> c1 [color=dimGray arrowsize=.3 label=response fontsize = 9];\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 ]
 
 .pull-right.w-70.mh-a[
@@ -945,13 +949,13 @@ class: header_background
 
 ---
 class: header_background
-# S.1.1 Single page applications 📄
+# A.1.1 Single page applications 📃
 
 A more recent web development.
 
 .pull-left.w-70.mh-a[
-<div id="htmlwidget-28020a62ce42933e424f" style="width:100%;height:432px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-28020a62ce42933e424f">{"x":{"diagram":"\ndigraph{\n  graph[rankdir=LR fontsize = 10]\n  node [shape=record fontsize=10];\n  s [label=\"Server\" color=cornflowerBlue];\n  c1 [label=\"Client\" color=gold];\n  c2 [label=\"Client\" color=gold];\n  c3 [label=\"Client\" color=gold];\n  c1 -> s [dir=both color=dimGray arrowsize=.3 label=messages fontsize = 9];\n  c2 -> s [dir=both color=dimGray arrowsize=.3 label=messages fontsize = 9];\n  c3 -> s [dir=both color=dimGray arrowsize=.3 label=messages fontsize = 9];\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-d9efc296029384a345c1" style="width:100%;height:432px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-d9efc296029384a345c1">{"x":{"diagram":"\ndigraph{\n  graph[rankdir=LR fontsize = 10]\n  node [shape=record fontsize=10];\n  s [label=\"Server\" color=cornflowerBlue];\n  c1 [label=\"Client\" color=gold];\n  c2 [label=\"Client\" color=gold];\n  c3 [label=\"Client\" color=gold];\n  c1 -> s [dir=both color=dimGray arrowsize=.3 label=messages fontsize = 9];\n  c2 -> s [dir=both color=dimGray arrowsize=.3 label=messages fontsize = 9];\n  c3 -> s [dir=both color=dimGray arrowsize=.3 label=messages fontsize = 9];\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 ]
 
 .pull-right.w-70.mh-a[
@@ -967,7 +971,7 @@ A more recent web development.
 
 ---
 class: header_background
-# S.1.2 What about shiny?
+# A.1.2 What about shiny?
 
 So which one of those does shiny use?
 
@@ -984,7 +988,7 @@ _(no other `/page` is ever visited)_
 
 ---
 class: header_background
-# S.1.3 Serving an HTTP response
+# A.1.3 Serving an HTTP response
 
 Shiny allows publishing any R object as a URL endpoint _unique to the session._
 
@@ -1024,7 +1028,7 @@ session$registerDataObj(
 
 ---
 class: header_background
-# S.1.3 Serving an HTTP response
+# A.1.3 Serving an HTTP response
 
 &lt;div class="confusing"&gt;
 &lt;h1 class="confusing-text"&gt;Too complicated!&lt;/h1&gt;
@@ -1073,6 +1077,13 @@ background-size: cover
 
 &lt;h3 class="white n rstudio"&gt;Intermission&lt;/h3&gt;
 &lt;p class="rstudio-comment"&gt;Open &lt;code&gt;http-intro.R&lt;/code&gt;&lt;/p&gt;
+
+---
+class: break center middle
+background-image: url('assets/img/bg/part4.jpg')
+background-size: cover
+
+&lt;h3 class="white absolute bottom center"&gt;Part 4. Shiny's Hidden Gems&lt;/h3&gt;
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>

@@ -892,6 +892,17 @@ updateCustomTextInputExample(6)
 ]
 
 ---
+class: header_background center
+# B.2.7 The binding steps: Recap
+
+.mt-50[
+<video width="80%" style="margin-top: 25px;">
+<source src="assets/movies/input-binding-steps.mov" type="video/mp4">
+</video>
+]
+
+
+---
 class: header_background
 # B.3 Box on Steroids!
 .mt-4[

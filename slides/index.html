@@ -173,7 +173,7 @@ top: 0; bottom: 0; margin: auto; max-width: 100%; max-height: 100%; transform: s
 
 # A simple Shiny app
 
-#### No HTML/CSS/JS and it just works 😱! What kind of **magic** is this?
+#### No HTML/CSS/JS and it just works 😨! What kind of **magic** is this?
 
 &lt;iframe src="https://gallery.shinyapps.io/050-kmeans-example" height="400px" width="100%"&gt;&lt;/iframe&gt;
 
@@ -263,35 +263,30 @@ The most common attributes:
   - non standards attributes like `data-toggle`
 ]
 
+&lt;br&gt;
+
 Attributes are used by **CSS** and **JavaScript** to **interact** with the web page!
 
 ---
 class: header_background
 # A.2.1 About the Document Object Model
-## Visualizing the DOM with the HTML inspector
 
-.pull-left.w-50[
+.pull-left.w-50.mt4[
 DOM is a convenient representation (tree) of the HTML document. We inspect the code of any web page with Firefox or Chrome:
 
   - after a right click and selecting inspect
   - after clicking on **F12** (windows), **fn + F12** (Mac)
 ]
 
-.pull-right.w-50[
+.pull-right.w-50.mt4[
 &lt;img src="assets/img/html_DOM.png" width="50%" /&gt;
 ]
 
 --- 
 class: header_background
-# A.2.2 About the DOM: exercise
-## Warmup 2
+# A.2.2 Manipulating the DOM
 
-```r
-library(shiny)
-ui &lt;- fluidPage(p("Hello World"))
-server &lt;- function(input, output) {}
-shinyApp(ui, server)
-```
+
 
 1. Run the above app, right click on the only text element and select inspect
 2. In the `Elements` panel, double click between the `&lt;p&gt;&lt;/p&gt;` tag to edit the current text. Press enter when finished
@@ -369,7 +364,7 @@ class: header_background
 
 Open `htmltools_deps.Rmd` and complete exercise 1
 
-<div class="countdown" id="timer_5f6f487a" style="right:0;bottom:0;" data-warnwhen="0">
+<div class="countdown" id="timer_5f6f484f" style="right:0;bottom:0;" data-warnwhen="0">
 <code class="countdown-time"><span class="countdown-digits minutes">10</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
 
@@ -495,7 +490,7 @@ div(
 )
 ```
 
-What about 100 tags 😨?
+What about 100 tags 😱?
 
 ]
 
@@ -517,7 +512,7 @@ class: header_background
 
 Open `htmltools_HTML_to_R.Rmd` and complete exercise 1 and 2
 
-<div class="countdown" id="timer_5f6f4770" style="right:0;bottom:0;" data-warnwhen="0">
+<div class="countdown" id="timer_5f6f482b" style="right:0;bottom:0;" data-warnwhen="0">
 <code class="countdown-time"><span class="countdown-digits minutes">15</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
 
@@ -704,7 +699,7 @@ In this part you'll need to fork the `{shinybulma}` [repository](https://github.
   
 John and I will review the PR after the workshop!
 
-<div class="countdown" id="timer_5f6f4533" style="right:0;bottom:0;" data-warnwhen="0">
+<div class="countdown" id="timer_5f6f47d4" style="right:0;bottom:0;" data-warnwhen="0">
 <code class="countdown-time"><span class="countdown-digits minutes">20</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
 
@@ -905,7 +900,7 @@ capability. Your mission: unleash the AdminLTE API to deliver box on steroids! O
 ]
 
 
-<div class="countdown" id="timer_5f6f4698" style="right:0;bottom:0;" data-warnwhen="0">
+<div class="countdown" id="timer_5f6f4851" style="right:0;bottom:0;" data-warnwhen="0">
 <code class="countdown-time"><span class="countdown-digits minutes">20</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
 
@@ -918,13 +913,13 @@ background-size: cover
 
 ---
 class: header_background
-# A. Multi page applications 📃 📃 📄
+# A. Multi page applications 📄 📃 📄
 
 "Traditional" applications and websites
 
 .pull-left.w-70.mh-a[
-<div id="htmlwidget-ff8f7cc091e719177917" style="width:100%;height:432px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-ff8f7cc091e719177917">{"x":{"diagram":"\nstrict digraph{\n  graph[rankdir=LR fontsize = 10]\n  node [shape=record fontsize=10];\n  s [label=\"Server\" color=cornflowerBlue];\n  c [label=\"Client\" color=gold];\n  c -> s [color=dimGray arrowsize=.3 label=request fontsize = 9];\n  s -> c [color=dimGray arrowsize=.3 label=response fontsize = 9];\n\n  c1 [label=\"Client\" color=gold];\n  c1 -> s [color=dimGray arrowsize=.3 label=request fontsize = 9];\n  s -> c1 [color=dimGray arrowsize=.3 label=response fontsize = 9];\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-e26a16c53b7e7fe18ea5" style="width:100%;height:432px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-e26a16c53b7e7fe18ea5">{"x":{"diagram":"\nstrict digraph{\n  graph[rankdir=LR fontsize = 10]\n  node [shape=record fontsize=10];\n  s [label=\"Server\" color=cornflowerBlue];\n  c [label=\"Client\" color=gold];\n  c -> s [color=dimGray arrowsize=.3 label=request fontsize = 9];\n  s -> c [color=dimGray arrowsize=.3 label=response fontsize = 9];\n\n  c1 [label=\"Client\" color=gold];\n  c1 -> s [color=dimGray arrowsize=.3 label=request fontsize = 9];\n  s -> c1 [color=dimGray arrowsize=.3 label=response fontsize = 9];\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 ]
 
 .pull-right.w-70.mh-a[
@@ -940,13 +935,13 @@ class: header_background
 
 ---
 class: header_background
-# A.1.1 Single page applications 📄
+# A.1.1 Single page applications 📃
 
 A more recent web development.
 
 .pull-left.w-70.mh-a[
-<div id="htmlwidget-ddd49902beb0d097ba32" style="width:100%;height:432px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-ddd49902beb0d097ba32">{"x":{"diagram":"\ndigraph{\n  graph[rankdir=LR fontsize = 10]\n  node [shape=record fontsize=10];\n  s [label=\"Server\" color=cornflowerBlue];\n  c1 [label=\"Client\" color=gold];\n  c2 [label=\"Client\" color=gold];\n  c3 [label=\"Client\" color=gold];\n  c1 -> s [dir=both color=dimGray arrowsize=.3 label=messages fontsize = 9];\n  c2 -> s [dir=both color=dimGray arrowsize=.3 label=messages fontsize = 9];\n  c3 -> s [dir=both color=dimGray arrowsize=.3 label=messages fontsize = 9];\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-54f5fbac48ea6c3784b4" style="width:100%;height:432px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-54f5fbac48ea6c3784b4">{"x":{"diagram":"\ndigraph{\n  graph[rankdir=LR fontsize = 10]\n  node [shape=record fontsize=10];\n  s [label=\"Server\" color=cornflowerBlue];\n  c1 [label=\"Client\" color=gold];\n  c2 [label=\"Client\" color=gold];\n  c3 [label=\"Client\" color=gold];\n  c1 -> s [dir=both color=dimGray arrowsize=.3 label=messages fontsize = 9];\n  c2 -> s [dir=both color=dimGray arrowsize=.3 label=messages fontsize = 9];\n  c3 -> s [dir=both color=dimGray arrowsize=.3 label=messages fontsize = 9];\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 ]
 
 .pull-right.w-70.mh-a[

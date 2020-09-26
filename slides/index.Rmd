@@ -277,21 +277,22 @@ The most common attributes:
   - non standards attributes like `data-toggle`
 ]
 
+<br>
+
 Attributes are used by **CSS** and **JavaScript** to **interact** with the web page!
 
 ---
 class: header_background
 # A.2.1 About the Document Object Model
-## Visualizing the DOM with the HTML inspector
 
-.pull-left.w-50[
+.pull-left.w-50.mt4[
 DOM is a convenient representation (tree) of the HTML document. We inspect the code of any web page with Firefox or Chrome:
 
   - after a right click and selecting inspect
   - after clicking on **F12** (windows), **fn + F12** (Mac)
 ]
 
-.pull-right.w-50[
+.pull-right.w-50.mt4[
 ```{r html-dom, echo=FALSE, out.width='50%'}
 knitr::include_graphics("assets/img/html_DOM.png")
 ```
@@ -299,8 +300,7 @@ knitr::include_graphics("assets/img/html_DOM.png")
 
 --- 
 class: header_background
-# A.2.2 About the DOM: exercise
-## Warmup 2
+# A.2.2 Manipulating the DOM
 
 ```r
 library(shiny)

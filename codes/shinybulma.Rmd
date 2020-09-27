@@ -9,6 +9,7 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 library(htmltools)
 library(charpente)
+library(shiny)
 ```
 
 ## About bulma
@@ -19,11 +20,12 @@ The first thing to do is to review the **Getting started [guide](https://bulma.i
 Obviously, an internet connection is required.
 
 ### Build the HTML dependency
+The CDN url is **https://cdn.jsdelivr.net/npm/bulma@0.9.0**.
 ```{r bulma-deps}
 bulma_deps <- htmlDependency(
   name = "bulma",
   version = "0.9.0",
-  src = c(href = "https://www.jsdelivr.com/package/npm/bulma"),
+  src = c(href = "https://cdn.jsdelivr.net/npm/bulma@0.9.0"),
   stylesheet = "css/bulma.min.css"
 )
 ```
@@ -43,33 +45,32 @@ According to the documentation, the starter template is:
 ```html
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Hello Bulma!</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css">
-  </head>
-  <body>
-  <section class="section">
-    <div class="container">
-      <h1 class="title">
-        Hello World
-      </h1>
-      <p class="subtitle">
-        My first website with <strong>Bulma</strong>!
-      </p>
-    </div>
-  </section>
-  </body>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hello Bulma!</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css">
+</head>
+<body>
+<section class="section">
+<div class="container">
+<h1 class="title">
+Hello World
+</h1>
+<p class="subtitle">
+My first website with <strong>Bulma</strong>!
+</p>
+</div>
+</section>
+</body>
 </html>
 ```
 
-Adding some `{charpente}` magic and `html_2_R`:
+Adding some `{charpente}` magic and `html_2_R`, we set the path parameter to `/html` to get the entire template:
 
 ```{r convert-page}
 html_2_R(
-  '<!DOCTYPE html>
-<html>
+  '<html>
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -89,6 +90,91 @@ html_2_R(
   </section>
   </body>
 </html>
-  '
+  ',
+path = "/html",
+prefix = TRUE
 )
 ```
+
+A detail: at run time, shiny add `html` around the UI, thereby making is not necessary to include. We could therefore wrap `head` and `body` in a `tagList`.
+
+```{r bulma-page}
+bulma_page <- function(..., title = NULL) {
+  tagList(
+    tags$head(
+      tags$meta(charset = "utf-8"),
+      tags$meta(
+        name = "viewport",
+        content = "width=device-width, initial-scale=1"
+      ),
+      tags$title(title)
+    ),
+    use_bulma(tags$body(...)) 
+  )
+}
+```
+
+
+Let's test it with dummy components from the documentation.
+
+```{r bulma-app}
+ui <- bulma_page(
+  title = "Bulma Design",
+  HTML(
+    '<div class="tile is-ancestor">
+  <div class="tile is-vertical is-8">
+    <div class="tile">
+      <div class="tile is-parent is-vertical">
+        <article class="tile is-child notification is-primary">
+          <p class="title">Vertical...</p>
+          <p class="subtitle">Top tile</p>
+        </article>
+        <article class="tile is-child notification is-warning">
+          <p class="title">...tiles</p>
+          <p class="subtitle">Bottom tile</p>
+        </article>
+      </div>
+      <div class="tile is-parent">
+        <article class="tile is-child notification is-info">
+          <p class="title">Middle tile</p>
+          <p class="subtitle">With an image</p>
+          <figure class="image is-4by3">
+            <img src="https://bulma.io/images/placeholders/640x480.png">
+          </figure>
+        </article>
+      </div>
+    </div>
+    <div class="tile is-parent">
+      <article class="tile is-child notification is-danger">
+        <p class="title">Wide tile</p>
+        <p class="subtitle">Aligned with the right tile</p>
+        <div class="content">
+          <!-- Content -->
+        </div>
+      </article>
+    </div>
+  </div>
+  <div class="tile is-parent">
+    <article class="tile is-child notification is-success">
+      <div class="content">
+        <p class="title">Tall tile</p>
+        <p class="subtitle">With even more content</p>
+        <div class="content">
+          <!-- Content -->
+        </div>
+      </div>
+    </article>
+  </div>
+</div>
+    '
+  )
+)
+
+server <- function(input, output, session) {}
+
+shinyApp(ui, server)
+```
+
+
+### Create our first bulma component
+

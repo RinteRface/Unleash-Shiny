@@ -177,4 +177,107 @@ shinyApp(ui, server)
 
 
 ### Create our first bulma component
+One of the most important component in every template is the **button**.
 
+1. Run the following app:
+
+```{r}
+ui <- fluidPage(
+  tags$style("body {background-color: black}"),
+  actionButton("test", "Click me!")
+)
+
+server <- function(input, output, session) {
+  observeEvent(input$test, {
+    showNotification("Congrats", type = "warning")
+  })
+}
+
+shinyApp(ui, server)
+```
+
+Notice the notifications that pops up as soon as the action button is clicked.
+
+1. Inspect the `shiny::actionButton code`. Hint: you may do `trace(actionButton, edit = TRUE)`. Notice the `action-button` class.
+
+2. Below is a custom shiny action button where we deliberately removed the `action-button` class.
+
+```{r}
+customActionButton <- function (inputId, label, icon = NULL, width = NULL, ...)  {
+  value <- restoreInput(id = inputId, default = NULL)
+  tags$button(
+    id = inputId, 
+    style = if (!is.null(width)) paste0("width: ", validateCssUnit(width), ";"), 
+    type = "button", 
+    class = "btn btn-default", 
+    `data-val` = value, 
+    list(shiny:::validateIcon(icon), label), ...
+  )
+}
+
+ui <- fluidPage(
+  tags$style("body {background-color: black}"),
+  customActionButton("test", "Click me!")
+)
+
+server <- function(input, output, session) {
+  observeEvent(input$test, {
+    showNotification("Congrats", type = "warning")
+  })
+}
+
+shinyApp(ui, server)
+
+```
+
+We'll see it later but the **action-button** class allows our button to be interactive. The bulma button is very basic HTML
+
+```html
+<button class="button">Button</button>
+```
+
+If we add the action button class, it will behave like the `shiny::actionButton` but with the bulma design.
+
+```{r bulma-button}
+bulma_button <- function(inputId, label) {
+  tags$button(
+    id = inputId,
+    class = "button action-button",
+    label
+  )
+}
+```
+
+```{r bulma-button-app}
+ui <- bulma_page(
+  bulma_button("test", "Click me!")
+)
+
+# we keep the same server function as above with the notifications
+
+shinyApp(ui, server)
+```
+
+Let's add some colors: there are 9 colors. The extra class is defined as `is-{color}`, for instance `is-danger`...
+
+```{r bulma-button-color}
+bulma_button <- function(inputId, label, color = NULL) {
+  
+  button_cl <- "button action-button"
+  if (!is.null(color)) button_cl <- paste0(button_cl, " is-", color)
+  
+  tags$button(
+    id = inputId,
+    class = button_cl,
+    label
+  )
+}
+
+ui <- bulma_page(
+  bulma_button("test", "Click me!", color = "warning")
+)
+
+# we keep the same server function as above with the notifications
+
+shinyApp(ui, server)
+```

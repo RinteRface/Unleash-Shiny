@@ -7,10 +7,31 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(htmltools)
 ```
 
 ## About bulma
 [bulma](https://bulma.io/) is a more and more popular open source CSS framework for the web. Importantly, there **isn't** any JavaScript helper in the bulma core. We'll see later that the recent [bulma JS](https://bulmajs.tomerbe.co.uk/) provide such feature. For now, let's focus on HTML and CSS.
 
 ## Bulma: get started
-The first thing to do is to review the **Getting started [guide](https://bulma.io/documentation/overview/start/)**
+The first thing to do is to review the **Getting started [guide](https://bulma.io/documentation/overview/start/)**. To install bulma dependencies, there are 3 way. For convenience, we'll choose the CDN method (content delivery network) which consists in getting dependencies from a dedicated server.
+Obviously, an internet connection is required.
+
+### Build the HTML dependency
+```{r bulma-deps}
+bulma_deps <- htmlDependency(
+  name = "bulma",
+  version = "0.9.0",
+  src = c(href = "https://www.jsdelivr.com/package/npm/bulma"),
+  stylesheet = "css/bulma.min.css"
+)
+```
+
+```{r attach-bulma-deps}
+use_bulma <- function(tag) {
+  tagList(tag, bulma_deps)
+}
+
+# check it works ...
+findDependencies(use_bulma(div()))
+```

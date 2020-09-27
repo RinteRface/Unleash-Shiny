@@ -1,0 +1,103 @@
+---
+title: "bulmajs"
+author: "David Granjon"
+date: "9/27/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(htmltools)
+library(jsonlite)
+dropNulls <- function(x) {
+  x[!vapply(x, is.null, FUN.VALUE = logical(1))]
+}
+```
+
+## bulmajs
+As stated in the previous activity, bulma only contains CSS things! It means we need
+either to develop custom JS code to add interactivity or use any existing API. 
+[bulma JS](https://bulmajs.tomerbe.co.uk/) is one of these!
+
+### Add the dependency
+```{r bulmajs-deps}
+bulma_js_dep <- htmlDependency(
+  name = "bulmajs",
+  version = "0.11.0",
+  src = c(href = "https://cdn.jsdelivr.net/npm/@vizuaalog/bulmajs@0.11.0/dist"),
+  script = "bulma.js"
+)
+
+use_bulmajs <- function(tag) {
+  tagList(tag, bulma_js_dep)
+}
+```
+
+### Notification 
+```{r nulma-notif}
+show_bulma_notification <- function(id = NULL, options = NULL, session = shiny::getDefaultReactiveDomain()) {
+  message <- dropNulls(
+    list(
+      id = id,
+      options = dropNulls(options)
+    )
+  )
+  session$sendCustomMessage(type = "bulma-notif", message)
+}
+```
+
+On the JS side
+
+```js
+$(function() {
+  Shiny.addCustomMessageHandler('bulma-notif', function(message) {
+    if (message.id !== undefined) {
+      Bulma('body').notification(message.options).show();
+    } else {
+      Bulma('#' + message.id).notification(message.options).show();
+    }
+  });
+});
+```
+
+Test app
+
+
+```{r bulma-notif-test}
+ui <- use_bulmajs(
+  bulma_page(
+    tags$head(
+      tags$script(
+        "$(function() {
+          Shiny.addCustomMessageHandler('bulma-notif', function(message) {
+            if (message.id !== undefined) {
+              Bulma('body').notification(message.options).show();
+            } else {
+              Bulma('#' + message.id).notification(message.options).show();
+            }
+          });
+        });
+        "
+      )
+    ),
+    bulma_button("test", "Click me!", color = "warning")
+  )
+)
+
+server <- function(input, output, session) {
+  observeEvent(input$test, {
+    show_bulma_notification(
+      id = "test", 
+      options = list(
+        body = "This is the message",
+        color = "danger",
+        dismissInterval = 2000
+      )
+    )
+  })
+}
+
+shinyApp(ui, server)
+```
+
+### Modal

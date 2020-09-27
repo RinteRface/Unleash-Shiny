@@ -1,0 +1,16 @@
+---
+title: "shinybulma"
+author: "David Granjon"
+date: "9/27/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## About bulma
+[bulma](https://bulma.io/) is a more and more popular open source CSS framework for the web. Importantly, there **isn't** any JavaScript helper in the bulma core. We'll see later that the recent [bulma JS](https://bulmajs.tomerbe.co.uk/) provide such feature. For now, let's focus on HTML and CSS.
+
+## Bulma: get started
+The first thing to do is to review the **Getting started [guide](https://bulma.io/documentation/overview/start/)**

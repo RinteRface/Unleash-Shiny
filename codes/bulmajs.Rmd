@@ -51,7 +51,7 @@ On the JS side
 ```js
 $(function() {
   Shiny.addCustomMessageHandler('bulma-notif', function(message) {
-    if (message.id !== undefined) {
+    if (message.id === undefined) {
       Bulma('body').notification(message.options).show();
     } else {
       Bulma('#' + message.id).notification(message.options).show();
@@ -70,10 +70,14 @@ ui <- use_bulmajs(
       tags$script(
         "$(function() {
           Shiny.addCustomMessageHandler('bulma-notif', function(message) {
-            if (message.id !== undefined) {
-              Bulma('body').notification(message.options).show();
+            if (message.id === undefined) {
+              Bulma('body')
+                .notification(message.options)
+                .show();
             } else {
-              Bulma('#' + message.id).notification(message.options).show();
+              Bulma('#' + message.id)
+                .notification(message.options)
+                .show();
             }
           });
         });
@@ -87,7 +91,7 @@ ui <- use_bulmajs(
 server <- function(input, output, session) {
   observeEvent(input$test, {
     show_bulma_notification(
-      id = "test", 
+      #id = "test", 
       options = list(
         body = "This is the message",
         color = "danger",

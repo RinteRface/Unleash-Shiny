@@ -110,6 +110,9 @@ The other JS component is the modal. There are 2 steps, like in vanilla Shiny:
   - We first create the modal HTML
   - We ask JS to show/hide it
   
+Alternatively, bulma JS allows to create the modal only from JS, like for notification. 
+The latter approach avoids to insert the modal HTML in the UI (like in vanilla Shiny).
+  
 #### Modal HTML 
 The bulma modal HTML is available in bulma's core [here](https://bulma.io/documentation/components/modal/) but only the card template works with bulma JS. After translating the most basic
 HTML template to R, we create `bulma_modal`. Notice there are also other options, like the modal card.

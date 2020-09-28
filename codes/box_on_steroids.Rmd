@@ -147,7 +147,7 @@ console.log(a);
   - Send information from R to JS with the `session$sendInputMessage` method. This is already done since question 4
   - Receive an treat information in the client (JS) with `reveiveMessage` and `setValue`. Interestingly, since the input binding is an object, you may create any other method
   
-**Hint**: `AdninLTE2` provides a plug and play `toggleBox` method that you may use inside `setValue`.
+**Hint**: `AdminLTE2` provides a plug and play `toggleBox` method that you may use inside `setValue`.
 
 12. Test the code
 

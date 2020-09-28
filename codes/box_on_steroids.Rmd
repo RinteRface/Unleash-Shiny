@@ -1,0 +1,33 @@
+---
+title: "box_on_steroids"
+author: "David Granjon"
+date: "9/28/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## {shinydashboard} boxes on steroids
+The Shiny input binding system is too convenient to be only used it for input elements. 
+In `{shinydashboard}`, you may know the box function. Boxes are containers with a title, body, footer, as well as optional elements. It would be nice to capture the state of the box in an input, so as to trigger other actions as soon as this input changes. Since an input value is unique, we must add an inputId parameter to the box function. You may inspect the code here.
+
+### AdminLTE2 exploration
+`{shinydashboard}` is built on top of the AdminLTE2 admin [template](https://adminlte.io/themes/AdminLTE/index2.html). The demonstration gives a overview
+of the whole capabilities. 
+
+1. Navigate to the [template](https://adminlte.io/themes/AdminLTE/index2.html) demo and
+inspect the HTML structure of a box.
+2. What happens to the class when the box is collapsed? Closed? **Hint**: this will be useful for the
+input binding development!
+
+Below, we'll design the `updateBox` function. 
+
+4. Replace the `...` by the appropriate elements.
+
+```{r update-box}
+updateBox <- function(...) {
+  session$...(...)
+}
+```

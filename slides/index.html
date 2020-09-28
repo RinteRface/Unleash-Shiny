@@ -299,7 +299,7 @@ class: header_background
 # B. Discover Shiny dependencies
 ## Warmup 3
 
-Let's play ⏯:
+Let's play ▶️:
 
   1. Run the app `runExample("01_hello")`
   2. Open the HTML inspector
@@ -367,7 +367,7 @@ class: header_background
 
 Open `htmltools_deps.Rmd` and complete exercise 1
 
-<div class="countdown" id="timer_5f72526f" style="right:0;bottom:0;" data-warnwhen="0">
+<div class="countdown" id="timer_5f725521" style="right:0;bottom:0;" data-warnwhen="0">
 <code class="countdown-time"><span class="countdown-digits minutes">10</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
 
@@ -490,10 +490,10 @@ There exist other functions but we'll not use them.
 
 ---
 class: header_background
-# C.2.4 Programmatically create children elements
-.mt2[Let's create 5 `span` tags!]
+# C.2.4 Programmatically create elements
+.mt4[Let's create 5 `span` tags!]
 
-.pull-left.w-70.mt4.mh-a[
+.pull-left.w-30.mt2[
 ```r
 div(
   span(1),
@@ -508,7 +508,7 @@ What about 100 tags 😨?
 
 ]
 
-.pull-right.w-70.mt4.mh-a[
+.pull-right.w-70.mt2[
 With some **functional** programming!
 ```r
 # base R
@@ -526,7 +526,7 @@ class: header_background
 
 Open `htmltools_HTML_to_R.Rmd` and complete exercise 1 and 2
 
-<div class="countdown" id="timer_5f7252dd" style="right:0;bottom:0;" data-warnwhen="0">
+<div class="countdown" id="timer_5f725441" style="right:0;bottom:0;" data-warnwhen="0">
 <code class="countdown-time"><span class="countdown-digits minutes">15</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
 
@@ -556,7 +556,7 @@ background-size: cover
 class: header_background
 # A.1 Inputs are key to interactivity
 .pull-left.w-50.mh-a.mt4[
-**Inputs** are key elements of web applications. They drive user interactions like:
+**Inputs** are key elements of web applications. They drive user **interactions** like:
 
   - configure parameters
   - fill and submit a form
@@ -592,8 +592,7 @@ How does all this even work 🧚?
 class: header_background
 # A.2 Shiny heavily relies on JavaScript (JS)
 .pull-left.w-50.mt4[
-JS source may be found [here](https://github.com/rstudio/shiny/tree/master/srcjs).
-In short all these files are **concatenated** to create one very big `shiny.js` responsible for:
+ One very big `shiny.js`&lt;sup&gt;*&lt;/sup&gt; responsible for:
 
   - registering input/output
   - handling every single input/output action
@@ -609,6 +608,11 @@ In short all these files are **concatenated** to create one very big `shiny.js` 
 
 .pull-right.w-50.mt4[
 &lt;img src="assets/img/shiny-js-sources.png" width="100%" /&gt;
+]
+
+.footnote.small[
+&lt;sup&gt;*&lt;/sup&gt; JS source may be found [here](https://github.com/rstudio/shiny/tree/master/srcjs).
+In short all these files are **concatenated**, giving **shiny.js** and **shiny.min.js**!
 ]
 
 ---
@@ -713,7 +717,7 @@ In this part you'll need to fork the `{shinybulma}` [repository](https://github.
   
 John and I will review the PR after the workshop!
 
-<div class="countdown" id="timer_5f7251d4" style="right:0;bottom:0;" data-warnwhen="0">
+<div class="countdown" id="timer_5f7254b1" style="right:0;bottom:0;" data-warnwhen="0">
 <code class="countdown-time"><span class="countdown-digits minutes">20</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
 
@@ -914,7 +918,7 @@ capability. Your mission: unleash the AdminLTE API to deliver box on steroids! O
 ]
 
 
-<div class="countdown" id="timer_5f7253e7" style="right:0;bottom:0;" data-warnwhen="0">
+<div class="countdown" id="timer_5f7253f7" style="right:0;bottom:0;" data-warnwhen="0">
 <code class="countdown-time"><span class="countdown-digits minutes">20</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
 
@@ -932,8 +936,8 @@ class: header_background
 "Traditional" applications and websites
 
 .pull-left.w-70.mh-a[
-<div id="htmlwidget-bb2cb2233450369c5589" style="width:100%;height:432px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-bb2cb2233450369c5589">{"x":{"diagram":"\nstrict digraph{\n  graph[rankdir=LR fontsize = 10]\n  node [shape=record fontsize=10];\n  s [label=\"Server\" color=cornflowerBlue];\n  c [label=\"Client\" color=gold];\n  c -> s [color=dimGray arrowsize=.3 label=request fontsize = 9];\n  s -> c [color=dimGray arrowsize=.3 label=response fontsize = 9];\n\n  c1 [label=\"Client\" color=gold];\n  c1 -> s [color=dimGray arrowsize=.3 label=request fontsize = 9];\n  s -> c1 [color=dimGray arrowsize=.3 label=response fontsize = 9];\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-403f29a3206cbe47d73f" style="width:100%;height:432px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-403f29a3206cbe47d73f">{"x":{"diagram":"\nstrict digraph{\n  graph[rankdir=LR fontsize = 10]\n  node [shape=record fontsize=10];\n  s [label=\"Server\" color=cornflowerBlue];\n  c [label=\"Client\" color=gold];\n  c -> s [color=dimGray arrowsize=.3 label=request fontsize = 9];\n  s -> c [color=dimGray arrowsize=.3 label=response fontsize = 9];\n\n  c1 [label=\"Client\" color=gold];\n  c1 -> s [color=dimGray arrowsize=.3 label=request fontsize = 9];\n  s -> c1 [color=dimGray arrowsize=.3 label=response fontsize = 9];\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 ]
 
 .pull-right.w-70.mh-a[
@@ -951,13 +955,13 @@ class: header_background
 
 ---
 class: header_background
-# A.1.1 Single page applications 📄
+# A.1.1 Single page applications 📃
 
 A more recent web development.
 
 .pull-left.w-70.mh-a[
-<div id="htmlwidget-8574d4485c1dc6e90806" style="width:100%;height:432px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-8574d4485c1dc6e90806">{"x":{"diagram":"\ndigraph{\n  graph[rankdir=LR fontsize = 10]\n  node [shape=record fontsize=10];\n  s [label=\"Server\" color=cornflowerBlue];\n  c1 [label=\"Client\" color=gold];\n  c2 [label=\"Client\" color=gold];\n  c3 [label=\"Client\" color=gold];\n  c1 -> s [dir=both color=dimGray arrowsize=.3 label=messages fontsize = 9];\n  c2 -> s [dir=both color=dimGray arrowsize=.3 label=messages fontsize = 9];\n  c3 -> s [dir=both color=dimGray arrowsize=.3 label=messages fontsize = 9];\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-c35a54763be500acf6fe" style="width:100%;height:432px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-c35a54763be500acf6fe">{"x":{"diagram":"\ndigraph{\n  graph[rankdir=LR fontsize = 10]\n  node [shape=record fontsize=10];\n  s [label=\"Server\" color=cornflowerBlue];\n  c1 [label=\"Client\" color=gold];\n  c2 [label=\"Client\" color=gold];\n  c3 [label=\"Client\" color=gold];\n  c1 -> s [dir=both color=dimGray arrowsize=.3 label=messages fontsize = 9];\n  c2 -> s [dir=both color=dimGray arrowsize=.3 label=messages fontsize = 9];\n  c3 -> s [dir=both color=dimGray arrowsize=.3 label=messages fontsize = 9];\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 ]
 
 .pull-right.w-70.mh-a[
@@ -1136,8 +1140,8 @@ class: header_background
 
 Serve data with an HTTP response, read it with JavaScript to produce the HTML output
 
-<div id="htmlwidget-c05bdf03fff5b2f69baa" style="width:100%;height:432px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-c05bdf03fff5b2f69baa">{"x":{"diagram":"\ndigraph{\n\n  graph[rankdir=LR fontsize = 10]\n  \n  node [shape=record fontsize=10];\n  server [label=\"Server\" color=cornflowerBlue];\n  json [label=\"JSON\" color=black];\n  javascript [label=\"JavaScript\" color=gold];\n  html [label=\"HTML output\" color=black]\n\n  server -> json [label=\"response\"]\n  json -> javascript [label=\"fetch\"]\n  javascript -> html\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-78de7a886e8ae37c792d" style="width:100%;height:432px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-78de7a886e8ae37c792d">{"x":{"diagram":"\ndigraph{\n\n  graph[rankdir=LR fontsize = 10]\n  \n  node [shape=record fontsize=10];\n  server [label=\"Server\" color=cornflowerBlue];\n  json [label=\"JSON\" color=black];\n  javascript [label=\"JavaScript\" color=gold];\n  html [label=\"HTML output\" color=black]\n\n  server -> json [label=\"response\"]\n  json -> javascript [label=\"fetch\"]\n  javascript -> html\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 
 ---
 class: header_background

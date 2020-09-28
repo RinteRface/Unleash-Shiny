@@ -478,10 +478,10 @@ There exist other functions but we'll not use them.
 
 ---
 class: header_background
-# C.2.4 Programmatically create children elements
-.mt2[Let's create 5 `span` tags!]
+# C.2.4 Programmatically create elements
+.mt4[Let's create 5 `span` tags!]
 
-.pull-left.w-70.mt4.mh-a[
+.pull-left.w-30.mt2[
 ```r
 div(
   span(1),
@@ -496,7 +496,7 @@ What about 100 tags `r ji("fear")`?
 
 ]
 
-.pull-right.w-70.mt4.mh-a[
+.pull-right.w-70.mt2[
 With some **functional** programming!
 ```r
 # base R
@@ -544,7 +544,7 @@ background-size: cover
 class: header_background
 # A.1 Inputs are key to interactivity
 .pull-left.w-50.mh-a.mt4[
-**Inputs** are key elements of web applications. They drive user interactions like:
+**Inputs** are key elements of web applications. They drive user **interactions** like:
 
   - configure parameters
   - fill and submit a form
@@ -580,8 +580,7 @@ How does all this even work `r ji("fairy")`?
 class: header_background
 # A.2 Shiny heavily relies on JavaScript (JS)
 .pull-left.w-50.mt4[
-JS source may be found [here](https://github.com/rstudio/shiny/tree/master/srcjs).
-In short all these files are **concatenated** to create one very big `shiny.js` responsible for:
+ One very big `shiny.js`<sup>*</sup> responsible for:
 
   - registering input/output
   - handling every single input/output action
@@ -601,6 +600,11 @@ knitr::include_graphics("assets/img/shiny-input-homer.gif")
 ```{r shiny-js-sources, echo=FALSE, out.width='100%'}
 knitr::include_graphics("assets/img/shiny-js-sources.png")
 ```
+]
+
+.footnote.small[
+<sup>*</sup> JS source may be found [here](https://github.com/rstudio/shiny/tree/master/srcjs).
+In short all these files are **concatenated**, giving **shiny.js** and **shiny.min.js**!
 ]
 
 ---

@@ -730,10 +730,14 @@ Input tags have various HTML structure.
 
 The simplest is probably the text input:
 
- - **id** guarantees the input **uniqueness**. We will see very soon that all instances of the same input share a unique **input binding**, therefore id is mandatory
+ - **id** guarantees the input **uniqueness**. <sup>1</sup>
  - **type** define the input type
  - **class** is generally targeted by JavaScript
  - **value** holds the input value
+ 
+.footnote.small[
+<sup>1</sup> All instances of the same input share a unique **input binding**. Hence, id is **mandatory**!
+]
 
 ---
 class: header_background
@@ -741,7 +745,7 @@ class: header_background
 ## Binding Shiny inputs
 An input binding: 
  - Allows Shiny to **identify** each **instance** of a given input 
- - Describes what you may do with it. For instance, a slider input must **update** whenever the range is dragged or when the left and right arrows of the keyboard are pressed. 
+ - Describes what you **may do** with it.
  - **Receives messages** from R ...
  - ... tells **when** Shiny have to update the value for R
  

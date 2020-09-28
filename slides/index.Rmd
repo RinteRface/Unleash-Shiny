@@ -912,10 +912,43 @@ class: header_background center
 </video>
 ]
 
+---
+class: header_background
+# B.3 How to hijack a binding? <img src="assets/img/hijack.gif" width="5%" align="right"/>
+
+Case study: we would like to modify the action button behavior **on the fly**.
+
+.pull-left-30.small[
+Steps:
+
+  1. Wait for the `shiny:connected` event
+  2. Unbind all inputs
+  3. Access the `Shiny.inputBindings` registry 
+  4. Extend the binding
+  5. Apply the new changes with `bindAll`
+]
+
+.pull-right-70.small[
+```js
+$(function() {
+  $(document).on('shiny:connected', function(event) {
+    Shiny.unbindAll();
+    $.extend(Shiny
+      .inputBindings
+      .bindingNames['shiny.actionButtonInput']
+      .binding, {
+        // do whathever you want to edit existing methods
+      });
+    Shiny.bindAll();
+  });
+});
+```
+]
+
 
 ---
 class: header_background
-# B.3 Box on Steroids!
+# B.4 Box on Steroids!
 .mt-4[
 Boxes are a center element of `{shinydashboard}`. Yet the latter only exploit 10% of their
 capability. Your mission: unleash the AdminLTE API to deliver box on steroids! Open `box_on_steroids.Rmd`.

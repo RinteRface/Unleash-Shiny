@@ -105,3 +105,116 @@ shinyApp(ui, server)
 ```
 
 ### Modal
+The other JS component is the modal. There are 2 steps, like in vanilla Shiny:
+
+  - We first create the modal HTML
+  - We ask JS to show/hide it
+  
+#### Modal HTML 
+The bulma modal HTML is available in bulma's core [here](https://bulma.io/documentation/components/modal/) but only the card template works with bulma JS. After translating the most basic
+HTML template to R, we create `bulma_modal`. Notice there are also other options, like the modal card.
+
+```{r bulma-modal}
+bulma_modal <- function(id, title = NULL, ...,
+                        footer = tagList(
+                          tags$button(
+                            class = "button is-success",
+                            "Save changes"
+                          ),
+                          tags$button(
+                            class = "button is-danger is-outline",
+                            "Cancel"
+                          )
+                        )
+) {
+  tags$div(
+    id = id,
+    class = "modal",
+    tags$div(class = "modal-background"),
+    tags$div(
+      class = "modal-card",
+      tags$header(
+        class = "modal-card-head",
+        tags$p(
+          class = "modal-card-title",
+          title
+        ),
+        tags$button(
+          class = "delete",
+          `aria-label` = "close"
+        )
+      ),
+      tags$section(
+        class = "modal-card-body",
+        ...
+      ),
+      tags$footer(
+        class = "modal-card-foot",
+        footer
+      )
+    )
+  )
+}
+```
+
+
+#### Toggle the modal
+Similar to `shiny::showModal` and `shiny::removeModal`, we could create `show_modal` and `hide_modal`. Let's do it with only 1 function, `toggle_bulma_modal`!
+
+A shown modal has the `is-active` class. 
+
+```js
+$(function() {
+  Shiny.addCustomMessageHandler('toggle-bulma-modal', function(message) {
+    var modalId = '#' + message;
+    var modal = Bulma(modalId).modal();
+    if ($(modalId).hasClass('is-active')) {
+      modal.close();
+    } else {
+      modal.open();
+    }
+  });
+});
+```
+
+
+```{r toggle-bulma-modal}
+toggle_bulma_modal <- function(id, session = shiny::getDefaultReactiveDomain()) {
+  session$sendCustomMessage(type = "toggle-bulma-modal", id)
+}
+```
+
+
+```{r bulma-modal-test}
+ui <- use_bulmajs(
+  bulma_page(
+    tags$head(
+      tags$script(
+        "$(function() {
+          Shiny.addCustomMessageHandler('toggle-bulma-modal', function(message) {
+            var modalId = '#' + message;
+            var modal = Bulma(modalId).modal();
+            if ($(modalId).hasClass('is-active')) {
+              modal.close();
+            } else {
+              modal.open();
+            }
+          });
+        });
+        "
+      )
+    ),
+    bulma_modal("mymodal", "A modal", "This is my first modal!"),
+    bulma_button("test", "Click me!", color = "warning")
+  )
+)
+
+server <- function(input, output, session) {
+  observeEvent(input$test, {
+    toggle_bulma_modal(id = "mymodal")
+  })
+}
+
+shinyApp(ui, server)
+```
+

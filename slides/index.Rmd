@@ -945,10 +945,38 @@ $(function() {
 ```
 ]
 
+---
+class: header_background
+# B.4 How to interact with a binding from JS?
+
+.pull-left-30.small.mt4[
+What if you don't want to update input from the server? `r ji("shrug")`
+  - Define the **trigger**
+  - Define the **target**
+  - **Capture** the target input binding
+  - Use `setValue` to add new value
+  - **Trigger** any **relevant** event mentioned in `subscribe` (tells Shiny to update from the R side)
+]
+
+.pull-right-70.small.mt4[
+```js
+$(function() {
+  // each time we click on #test (a button)
+  $('#test').on('click', function() {
+    var $obj = $('#button');
+    var inputBinding = $obj.data('shiny-input-binding');
+    var val = $obj.data('val') || 0;
+    inputBinding.setValue($obj, val + 10);
+    $obj.trigger('click');
+  });
+});
+```
+]
+
 
 ---
 class: header_background
-# B.4 Box on Steroids!
+# B.5 Box on Steroids!
 .mt-4[
 Boxes are a center element of `{shinydashboard}`. Yet the latter only exploit 10% of their
 capability. Your mission: unleash the AdminLTE API to deliver box on steroids! Open `box_on_steroids.Rmd`.

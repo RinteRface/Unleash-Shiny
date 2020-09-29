@@ -1004,7 +1004,7 @@ DiagrammeR::grViz("
 strict digraph{
   graph[rankdir=LR fontsize = 10]
   node [shape=record fontsize=10];
-  s [label='Server' color=cornflowerBlue];
+  s [label='Server' color=mediumpurple];
   c [label='Client' color=gold];
   c -> s [color=dimGray arrowsize=.3 label=request fontsize = 9];
   s -> c [color=dimGray arrowsize=.3 label=response fontsize = 9];
@@ -1042,7 +1042,7 @@ DiagrammeR::grViz("
 digraph{
   graph[rankdir=LR fontsize = 10]
   node [shape=record fontsize=10];
-  s [label='Server' color=cornflowerBlue];
+  s [label='Server' color=mediumpurple];
   c1 [label='Client' color=gold];
   c2 [label='Client' color=gold];
   c3 [label='Client' color=gold];
@@ -1126,29 +1126,69 @@ shiny:::httpResponse(
 ```
 
 1. `status` - you probably have heard of `404`. OK response = `200`
-2. `content_type` - type of content the browser should display
+2. `content_type` - type of content the browser should display (HTML, JSON, etc.)
 4. `content` - content to display in browser
 
 __Note__: `httpResponse` is not exported, hence the `:::`
 
 ---
 class: header_background
-# A.1.3.2 HTTP response __example__
+# A.1.3.2 HTTP response __Session__
 
-Shiny allows publishing any R object as a URL endpoint _unique to the session._
+Note that the path returned by `registerDataObj` is __unique to the session.__
+
+Therefore refreshing the browser (changes the session) and returns a different path.
+
+1. `session/0a6ed2556d97dcaa1ddeb615dc04cd1e/dataobj/nameOfEndpoint`
+2. `session/259b8dc2f18ffc975b246d206b60073f/dataobj/nameOfEndpoint`
+3. `session/72abd5a5da9a1651bee32d25a908a0cd/dataobj/nameOfEndpoint`
+
+This also indicates that the endpoint cannot be accessed outside of the session: a user must be connected on that session for it to be accessible.
+
+---
+class: header_background
+# A.1.3.3 HTTP response __HTML__
+
+By default `httpResponse` returns a HTML.
 
 .pull-left-70[
 
 ```r
-session$registerDataObj(
-  "cars-data",            # endpoint 
-  cars,                   # data
+path <- session$registerDataObj(
+  name = "hello", 
+  data = "<h1>Hello there!</h1>",
   function(data, req) {
-    res <- jsonlite::toJSON(cars)
     shiny:::httpResponse(
-      200,                # status
-      "application/json", # header 
-      res                 # response
+      content = data
+    )
+  }
+)
+```
+
+]
+
+.pull-right-30[
+![](assets/img/http-hello.png)
+]
+
+---
+class: header_background
+# A.1.3.4 HTTP response __JSON__
+
+Minor changes to return JSON data.
+
+.pull-left-70[
+
+```r
+path <- session$registerDataObj(
+  name = "cars-data", 
+  data = cars,
+  function(data, req) {
+    # seralise to JSON
+    res <- jsonlite::toJSON(data)
+    shiny:::httpResponse(
+      content_type = "application/json", 
+      content = res
     )
   }
 )
@@ -1174,26 +1214,26 @@ session$registerDataObj(
 
 ---
 class: header_background
-# A.1.3.3 Serving an HTTP response
+# A.1.3.4 HTTP response __JSON__
 
 <div class="confusing">
 <h1 class="confusing-text">Too confusing!</h1>
 </div>
 
-Shiny allows publishing any R object as a URL endpoint _unique to the session._
+Minor changes to return JSON data.
 
 .pull-left-70[
 
 ```r
-session$registerDataObj(
-  "cars-data",            # endpoint 
-  cars,                   # data
+path <- session$registerDataObj(
+  name = "cars-data", 
+  data = cars,
   function(data, req) {
-    res <- jsonlite::toJSON(cars)
+    # seralise to JSON
+    res <- jsonlite::toJSON(data)
     shiny:::httpResponse(
-      200L,               # status
-      "application/json", # header 
-      res                 # response
+      content_type = "application/json", 
+      content = res
     )
   }
 )
@@ -1223,10 +1263,17 @@ background-size: cover
 
 <h3 class="white n rstudio">Code along</h3>
 <p class="rstudio-comment">Open <code>http-intro.R</code></p>
+---
+class: header_background
+# B.1 Master HTTP
+
+Open and complete `http_excercise.Rmd`
+
+`r countdown(10)`
 
 ---
 class: header_background
-# B.1 `r ji("bulb")` The grand idea
+# B.2 `r ji("bulb")` The grand idea
 
 Serve data with an HTTP response, read it with JavaScript to produce the HTML output
 
@@ -1237,7 +1284,7 @@ digraph{
   graph[rankdir=LR fontsize = 10]
   
   node [shape=record fontsize=10];
-  server [label='Server' color=cornflowerBlue];
+  server [label='Server' color=mediumpurple];
   json [label='JSON' color=black];
   javascript [label='JavaScript' color=gold];
   html [label='HTML output' color=black]
@@ -1251,7 +1298,7 @@ digraph{
 
 ---
 class: header_background
-# B.2 Custom outputs
+# B.3 Outputs
 
 Examples:
 
@@ -1285,7 +1332,7 @@ Always comprises of __3 functions:__
 
 ---
 class: header_background
-# B.3 Level
+# B.4 Level
 
 Let's make bulma's "level layout" a custom output!
 
@@ -1320,6 +1367,8 @@ The three function's we're about to write together to produce the "level layout.
 class: header_background
 # B.4.2 Level __box__
 
+.pull-left[
+<br/>
 ## Box
 
 The `box` function.
@@ -1331,11 +1380,20 @@ The `box` function.
 ### Value
 
 Returns a data.frame
+]
+
+.pull-right[
+  <br/>
+  <br/>
+  <img src="assets/img/level.png" class="shade"/>
+]
 
 ---
 class: header_background
 # B.4.3 Level __boxOutput__
 
+.pull-left[
+<br/>
 ## boxOutput
 
 The `boxOutput` function to place in the shiny UI.
@@ -1347,6 +1405,17 @@ The `boxOutput` function to place in the shiny UI.
 ### Value
 
 Returns a `<nav>` tag bearing input `id`
+]
+
+.pull-right[
+<br/>
+<br/>
+```html
+<nav class="level">
+  <!-- Level items -->
+</nav>
+```
+]
 
 ---
 class: header_background
@@ -1367,11 +1436,11 @@ Returns a function
 class: header_background
 # B.4.4 Level __binding__ 
 
-Much of the JavaScript works just like inputs, albeit simpler!
+Much of the JavaScript works just like inputs, __only simpler!__
 
 Only two methods:
 
-1. `find` - same as for inputs.
+1. `find` - does the same as for inputs.
 2. `renderValue` - renders the output.
 
 ---
@@ -1388,7 +1457,8 @@ $.extend(boxBinding, {
     return $(scope).find(".box");
   },
   renderValue: function(el, data) {
-    // TODO
+    // Get the serialised JSON
+    // Use it to render content
   }
 });
 

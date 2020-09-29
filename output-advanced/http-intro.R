@@ -8,7 +8,13 @@ server <- function(input, output, session){
 
   # serve the response
   path <- session$registerDataObj(
-    ## CODE HERE
+    name = "hello",
+    data = "<h1>Hello there!</h1>",
+    function(data, req) {
+      shiny:::httpResponse(
+        content = data 
+      )
+    }
   )
 
   # print path

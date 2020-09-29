@@ -46,7 +46,7 @@ renderBox <- function(expr, env = parent.frame(), quoted = FALSE) {
       data, 
       function(data, req){
         response <- jsonlite::toJSON(data)
-        shiny:::httpResponse(200, "application/json", enc2utf8(response))
+        shiny:::httpResponse(200, "application/json", response)
       }
     )
 

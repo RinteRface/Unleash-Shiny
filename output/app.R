@@ -1,29 +1,15 @@
 library(shiny)
 library(shinybulma)
 
-# select columns
-box <- function(data, title, value, session = shiny::getDefaultReactiveDomain()){
+# import functions
+source("utils.R")
+source("functions.R")
 
-  # checks
-  if(missing(title)) stop("missing title")
-  if(missing(value)) stop("missing value")
-
-  # select the columns
-  dplyr::select(data, title = {{title}}, value = {{value}})
-
-}
-
-# create the <nav>
-boxOutput <- function(id){
-  # TODO
-}
-
-# must return a function
-renderBox <- function(expr, env = parent.frame(), quoted = FALSE) {
-  # TODO
-}
-
-########################## App to test
+# data to test
+boxes <- data.frame(
+  name = c("Beans", "Potatoes", "Cakes", "Flowers", "More cakes"),
+  val = sample(1:1000, 5)
+)
 
 ui <- bulmaPage(
   bulmaContainer(
@@ -32,14 +18,8 @@ ui <- bulmaPage(
 )
 
 server <- function(input, output){
-
-  boxes <- data.frame(
-    titles = c("Beans", "Potatoes", "Cakes", "Flowers", "More cakes"),
-    values = sample(1:1000, 5)
-  )
-
   output$test <- renderBox({
-    box(boxes, titles, values)
+    box(boxes, name, val)
   })
 }
 

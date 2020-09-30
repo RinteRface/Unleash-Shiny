@@ -609,6 +609,87 @@ In short all these files are **concatenated**, giving **shiny.js** and **shiny.m
 
 ---
 class: header_background
+# A.2.1 Introduction to JS and jQuery
+
+1. Primary role: create **dynamic** and **interactive** pages
+2. How? **Interact** with the **DOM** elements (modify, remove, add)
+3. JS is run on the **client** (web browser)
+4. JS is **object oriented**
+
+.pull-left-30[
+```js
+var myNumber = 1; // affectation
+myNumber--; // decrement
+console.log(myNumber); // print 0
+```
+]
+
+.pull-right-70[
+```js
+const you = {
+  name: 'your name', // property
+  music : 'your favorite music',
+  printName: function() { // method
+    console.log(`I am ${this.name}`); // here "this" is the object
+  }
+}
+
+you.geek = true; // add extra property
+```
+]
+
+---
+class: header_background
+# A.2.2 jQuery, "Write less, do more"
+jQuery is a JS **library**, not another language!
+.center[
+```js
+var $ = jQuery; // usually you don't need this since Shiny already does it
+$(selector).action(); // jQuery's philosophy
+```
+]
+
+---
+class: header_background
+# A.2.3 jQuery and CSS selectors
+In the next steps, we'll have to **select** elements from the DOM.
+
+<iframe src="https://www.w3schools.com/jquery/trysel.asp" height="400px" width="100%"></iframe>
+
+---
+class: header_background
+# A.2.4 jQuery and event listeners
+An **event listener** is a program that **triggers** when a given event **occurs**, like after a mouse click.
+
+.mh-a.small[
+```html
+<button id="mybutton">Go ! </button>
+```
+]
+
+.pull-left.small[
+With **vanilla JS**:
+```js
+var btn = document.getElementById('mybutton'); // select the button
+btn.addEventListener('click', function() { // action + consequences
+  alert('You clicked me!'); // action
+});
+```
+]
+
+.pull-right.small[
+With **jQuery**:
+```js
+$('#mybutton').on('click', function() {
+  alert('You clicked me!');
+});
+```
+]
+
+Hopefully you are convinced that jQuery is less **verbose** than pure JS!
+
+---
+class: header_background
 # A.3.1 R and JS
 Let's consider the following app
 .pull-left.w-50.small[

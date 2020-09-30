@@ -98,34 +98,41 @@ js4shiny::html_setup(stylize = c("fonts", "variables", "code"))
 ]
 
 ---
-# Plan
+# Program
 
-We're in for 4 hours of fun!
+We're in for 4 hours of **fun**!
 
-- Grab a coffee
-- Make yourself comfortable
-- Ask questions!  
+- Grab a `r ji("coffee")`
+- Make yourself comfortable `r ji("couch")` or 🧘
+- Ask questions `r ji("question")`  
 
-1. Quick intro on shiny under the hood
-2. Custom inputs
-3. Pause
-4. Custom outputs
-5. Q & A
+1. Intro + Quiz (5 min)
+2. Develop **custom templates** with Shiny (45 min)
+3. `r ji("coffee")` + `r ji("question")` (10 min) (total: 1h)
+4. Demystify and develop **custom inputs** (60 min)
+5. `r ji("coffee")` + `r ji("question")` (10 min) (total: 2h10)
+6. Innovative approach to **custom outputs** (60 min)
+7. `r ji("coffee")` + `r ji("question")` (10 min) (total: 3h20)
+8. Shiny's **hidden** or **less documented** features  (20 min)
+9. Q & A (20 min) (total: 4h)
+
+.footnote[
+Disclaimer: this workshop is not about **building** Shiny Apps!!!
+]
 
 ---
-
 # Workshop Material
 
-To reproduce the workshop on your computer, install the following packages:
+.tc.mt4[
+For a plug and play experience, we created a [Rstudio Cloud](https://rstudio.cloud/) project with everything installed for you!
+]
+
+To follow the workshop on your personal computer, install the following packages:
 .f5.w-70.mh-a.mt4.small[
 ```r
 devtools::install_github("RinteRface/charpente", dependencies = TRUE)
 devtools::install_github("DivadNojnarg/OSUICode")
 ```
-
-.tc.mt4[
-For a plug and play experience, prefer [Rstudio Cloud](https://rstudio.cloud/)
-]
 ]
 
 ---

@@ -221,7 +221,7 @@ background-size: cover
 ---
 class: header_background
 # A. Shiny generates HTML from R
-## Warmup 1
+## Warm up 1
 1. Run the following code:
 
 ```{r, eval=FALSE}
@@ -291,7 +291,7 @@ Attributes are used by **CSS** and **JavaScript** to **interact** with the web p
 
 ---
 class: header_background
-# A.2.1 About the Document Object Model
+# A.2 About the Document Object Model
 
 .pull-left.w-50.mt4.small[
 DOM is a convenient representation (tree) of the HTML document. We inspect the code of any web page with Firefox or Chrome:
@@ -319,7 +319,7 @@ knitr::include_graphics("assets/img/html_DOM.png")
 ---
 class: header_background
 # B. Discover Shiny dependencies
-## Warmup 3
+## Warm up 2
 
 Let's play `r ji("play")`:
 
@@ -382,18 +382,10 @@ use_bs4_dep(fluidPage())
 ```
 ]
 
----
-class: header_background
-# C.1.2 Handle dependencies
-## Exercise 1
-
-Open `htmltools_deps.Rmd` and complete exercise 1
-
-`r countdown(10)`
 
 ---
 class: header_background
-# C.2.1 From HTML to R `r ji("wizard")`
+# C.1.2 From HTML to R `r ji("wizard")`
 ## HTML VS R
 .pull-left.w-50.mh-a[
 In HTML, we have:
@@ -423,7 +415,7 @@ Some tags like `<nav></nav>` need the `tags$` prefix before (`tags` is a list of
 
 ---
 class: header_background
-# C.2.2 Automate the conversion? <img src="assets/img/thug_life.png" width="5%" align="right"/>
+# C.1.3 Automate the conversion? <img src="assets/img/thug_life.png" width="5%" align="right"/>
 This process is **not interesting** and **time consuming**!
 
 .center[
@@ -450,7 +442,7 @@ html_2_R('<div class="divclass" id = "daddy"></div>')
 
 ---
 class: header_background
-# C.2.3 Accessing R tags attributes
+# C.2.1 Accessing R tags attributes
 How to access name, attributes, children?
 
 We could use `str(mytag)` to inspect the structure of the R object.
@@ -469,7 +461,7 @@ mytag$children
 
 ---
 class: header_background
-# C.2.4 Manipulate R tags
+# C.2.2 Manipulate R tags
 ## Add new attributes
 There are 2 methods:
 
@@ -485,7 +477,7 @@ There exist other functions but we'll not use them.
 
 ---
 class: header_background
-# C.2.4 Programmatically create elements
+# C.2.3 Programmatically create elements
 .mt4[Let's create 5 `span` tags!]
 
 .pull-left.w-30.mt2[
@@ -516,16 +508,6 @@ map(1:5, function(i) span(i)) %>% div()
 
 ---
 class: header_background
-# C.2.4 Wrap up
-## Exercise 2
-
-Open `htmltools_HTML_to_R.Rmd` and complete exercise 1 and 2
-
-`r countdown(15)`
-
-
----
-class: header_background
 # D. Practice: bulma
 In the following, you'll reconstruct the `{shinybulma}` package step by step!
 .center[
@@ -539,6 +521,8 @@ Main tasks:
   - Generate the main `page` function 
   
 Lets' start! Open `shinybulma.Rmd` and enjoy `r ji("monkey")`
+
+`r countdown(25)`
 
 ---
 class: break center middle
@@ -725,7 +709,7 @@ Waiiit!!
 
 ---
 class: header_background
-# A.3.4 The Shiny JS object
+# A.3.2 The Shiny JS object
 Did you know that `Shiny` is also a JavaScript object `r ji("question")` 
 
 .pull-left.w-50.small[
@@ -754,7 +738,7 @@ knitr::include_graphics("assets/img/shiny-object.png")
 
 ---
 class: header_background
-# A.3.2 The websocket
+# A.3.3 The websocket
 This is the magic piece allowing **bidirectional** communication between R and JavaScript. The technology behind is provided by `{httpuv}` and `{websocket}`.
 
 .pull-left.w-50[
@@ -773,7 +757,7 @@ knitr::include_graphics("assets/img/inspect-websocket.png")
 
 ---
 class: header_background
-# A.3.3 From R to JS, from JS to R
+# A.3.4 From R to JS, from JS to R
 
 On the R side `session` is an instance of the `ShinySession` R6 class allowing to send **messages** to JS.
 .pull-left.w-50.small[

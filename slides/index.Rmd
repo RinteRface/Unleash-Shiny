@@ -1665,3 +1665,10 @@ class: header_background
 .center[
 Open `update_input_from_client.Rmd`.
 ]
+
+---
+class: break center middle
+background-image: url('assets/img/bg/end.jpg')
+background-size: cover
+
+<h3 class="white absolute bottom center">To be continued ... Thanks !!!</h3>

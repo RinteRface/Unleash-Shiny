@@ -314,3 +314,7 @@ table.dataTable.display tbody tr:hover {
   -moz-box-shadow: 0px 0px 22px 0px rgba(0,0,0,0.75);
   box-shadow: 0px 0px 22px 0px rgba(0,0,0,0.75);
 }
+
+.small{
+  font-size: 1em;
+}

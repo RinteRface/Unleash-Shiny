@@ -4,6 +4,7 @@
     <title>Unleash Shiny</title>
     <meta charset="utf-8" />
     <meta name="author" content="David Granjon (Novartis) &amp; John Coene (World Economic Forum)" />
+    <script src="libs/header-attrs-2.3.9/header-attrs.js"></script>
     <link href="libs/tile-view-0.2.3.9000/tile-view.css" rel="stylesheet" />
     <script src="libs/tile-view-0.2.3.9000/tile-view.js"></script>
     <link href="libs/animate.css-3.7.2/animate.xaringan.css" rel="stylesheet" />
@@ -20,7 +21,7 @@
     <script src="libs/js4shiny-redirectConsoleLog-0.0.28/redirectConsoleLog.js"></script>
     <link href="libs/countdown-0.3.5/countdown.css" rel="stylesheet" />
     <script src="libs/countdown-0.3.5/countdown.js"></script>
-    <script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
+    <script src="libs/htmlwidgets-1.5.1.9002/htmlwidgets.js"></script>
     <script src="libs/viz-1.8.2/viz.js"></script>
     <link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
     <script src="libs/grViz-binding-1.0.6.1/grViz.js"></script>
@@ -182,7 +183,7 @@ top: 0; bottom: 0; margin: auto; max-width: 100%; max-height: 100%; transform: s
 
 # A simple Shiny app
 
-#### No HTML/CSS/JS and it just works 😨! What kind of **magic** is this?
+#### No HTML/CSS/JS and it just works 😱! What kind of **magic** is this?
 
 &lt;iframe src="https://gallery.shinyapps.io/050-kmeans-example" height="400px" width="100%"&gt;&lt;/iframe&gt;
 
@@ -306,7 +307,7 @@ class: header_background
 # B. Discover Shiny dependencies
 ## Warm up 2
 
-Let's play ⏯:
+Let's play 🎮:
 
   1. Run the app `runExample("01_hello")`
   2. Open the HTML inspector
@@ -530,7 +531,7 @@ Main tasks:
   
 Lets' start! Open `shinybulma.Rmd` and enjoy 🐒
 
-<div class="countdown" id="timer_5f7788fe" style="right:0;bottom:0;" data-warnwhen="0">
+<div class="countdown" id="timer_5f799ea2" style="right:0;bottom:0;" data-warnwhen="0">
 <code class="countdown-time"><span class="countdown-digits minutes">25</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
 
@@ -787,7 +788,7 @@ In this part you'll need to fork the `{shinybulma}` [repository](https://github.
   
 John and I will review the PR after the workshop!
 
-<div class="countdown" id="timer_5f7786d4" style="right:0;bottom:0;" data-warnwhen="0">
+<div class="countdown" id="timer_5f79a03d" style="right:0;bottom:0;" data-warnwhen="0">
 <code class="countdown-time"><span class="countdown-digits minutes">20</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
 
@@ -1053,7 +1054,7 @@ capability. Your mission: unleash the AdminLTE API to deliver box on steroids! O
 ]
 
 
-<div class="countdown" id="timer_5f778680" style="right:0;bottom:0;" data-warnwhen="0">
+<div class="countdown" id="timer_5f79a0a6" style="right:0;bottom:0;" data-warnwhen="0">
 <code class="countdown-time"><span class="countdown-digits minutes">20</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
 
@@ -1066,13 +1067,13 @@ background-size: cover
 
 ---
 class: header_background
-# A. Multi page applications 📄 📃 📃
+# A. Multi page applications 📄 📃 📄
 
 "Traditional" applications and websites
 
 .pull-left.w-70.mh-a[
-<div id="htmlwidget-c69744d6f2bdc1072567" style="width:100%;height:432px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-c69744d6f2bdc1072567">{"x":{"diagram":"\nstrict digraph{\n  graph[rankdir=LR fontsize = 10]\n  node [shape=record fontsize=10];\n  s [label=\"Server\" color=mediumpurple];\n  c [label=\"Client\" color=gold];\n  c -> s [color=dimGray arrowsize=.3 label=request fontsize = 9];\n  s -> c [color=dimGray arrowsize=.3 label=response fontsize = 9];\n\n  c1 [label=\"Client\" color=gold];\n  c1 -> s [color=dimGray arrowsize=.3 label=request fontsize = 9];\n  s -> c1 [color=dimGray arrowsize=.3 label=response fontsize = 9];\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-070191e4c230116e9715" style="width:100%;height:432px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-070191e4c230116e9715">{"x":{"diagram":"\nstrict digraph{\n  graph[rankdir=LR fontsize = 10]\n  node [shape=record fontsize=10];\n  s [label=\"Server\" color=mediumpurple];\n  c [label=\"Client\" color=gold];\n  c -> s [color=dimGray arrowsize=.3 label=request fontsize = 9];\n  s -> c [color=dimGray arrowsize=.3 label=response fontsize = 9];\n\n  c1 [label=\"Client\" color=gold];\n  c1 -> s [color=dimGray arrowsize=.3 label=request fontsize = 9];\n  s -> c1 [color=dimGray arrowsize=.3 label=response fontsize = 9];\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 ]
 
 .pull-right.w-70.mh-a[
@@ -1095,8 +1096,8 @@ class: header_background
 A more recent web development.
 
 .pull-left.w-70.mh-a[
-<div id="htmlwidget-63eab1e7d9360ff8db39" style="width:100%;height:432px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-63eab1e7d9360ff8db39">{"x":{"diagram":"\ndigraph{\n  graph[rankdir=LR fontsize = 10]\n  node [shape=record fontsize=10];\n  s [label=\"Server\" color=mediumpurple];\n  c1 [label=\"Client\" color=gold];\n  c2 [label=\"Client\" color=gold];\n  c3 [label=\"Client\" color=gold];\n  c1 -> s [dir=both color=dimGray arrowsize=.3 label=messages fontsize = 9];\n  c2 -> s [dir=both color=dimGray arrowsize=.3 label=messages fontsize = 9];\n  c3 -> s [dir=both color=dimGray arrowsize=.3 label=messages fontsize = 9];\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-381e42a1ba4f2623a5fb" style="width:100%;height:432px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-381e42a1ba4f2623a5fb">{"x":{"diagram":"\ndigraph{\n  graph[rankdir=LR fontsize = 10]\n  node [shape=record fontsize=10];\n  s [label=\"Server\" color=mediumpurple];\n  c1 [label=\"Client\" color=gold];\n  c2 [label=\"Client\" color=gold];\n  c3 [label=\"Client\" color=gold];\n  c1 -> s [dir=both color=dimGray arrowsize=.3 label=messages fontsize = 9];\n  c2 -> s [dir=both color=dimGray arrowsize=.3 label=messages fontsize = 9];\n  c3 -> s [dir=both color=dimGray arrowsize=.3 label=messages fontsize = 9];\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 ]
 
 .pull-right.w-70.mh-a[
@@ -1314,7 +1315,7 @@ class: header_background
 
 Open and complete `http_excercise.Rmd`
 
-<div class="countdown" id="timer_5f778773" style="right:0;bottom:0;" data-warnwhen="0">
+<div class="countdown" id="timer_5f79a0b3" style="right:0;bottom:0;" data-warnwhen="0">
 <code class="countdown-time"><span class="countdown-digits minutes">10</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
 
@@ -1324,8 +1325,8 @@ class: header_background
 
 Serve data with an HTTP response, read it with JavaScript to produce the HTML output
 
-<div id="htmlwidget-0777ea8d73a0c36e7747" style="width:100%;height:432px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-0777ea8d73a0c36e7747">{"x":{"diagram":"\ndigraph{\n\n  graph[rankdir=LR fontsize = 10]\n  \n  node [shape=record fontsize=10];\n  server [label=\"Server\" color=mediumpurple];\n  json [label=\"JSON\" color=black];\n  javascript [label=\"JavaScript\" color=gold];\n  html [label=\"HTML output\" color=black]\n\n  server -> json [label=\"response\"]\n  json -> javascript [label=\"fetch\"]\n  javascript -> html\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-86399ff973595f4b9620" style="width:100%;height:432px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-86399ff973595f4b9620">{"x":{"diagram":"\ndigraph{\n\n  graph[rankdir=LR fontsize = 10]\n  \n  node [shape=record fontsize=10];\n  server [label=\"Server\" color=mediumpurple];\n  json [label=\"JSON\" color=black];\n  javascript [label=\"JavaScript\" color=gold];\n  html [label=\"HTML output\" color=black]\n\n  server -> json [label=\"response\"]\n  json -> javascript [label=\"fetch\"]\n  javascript -> html\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 
 ---
 class: header_background
@@ -1396,7 +1397,7 @@ The three function's we're about to write together to produce the "level layout.
 
 ---
 class: header_background
-# B.4.2 Level __box__
+# B.4.2 Level __box__ - _man page_
 
 .pull-left[
 &lt;br/&gt;
@@ -1421,7 +1422,21 @@ Returns a data.frame
 
 ---
 class: header_background
-# B.4.3 Level __boxOutput__
+# B.4.4 Level __box__ - _source code_
+
+The function takes a dataframe and selects two columns.
+
+```r
+box &lt;- function(data, title, value){
+  dplyr::select(data, title = {{title}}, value = {{value}})
+}
+```
+
+Ideally `box` should "work" on its own, like `plot` or `datatable`, consider adding a method (more on this later).
+
+---
+class: header_background
+# B.4.5 Level __boxOutput__ - _man page_
 
 .pull-left[
 &lt;br/&gt;
@@ -1450,7 +1465,37 @@ Returns a `&lt;nav&gt;` tag bearing input `id`
 
 ---
 class: header_background
-# B.4.3 Level __renderBox__
+# B.4.6 Level __boxOutput__ - _source code_
+
+.pull-left-70[
+```r
+boxOutput &lt;- function(id){
+  el &lt;- shiny::tags$nav(id = id, class = "box level")
+
+  path &lt;- normalizePath("assets")
+
+  deps &lt;- list(
+    htmltools::htmlDependency(
+      name = "box",
+      version = "1.0.0",
+      src = c(file = path),
+      script = c("binding.js")
+    )
+  )
+
+  htmltools::attachDependencies(el, deps)
+}
+```
+]
+
+.pull-right-30[
+1. Creates the `&lt;nav&gt;` with classes and id
+2. Attaches dependencies
+]
+
+---
+class: header_background
+# B.4.7 Level __renderBox__ - _man page_
 
 ## renderBox
 
@@ -1462,10 +1507,67 @@ The `renderBox` function to render `box` in shiny.
 
 ### Value
 
-Returns a function
+__Returns a function__
+
+---
+# B.4.8 Level __renderBox__ - _source code_ (1)
+
+`output$something &lt;-` what is assigned is a function!
+
+Internally theses `render*` functions return `function()` that is produced with `shiny::exprToFunction`: _does what is says on the tin._
+
+.pull-left[
+```r
+shiny::exprToFunction({
+  dat &lt;- head(cars, 10)
+  plot(dat)
+})
+```
+]
+
+.pull-right[
+```r
+function () 
+{
+  dat &lt;- head(cars, 10)
+  plot(dat)
+}
+```
+]
+
+Use of function in console (e.g.: `plot`) != in shiny: `render*` is used to preprocess standard ouput and create a valid "renderer."
+---
+# B.4.9 Level __renderBox__ - _source code_ (2)
+
+.small[
+```r
+renderBox &lt;- function(expr, session = shiny::getDefaultReactiveDomain()) {
+  func &lt;- shiny::exprToFunction(expr)
+
+  function(){
+    data &lt;- func()
+
+    # generate random endpoint name
+    endpoint &lt;- paste0(sample(letters, 26), collapse = "")
+
+    uri &lt;- session$registerDataObj(
+      endpoint, 
+      data, 
+      function(data, req){
+        response &lt;- jsonlite::toJSON(data)
+        shiny:::httpResponse(200, "application/json", response)
+      }
+    )
+
+    return(uri)
+  }
+}
+```
+]
+
 ---
 class: header_background
-# B.4.4 Level __binding__ 
+# B.4.10 Level __binding__ 
 
 Much of the JavaScript works just like inputs, __only simpler!__
 
@@ -1476,7 +1578,7 @@ Only two methods:
 
 ---
 class: header_background
-# B.4.4 Level __skeleton__ 
+# B.4.11 Level __skeleton__ 
 
 Eerily similar to inputs: 1) initialise, 2) extend, 3) register.
 
@@ -1497,22 +1599,57 @@ Shiny.outputBindings.register(boxBinding, "pharma.box");
 ```
 
 ---
+class: header_background
+# B.4.12 Level __renderValue__
+
+The `renderValue` in the JavaScript binding the following:
+
+.pull-left-70[
+```js
+function(el, data) {
+
+  fetch(data)
+    .then(response =&gt; response.json())
+    .then(data =&gt; {
+      data.map((row)=&gt;{
+        let div = createElement(row);
+        $(el).append(div);
+      })
+    })
+
+}
+```
+]
+
+.pull-right-30[
+1. Fetch the data
+2. Extract JSON from response
+3. Loop over data
+  1. Create `level-item`
+  2. Append to `&lt;nav&gt;`
+]
+
+---
 class: break center middle
 background-image: url('https://rstudio.com/assets/img/og/rstudio-og-fb-1.jpg')
 background-size: cover
 
-&lt;h3 class="white n rstudio"&gt;Code along&lt;/h3&gt;
-&lt;p class="rstudio-comment"&gt;Open &lt;code&gt;output&lt;/code&gt;directory&lt;/p&gt;
+&lt;h3 class="white n rstudio"&gt;Demo + Q&amp;A&lt;/h3&gt;
+&lt;p class="rstudio-comment"&gt;Open &lt;code&gt;Unleash-Shiny-Output&lt;/code&gt; project&lt;/p&gt;
 
 ---
 class: header_background
-# B.5 Tinker
+# C.1 Where to go from here
 
-The "box" could be made much more useful and interesting
+Numerous improvements could be made.
 
-- The `box` function could accept a model and extract interesting statistics
-- The output could use other JavaScript package to [animate the numbers](https://inorganik.github.io/countUp.js/) for instance
+- The `box` function could accept a model and extract relevant statistics
+- The output could use other JavaScript libraries to [animate the numbers](https://inorganik.github.io/countUp.js/) for instance
 - Or the value could be colored dependening on threshold (e.g.: confidence)
+- Add methods so `box` accepts different kinds of objects (e.g.: `xts`)
+- Add an inline chart
+
+Plenty more can be done!
 
 ---
 class: break center middle

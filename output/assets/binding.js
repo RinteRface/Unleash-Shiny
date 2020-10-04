@@ -15,13 +15,7 @@ $.extend(boxBinding, {
   },
   renderValue: function(el, data) {
 
-    let base_url = window.location.href;
-    let url = base_url  + data;
-
-    console.log(url);
-    console.log(data);
-
-    fetch(url)
+    fetch(data)
       .then(response => response.json())
       .then(data => {
         data.map((row)=>{

@@ -1375,7 +1375,7 @@ The three function's we're about to write together to produce the "level layout.
 
 ---
 class: header_background
-# B.4.2 Level __box__
+# B.4.2 Level __box__ - _man page_
 
 .pull-left[
 <br/>
@@ -1400,7 +1400,21 @@ Returns a data.frame
 
 ---
 class: header_background
-# B.4.3 Level __boxOutput__
+# B.4.4 Level __box__ - _source code_
+
+The function takes a dataframe and selects two columns.
+
+```r
+box <- function(data, title, value){
+  dplyr::select(data, title = {{title}}, value = {{value}})
+}
+```
+
+Ideally `box` should "work" on its own, like `plot` or `datatable`, consider adding a method (more on this later).
+
+---
+class: header_background
+# B.4.5 Level __boxOutput__ - _man page_
 
 .pull-left[
 <br/>
@@ -1429,7 +1443,37 @@ Returns a `<nav>` tag bearing input `id`
 
 ---
 class: header_background
-# B.4.3 Level __renderBox__
+# B.4.6 Level __boxOutput__ - _source code_
+
+.pull-left-70[
+```r
+boxOutput <- function(id){
+  el <- shiny::tags$nav(id = id, class = "box level")
+
+  path <- normalizePath("assets")
+
+  deps <- list(
+    htmltools::htmlDependency(
+      name = "box",
+      version = "1.0.0",
+      src = c(file = path),
+      script = c("binding.js")
+    )
+  )
+
+  htmltools::attachDependencies(el, deps)
+}
+```
+]
+
+.pull-right-30[
+1. Creates the `<nav>` with classes and id
+2. Attaches dependencies
+]
+
+---
+class: header_background
+# B.4.7 Level __renderBox__ - _man page_
 
 ## renderBox
 
@@ -1441,10 +1485,67 @@ The `renderBox` function to render `box` in shiny.
 
 ### Value
 
-Returns a function
+__Returns a function__
+
+---
+# B.4.8 Level __renderBox__ - _source code_ (1)
+
+`output$something <-` what is assigned is a function!
+
+Internally theses `render*` functions return `function()` that is produced with `shiny::exprToFunction`: _does what is says on the tin._
+
+.pull-left[
+```r
+shiny::exprToFunction({
+  dat <- head(cars, 10)
+  plot(dat)
+})
+```
+]
+
+.pull-right[
+```r
+function () 
+{
+  dat <- head(cars, 10)
+  plot(dat)
+}
+```
+]
+
+Use of function in console (e.g.: `plot`) != in shiny: `render*` is used to preprocess standard ouput and create a valid "renderer."
+---
+# B.4.9 Level __renderBox__ - _source code_ (2)
+
+.small[
+```r
+renderBox <- function(expr, session = shiny::getDefaultReactiveDomain()) {
+  func <- shiny::exprToFunction(expr)
+
+  function(){
+    data <- func()
+
+    # generate random endpoint name
+    endpoint <- paste0(sample(letters, 26), collapse = "")
+
+    uri <- session$registerDataObj(
+      endpoint, 
+      data, 
+      function(data, req){
+        response <- jsonlite::toJSON(data)
+        shiny:::httpResponse(200, "application/json", response)
+      }
+    )
+
+    return(uri)
+  }
+}
+```
+]
+
 ---
 class: header_background
-# B.4.4 Level __binding__ 
+# B.4.10 Level __binding__ 
 
 Much of the JavaScript works just like inputs, __only simpler!__
 
@@ -1455,7 +1556,7 @@ Only two methods:
 
 ---
 class: header_background
-# B.4.4 Level __skeleton__ 
+# B.4.11 Level __skeleton__ 
 
 Eerily similar to inputs: 1) initialise, 2) extend, 3) register.
 
@@ -1476,22 +1577,57 @@ Shiny.outputBindings.register(boxBinding, "pharma.box");
 ```
 
 ---
+class: header_background
+# B.4.12 Level __renderValue__
+
+The `renderValue` in the JavaScript binding the following:
+
+.pull-left-70[
+```js
+function(el, data) {
+
+  fetch(data)
+    .then(response => response.json())
+    .then(data => {
+      data.map((row)=>{
+        let div = createElement(row);
+        $(el).append(div);
+      })
+    })
+
+}
+```
+]
+
+.pull-right-30[
+1. Fetch the data
+2. Extract JSON from response
+3. Loop over data
+  1. Create `level-item`
+  2. Append to `<nav>`
+]
+
+---
 class: break center middle
 background-image: url('https://rstudio.com/assets/img/og/rstudio-og-fb-1.jpg')
 background-size: cover
 
-<h3 class="white n rstudio">Code along</h3>
-<p class="rstudio-comment">Open <code>output</code>directory</p>
+<h3 class="white n rstudio">Demo + Q&A</h3>
+<p class="rstudio-comment">Open <code>Unleash-Shiny-Output</code> project</p>
 
 ---
 class: header_background
-# B.5 Tinker
+# C.1 Where to go from here
 
-The "box" could be made much more useful and interesting
+Numerous improvements could be made.
 
-- The `box` function could accept a model and extract interesting statistics
-- The output could use other JavaScript package to [animate the numbers](https://inorganik.github.io/countUp.js/) for instance
+- The `box` function could accept a model and extract relevant statistics
+- The output could use other JavaScript libraries to [animate the numbers](https://inorganik.github.io/countUp.js/) for instance
 - Or the value could be colored dependening on threshold (e.g.: confidence)
+- Add methods so `box` accepts different kinds of objects (e.g.: `xts`)
+- Add an inline chart
+
+Plenty more can be done!
 
 ---
 class: break center middle

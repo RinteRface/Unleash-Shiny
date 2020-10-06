@@ -1,0 +1,120 @@
+---
+title: "Shiny HTTP response"
+author: "John Coene"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+<div class="container" style="min-height:75vh;">
+
+# HTTP Response
+
+## Recap
+
+Start from the application we put together previously (below). The application serves some data over HTTP, run it to refresh your memory.
+
+```r
+library(shiny)
+
+ui <- fluidPage(
+  uiOutput("intro")
+)
+
+server <- function(input, output, session){
+  # serve the response
+  path <- session$registerDataObj(
+    name = "cars-data",
+    data = mtcars,
+    filterFunc = function(data, req){
+      json <- jsonlite::toJSON(data)
+      shiny:::httpResponse(content_type = "application/json", content = json)
+    }
+  )
+  # print path
+  output$intro <- renderUI({
+    
+    # print so we can see the path clearly
+    print(path) 
+    # print it big so we can see it
+    h1(
+      tags$a(path, href = path)
+    )
+  })
+}
+shinyApp(ui, server)
+```
+
+## Exercise
+
+The idea of this exercise is to 1) familiarise yourself more with the function and 2) improve upon it.
+
+The `filterFunc` function passed to `registerDataObj` accepts `req`, the request, from which the `QUERY_STRING` can be obtained. The query string contains the URL parameters used when accessing the application, you might have indirectly used them with shiny's bookmarking state system. Essentially one can pass parameters to a URL so they can be retrieved from the `QUERY_STRING`, these are placed after `?` all subsequent parameters are delimited by `&`.
+
+For instance one could construct a URL such the one below.
+
+`http://127.0.0.1:3000?firstName=Bob&lastName=Doe`
+
+Shiny comes with a function to parse the `QUERY_STRING` and obtain a structured list. Parsing the URL above would return a named `list`.
+
+```r
+parseQueryString(req$QUERY_STRING)
+```
+
+```
+$firstName
+[1] "Bob"
+$lastName
+[1] "Doe"
+```
+
+The original application has been slightly modified:
+
+1. It parses the `QUERY_STRING`
+2. Assigns it to an object named `query`
+3. Prints the `query` object
+
+What we would like you to do is to make use of this to pass a URL parameter that allows returning only a specific column, e.g.: `http://127.0.0.1:3000/xxxXxXxXX/dataobj/cars-data?column=qsec` (instead of returning the entire dataset).
+
+If you are still confused, run the application once, visit the endpoint and observe the parsed `query` printed in the console.
+
+```r
+library(shiny)
+
+ui <- fluidPage(
+  uiOutput("intro")
+)
+
+server <- function(input, output, session){
+  # serve the response
+  path <- session$registerDataObj(
+    "cars-data",
+    mtcars,
+    filterFunc = function(data, req){
+      query <- parseQueryString(req$QUERY_STRING)
+      print(query)
+      ######################### Your code here #########################
+      ##################################################################
+      json <- jsonlite::toJSON(data)
+      shiny:::httpResponse(content_type = "application/json", content = json)
+    }
+  )
+  # print path
+  output$intro <- renderUI({
+    
+    # print so we can see the path clearly
+    print(path) 
+    # print it big so we can see it
+    h1(
+      tags$input(
+        value = path, 
+        width = "100%", 
+        class = "form-control",
+        style = "font-size:24px;"
+      )
+    )
+  })
+}
+shinyApp(ui, server)
+```
+
+</div>

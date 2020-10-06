@@ -1,0 +1,27 @@
+---
+title: "Unleash Shiny"
+---
+
+```{r, include = FALSE}
+library(htmltools)
+```
+
+<div class="container" style="min-height:75vh;">
+
+```{r, echo=FALSE}
+img(src="https://rinpharma.com/images/logotext_small.png")
+div(
+  class = "card purple darken-4",
+  div(
+    class = "card-content white-text",
+    h1(class = "card-title", "Learn to build better UI and UX with shiny"),
+    h1("Unleash Shiny"),
+    h3("R/Pharma virtual workshop"),
+    hr(),
+    h4("October 9"),
+    
+  )
+)
+```
+
+</div>

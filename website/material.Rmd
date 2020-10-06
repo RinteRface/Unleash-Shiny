@@ -1,0 +1,27 @@
+---
+title: Material
+---
+
+<div class="container" style="min-height:75vh;">
+
+<h1>Material</h1>
+
+All material will be made public here prior to the workshop.
+
+All projects are on RStudio Cloud.
+
+```r
+devtools::install_github("RinteRface/charpente", dependencies = TRUE)
+devtools::install_github("DivadNojnarg/OSUICode")
+```
+
+## Exercises
+
+Below is a list of all rendered exercises for convenience.
+
+- Exercise 1
+- Exercise 2
+- Exercise 3
+- [HTTP Exercise](exercise-http.html)
+
+</div>

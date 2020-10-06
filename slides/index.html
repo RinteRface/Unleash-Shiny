@@ -36,7 +36,7 @@ class: center, middle, inverse, title-slide
 # Unleash Shiny
 ## R/Pharma - Advanced Shiny Workshop
 ### David Granjon (Novartis) &amp; John Coene (World Economic Forum)
-### 13-03-2020
+### 09-10-2020
 
 ---
 
@@ -307,7 +307,7 @@ class: header_background
 # B. Discover Shiny dependencies
 ## Warm up 2
 
-Let's play ⏯:
+Let's play 🎮:
 
   1. Run the app `runExample("01_hello")`
   2. Open the HTML inspector
@@ -491,7 +491,7 @@ class: header_background
 # C.2.3 Programmatically create elements
 .mt4[Let's create 5 `span` tags!]
 
-.pull-left.w-30.mt2[
+.pull-left-30.mt2[
 ```r
 div(
   span(1),
@@ -506,7 +506,7 @@ What about 100 tags 😱?
 
 ]
 
-.pull-right.w-70.mt2[
+.pull-right-70.mt2[
 With some **functional** programming!
 ```r
 # base R
@@ -531,7 +531,7 @@ Main tasks:
   
 Lets' start! Open `shinybulma.Rmd` and enjoy 🐒
 
-<div class="countdown" id="timer_5f7c8b2d" style="right:0;bottom:0;" data-warnwhen="0">
+<div class="countdown" id="timer_5f7c8c9e" style="right:0;bottom:0;" data-warnwhen="0">
 <code class="countdown-time"><span class="countdown-digits minutes">25</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
 
@@ -788,7 +788,7 @@ In this part you'll need to fork the `{shinybulma}` [repository](https://github.
   
 John and I will review the PR after the workshop!
 
-<div class="countdown" id="timer_5f7c88bb" style="right:0;bottom:0;" data-warnwhen="0">
+<div class="countdown" id="timer_5f7c8a16" style="right:0;bottom:0;" data-warnwhen="0">
 <code class="countdown-time"><span class="countdown-digits minutes">20</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
 
@@ -807,7 +807,7 @@ The simplest is probably the text input:
 
  - **id** guarantees the input **uniqueness**. &lt;sup&gt;1&lt;/sup&gt;
  - **type** define the input type
- - **class** is generally targeted by JavaScript
+ - **class** is generally targeted by JavaScript: `$('.input-text').action();`
  - **value** holds the input value
  
 .footnote.small[
@@ -825,6 +825,10 @@ An input binding:
  - ... tells **when** Shiny have to update the value for R
  
 🗒 Bindings rely on a JS class defined in the input_binding.js [file](https://github.com/rstudio/shiny/blob/master/srcjs/input_binding.js)
+
+```js
+var customTextBinding = new Shiny.InputBinding();
+```
 
 In the following, we'll need `devtools::install_github("DivadNojnarg/OSUICode")`
 
@@ -854,11 +858,6 @@ customTextInputExample(1)
 .pull-right.w-50[
 &lt;img src="assets/img/shiny-find-inputs.png" width="100%" /&gt;
 ]
-
----
-class: header_background
-# B.2.2 The binding steps: **initialize**
-Upon app initialization, Shiny calls the `initializeInputs` function that takes all input bindings and call their **initialize** method. This is useful if you work with "sophisticated " API like [Framework7](https://framework7.io/). We won't have time to cover this topic here...
 
 ---
 class: header_background
@@ -983,78 +982,17 @@ class: header_background center
 &lt;/video&gt;
 ]
 
----
-class: header_background
-# B.3 How to hijack a binding? &lt;img src="assets/img/hijack.gif" width="5%" align="right"/&gt;
-
-Case study: we would like to modify the action button behavior **on the fly**.
-
-.pull-left-30.small[
-Steps:
-
-  1. Wait for the `shiny:connected` event
-  2. Unbind all inputs
-  3. Access the `Shiny.inputBindings` registry 
-  4. Extend the binding
-  5. Apply the new changes with `bindAll`
-]
-
-.pull-right-70.small[
-```js
-$(function() {
-  $(document).on('shiny:connected', function(event) {
-    Shiny.unbindAll();
-    $.extend(Shiny
-      .inputBindings
-      .bindingNames['shiny.actionButtonInput']
-      .binding, {
-        // do whathever you want to edit existing methods
-      });
-    Shiny.bindAll();
-  });
-});
-```
-]
 
 ---
 class: header_background
-# B.4 How to interact with a binding from JS?
-
-.pull-left-30.small.mt4[
-What if you don't want to update input from the server? 🤷
-  - Define the **trigger**
-  - Define the **target**
-  - **Capture** the target input binding
-  - Use `setValue` to add new value
-  - **Trigger** any **relevant** event mentioned in `subscribe` (tells Shiny to update from the R side)
-]
-
-.pull-right-70.small.mt4[
-```js
-$(function() {
-  // each time we click on #test (a button)
-  $('#test').on('click', function() {
-    var $obj = $('#button');
-    var inputBinding = $obj.data('shiny-input-binding');
-    var val = $obj.data('val') || 0;
-    inputBinding.setValue($obj, val + 10);
-    $obj.trigger('click');
-  });
-});
-```
-]
-
-
----
-class: header_background
-# B.5 Box on Steroids!
+# B.3 Box on Steroids!
 .mt-4[
 Boxes are a center element of `{shinydashboard}`. Yet the latter only exploit 10% of their
 capability. Your mission: unleash the AdminLTE API to deliver box on steroids! Open `box_on_steroids.Rmd`.
 ]
 
 
-<div class="countdown" id="timer_5f7c8bf4" style="right:0;bottom:0;" data-warnwhen="0">
+<div class="countdown" id="timer_5f7c8c39" style="right:0;bottom:0;" data-warnwhen="0">
 <code class="countdown-time"><span class="countdown-digits minutes">20</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
 
@@ -1067,13 +1005,13 @@ background-size: cover
 
 ---
 class: header_background
-# A. Multi page applications 📃 📄 📄
+# A. Multi page applications 📄 📃 📃
 
 "Traditional" applications and websites
 
 .pull-left.w-70.mh-a[
-<div id="htmlwidget-10dff1c62123611c12b0" style="width:100%;height:432px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-10dff1c62123611c12b0">{"x":{"diagram":"\nstrict digraph{\n  graph[rankdir=LR fontsize = 10]\n  node [shape=record fontsize=10];\n  s [label=\"Server\" color=mediumpurple];\n  c [label=\"Client\" color=gold];\n  c -> s [color=dimGray arrowsize=.3 label=request fontsize = 9];\n  s -> c [color=dimGray arrowsize=.3 label=response fontsize = 9];\n\n  c1 [label=\"Client\" color=gold];\n  c1 -> s [color=dimGray arrowsize=.3 label=request fontsize = 9];\n  s -> c1 [color=dimGray arrowsize=.3 label=response fontsize = 9];\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-90739751a125e12c457a" style="width:100%;height:432px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-90739751a125e12c457a">{"x":{"diagram":"\nstrict digraph{\n  graph[rankdir=LR fontsize = 10]\n  node [shape=record fontsize=10];\n  s [label=\"Server\" color=mediumpurple];\n  c [label=\"Client\" color=gold];\n  c -> s [color=dimGray arrowsize=.3 label=request fontsize = 9];\n  s -> c [color=dimGray arrowsize=.3 label=response fontsize = 9];\n\n  c1 [label=\"Client\" color=gold];\n  c1 -> s [color=dimGray arrowsize=.3 label=request fontsize = 9];\n  s -> c1 [color=dimGray arrowsize=.3 label=response fontsize = 9];\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 ]
 
 .pull-right.w-70.mh-a[
@@ -1091,13 +1029,13 @@ class: header_background
 
 ---
 class: header_background
-# A.1.1 Single page applications 📄
+# A.1.1 Single page applications 📃
 
 A more recent web development.
 
 .pull-left.w-70.mh-a[
-<div id="htmlwidget-96a602614e945c8a5b5e" style="width:100%;height:432px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-96a602614e945c8a5b5e">{"x":{"diagram":"\ndigraph{\n  graph[rankdir=LR fontsize = 10]\n  node [shape=record fontsize=10];\n  s [label=\"Server\" color=mediumpurple];\n  c1 [label=\"Client\" color=gold];\n  c2 [label=\"Client\" color=gold];\n  c3 [label=\"Client\" color=gold];\n  c1 -> s [dir=both color=dimGray arrowsize=.3 label=messages fontsize = 9];\n  c2 -> s [dir=both color=dimGray arrowsize=.3 label=messages fontsize = 9];\n  c3 -> s [dir=both color=dimGray arrowsize=.3 label=messages fontsize = 9];\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-cc534ad4da90136d638e" style="width:100%;height:432px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-cc534ad4da90136d638e">{"x":{"diagram":"\ndigraph{\n  graph[rankdir=LR fontsize = 10]\n  node [shape=record fontsize=10];\n  s [label=\"Server\" color=mediumpurple];\n  c1 [label=\"Client\" color=gold];\n  c2 [label=\"Client\" color=gold];\n  c3 [label=\"Client\" color=gold];\n  c1 -> s [dir=both color=dimGray arrowsize=.3 label=messages fontsize = 9];\n  c2 -> s [dir=both color=dimGray arrowsize=.3 label=messages fontsize = 9];\n  c3 -> s [dir=both color=dimGray arrowsize=.3 label=messages fontsize = 9];\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 ]
 
 .pull-right.w-70.mh-a[
@@ -1315,7 +1253,7 @@ class: header_background
 
 Open and complete `http_excercise.Rmd`
 
-<div class="countdown" id="timer_5f7c8b8e" style="right:0;bottom:0;" data-warnwhen="0">
+<div class="countdown" id="timer_5f7c8c40" style="right:0;bottom:0;" data-warnwhen="0">
 <code class="countdown-time"><span class="countdown-digits minutes">10</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
 
@@ -1325,8 +1263,8 @@ class: header_background
 
 Serve data with an HTTP response, read it with JavaScript to produce the HTML output
 
-<div id="htmlwidget-94c89ba59601c12cb19e" style="width:100%;height:432px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-94c89ba59601c12cb19e">{"x":{"diagram":"\ndigraph{\n\n  graph[rankdir=LR fontsize = 10]\n  \n  node [shape=record fontsize=10];\n  server [label=\"Server\" color=mediumpurple];\n  json [label=\"JSON\" color=black];\n  javascript [label=\"JavaScript\" color=gold];\n  html [label=\"HTML output\" color=black]\n\n  server -> json [label=\"response\"]\n  json -> javascript [label=\"fetch\"]\n  javascript -> html\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-2c3b710dd70cfc110db9" style="width:100%;height:432px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-2c3b710dd70cfc110db9">{"x":{"diagram":"\ndigraph{\n\n  graph[rankdir=LR fontsize = 10]\n  \n  node [shape=record fontsize=10];\n  server [label=\"Server\" color=mediumpurple];\n  json [label=\"JSON\" color=black];\n  javascript [label=\"JavaScript\" color=gold];\n  html [label=\"HTML output\" color=black]\n\n  server -> json [label=\"response\"]\n  json -> javascript [label=\"fetch\"]\n  javascript -> html\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 
 ---
 class: header_background
@@ -1806,6 +1744,67 @@ class: header_background
 
 .center[
 Open `update_input_from_client.Rmd`.
+]
+
+---
+class: header_background
+# How to hijack a binding? &lt;img src="assets/img/hijack.gif" width="5%" align="right"/&gt;
+
+Case study: we would like to modify the action button behavior **on the fly**.
+
+.pull-left-30.small[
+Steps:
+
+  1. Wait for the `shiny:connected` event
+  2. Unbind all inputs
+  3. Access the `Shiny.inputBindings` registry 
+  4. Extend the binding
+  5. Apply the new changes with `bindAll`
+]
+
+.pull-right-70.small[
+```js
+$(function() {
+  $(document).on('shiny:connected', function(event) {
+    Shiny.unbindAll();
+    $.extend(Shiny
+      .inputBindings
+      .bindingNames['shiny.actionButtonInput']
+      .binding, {
+        // do whathever you want to edit existing methods
+      });
+    Shiny.bindAll();
+  });
+});
+```
+]
+
+---
+class: header_background
+# How to interact with a binding from JS?
+
+.pull-left-30.small.mt4[
+What if you don't want to update input from the server? 🤷
+  - Define the **trigger**
+  - Define the **target**
+  - **Capture** the target input binding
+  - Use `setValue` to add new value
+  - **Trigger** any **relevant** event mentioned in `subscribe` (tells Shiny to update from the R side)
+]
+
+.pull-right-70.small.mt4[
+```js
+$(function() {
+  // each time we click on #test (a button)
+  $('#test').on('click', function() {
+    var $obj = $('#button');
+    var inputBinding = $obj.data('shiny-input-binding');
+    var val = $obj.data('val') || 0;
+    inputBinding.setValue($obj, val + 10);
+    $obj.trigger('click');
+  });
+});
+```
 ]
 
 ---

@@ -2,7 +2,7 @@
 title: "Unleash Shiny"
 subtitle: "R/Pharma - Advanced Shiny Workshop"
 author: "David Granjon (Novartis) & John Coene (World Economic Forum)"
-date: "13-03-2020"
+date: "09-10-2020"
 output:
   xaringan::moon_reader:
     lib_dir: libs
@@ -480,7 +480,7 @@ class: header_background
 # C.2.3 Programmatically create elements
 .mt4[Let's create 5 `span` tags!]
 
-.pull-left.w-30.mt2[
+.pull-left-30.mt2[
 ```r
 div(
   span(1),
@@ -495,7 +495,7 @@ What about 100 tags `r ji("fear")`?
 
 ]
 
-.pull-right.w-70.mt2[
+.pull-right-70.mt2[
 With some **functional** programming!
 ```r
 # base R
@@ -804,7 +804,7 @@ The simplest is probably the text input:
 
  - **id** guarantees the input **uniqueness**. <sup>1</sup>
  - **type** define the input type
- - **class** is generally targeted by JavaScript
+ - **class** is generally targeted by JavaScript: `$('.input-text').action();`
  - **value** holds the input value
  
 .footnote.small[
@@ -822,6 +822,10 @@ An input binding:
  - ... tells **when** Shiny have to update the value for R
  
 🗒 Bindings rely on a JS class defined in the input_binding.js [file](https://github.com/rstudio/shiny/blob/master/srcjs/input_binding.js)
+
+```js
+var customTextBinding = new Shiny.InputBinding();
+```
 
 In the following, we'll need `devtools::install_github("DivadNojnarg/OSUICode")`
 
@@ -853,11 +857,6 @@ customTextInputExample(1)
 knitr::include_graphics("assets/img/shiny-find-inputs.png")
 ```
 ]
-
----
-class: header_background
-# B.2.2 The binding steps: **initialize**
-Upon app initialization, Shiny calls the `initializeInputs` function that takes all input bindings and call their **initialize** method. This is useful if you work with "sophisticated " API like [Framework7](https://framework7.io/). We won't have time to cover this topic here...
 
 ---
 class: header_background
@@ -984,71 +983,10 @@ class: header_background center
 </video>
 ]
 
----
-class: header_background
-# B.3 How to hijack a binding? <img src="assets/img/hijack.gif" width="5%" align="right"/>
-
-Case study: we would like to modify the action button behavior **on the fly**.
-
-.pull-left-30.small[
-Steps:
-
-  1. Wait for the `shiny:connected` event
-  2. Unbind all inputs
-  3. Access the `Shiny.inputBindings` registry 
-  4. Extend the binding
-  5. Apply the new changes with `bindAll`
-]
-
-.pull-right-70.small[
-```js
-$(function() {
-  $(document).on('shiny:connected', function(event) {
-    Shiny.unbindAll();
-    $.extend(Shiny
-      .inputBindings
-      .bindingNames['shiny.actionButtonInput']
-      .binding, {
-        // do whathever you want to edit existing methods
-      });
-    Shiny.bindAll();
-  });
-});
-```
-]
 
 ---
 class: header_background
-# B.4 How to interact with a binding from JS?
-
-.pull-left-30.small.mt4[
-What if you don't want to update input from the server? `r ji("shrug")`
-  - Define the **trigger**
-  - Define the **target**
-  - **Capture** the target input binding
-  - Use `setValue` to add new value
-  - **Trigger** any **relevant** event mentioned in `subscribe` (tells Shiny to update from the R side)
-]
-
-.pull-right-70.small.mt4[
-```js
-$(function() {
-  // each time we click on #test (a button)
-  $('#test').on('click', function() {
-    var $obj = $('#button');
-    var inputBinding = $obj.data('shiny-input-binding');
-    var val = $obj.data('val') || 0;
-    inputBinding.setValue($obj, val + 10);
-    $obj.trigger('click');
-  });
-});
-```
-]
-
-
----
-class: header_background
-# B.5 Box on Steroids!
+# B.3 Box on Steroids!
 .mt-4[
 Boxes are a center element of `{shinydashboard}`. Yet the latter only exploit 10% of their
 capability. Your mission: unleash the AdminLTE API to deliver box on steroids! Open `box_on_steroids.Rmd`.
@@ -1843,6 +1781,67 @@ class: header_background
 
 .center[
 Open `update_input_from_client.Rmd`.
+]
+
+---
+class: header_background
+# How to hijack a binding? <img src="assets/img/hijack.gif" width="5%" align="right"/>
+
+Case study: we would like to modify the action button behavior **on the fly**.
+
+.pull-left-30.small[
+Steps:
+
+  1. Wait for the `shiny:connected` event
+  2. Unbind all inputs
+  3. Access the `Shiny.inputBindings` registry 
+  4. Extend the binding
+  5. Apply the new changes with `bindAll`
+]
+
+.pull-right-70.small[
+```js
+$(function() {
+  $(document).on('shiny:connected', function(event) {
+    Shiny.unbindAll();
+    $.extend(Shiny
+      .inputBindings
+      .bindingNames['shiny.actionButtonInput']
+      .binding, {
+        // do whathever you want to edit existing methods
+      });
+    Shiny.bindAll();
+  });
+});
+```
+]
+
+---
+class: header_background
+# How to interact with a binding from JS?
+
+.pull-left-30.small.mt4[
+What if you don't want to update input from the server? `r ji("shrug")`
+  - Define the **trigger**
+  - Define the **target**
+  - **Capture** the target input binding
+  - Use `setValue` to add new value
+  - **Trigger** any **relevant** event mentioned in `subscribe` (tells Shiny to update from the R side)
+]
+
+.pull-right-70.small.mt4[
+```js
+$(function() {
+  // each time we click on #test (a button)
+  $('#test').on('click', function() {
+    var $obj = $('#button');
+    var inputBinding = $obj.data('shiny-input-binding');
+    var val = $obj.data('val') || 0;
+    inputBinding.setValue($obj, val + 10);
+    $obj.trigger('click');
+  });
+});
+```
 ]
 
 ---

@@ -123,17 +123,15 @@ Disclaimer: this workshop is not about **building** Shiny Apps!!!
 ---
 # Workshop Material
 
-.tc.mt4[
-For a plug and play experience, we created a [Rstudio Cloud](https://rstudio.cloud/) project with everything installed for you!
-]
 
-To follow the workshop on your personal computer, install the following packages:
-.f5.w-70.mh-a.mt4.small[
-```r
-devtools::install_github("RinteRface/charpente", dependencies = TRUE)
-devtools::install_github("DivadNojnarg/OSUICode")
-```
+  - For a plug and play experience, we created a [Rstudio Cloud](https://rstudio.cloud/spaces/92568/join?access_code=kqUUGAOZMMHSZoAQBrQ1GHSOBxSE4u1q8JvrJoRs) project with everything installed for you
+
+.center[
+https://rstudio.cloud/spaces/92568/join?access_code=kqUUGAOZMMHSZoAQBrQ1GHSOBxSE4u1q8JvrJoRs
 ]
+  
+  - To avoid **connection issues**, disconnect from your **VPN**!
+  - Somes slides contain code that you may run (a **sandbox** space is available in RStudio Cloud)
 
 ---
 class: break center middle

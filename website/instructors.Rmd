@@ -1,0 +1,97 @@
+---
+title: "Instructor"
+---
+
+```{r, include = FALSE}
+library(htmltools)
+```
+
+<div class="container" style="min-height:75vh;">
+
+<h1>Instructor</h1>
+
+```{r, echo = FALSE}
+div(
+  class = "row",
+  # david
+  div(
+    class = "col m4",
+    div(
+      class = "card",
+      div(
+        class = "card-image",
+        img(src = "assets/img/people/david.jpg"),
+        span(
+          class = "card-title",
+          "David Granjon"
+        )
+      ),
+      div(
+        class = "card-content",
+        p("Data Scientist at Novartis.")
+      ),
+      div(
+        class = "card-action",
+        a(
+          href = "https://twitter.com/divadnojnarg",
+          "@divadnojnarg"
+        )
+      )
+    )
+  ),
+  # john
+  div(
+    class = "col m4",
+    div(
+      class = "card",
+      div(
+        class = "card-image",
+        img(src = "assets/img/people/john.jpg"),
+        span(
+          class = "card-title",
+          "John Coene"
+        )
+      ),
+      div(
+        class = "card-content",
+        p("Data Scientist at the World Economic Forum.")
+      ),
+      div(
+        class = "card-action",
+        a(
+          href = "https://twitter.com/jdatap",
+          "@jdatap"
+        )
+      )
+    )
+  ),
+  # colin
+  div(
+    class = "col m4",
+    div(
+      class = "card",
+      div(
+        class = "card-image",
+        img(src = "assets/img/people/colin.jpg"),
+        span(
+          class = "card-title",
+          "Colin Fay"
+        )
+      ),
+      div(
+        class = "card-content",
+        p("Shiny Expert at ThinkR.")
+      ),
+      div(
+        class = "card-action",
+        a(
+          href = "https://twitter.com/_ColinFay",
+          "@_ColinFay"
+        )
+      )
+    )
+  )
+)
+```
+
+</div>

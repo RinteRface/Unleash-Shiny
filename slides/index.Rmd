@@ -1004,7 +1004,7 @@ background-size: cover
 
 ---
 class: header_background
-# A. Multi page applications `r ji("page")` `r ji("page")` `r ji("page")`
+# A.1 Multi page applications `r ji("page")` `r ji("page")` `r ji("page")`
 
 "Traditional" applications and websites
 

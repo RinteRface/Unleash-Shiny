@@ -92,8 +92,9 @@ server <- function(input, output, session){
     filterFunc = function(data, req){
       query <- parseQueryString(req$QUERY_STRING)
       print(query)
+
       ######################### Your code here #########################
-      ##################################################################
+
       json <- jsonlite::toJSON(data)
       shiny:::httpResponse(content_type = "application/json", content = json)
     }
@@ -103,13 +104,23 @@ server <- function(input, output, session){
     
     # print so we can see the path clearly
     print(path) 
+
     # print it big so we can see it
-    h1(
-      tags$input(
-        value = path, 
-        width = "100%", 
-        class = "form-control",
-        style = "font-size:24px;"
+    tagList(
+      h4("Add the URL parameter and click the button"),
+      h2(
+        tags$input(
+          id = "path",
+          value = path, 
+          width = "100%", 
+          class = "form-control",
+          style = "font-size:20px;"
+        )
+      ),
+      tags$a(
+        class = "btn btn-primary", 
+        onClick = "window.location = $('#path').val();",
+        "Visit the endpoint"
       )
     )
   })

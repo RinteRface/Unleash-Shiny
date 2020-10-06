@@ -4,14 +4,14 @@
     <title>Unleash Shiny</title>
     <meta charset="utf-8" />
     <meta name="author" content="David Granjon (Novartis) &amp; John Coene (World Economic Forum)" />
-    <script src="libs/header-attrs-2.3.9/header-attrs.js"></script>
-    <link href="libs/tile-view-0.2.3.9000/tile-view.css" rel="stylesheet" />
-    <script src="libs/tile-view-0.2.3.9000/tile-view.js"></script>
+    <script src="libs/header-attrs-2.4/header-attrs.js"></script>
+    <link href="libs/tile-view-0.2.1/tile-view.css" rel="stylesheet" />
+    <script src="libs/tile-view-0.2.1/tile-view.js"></script>
     <link href="libs/animate.css-3.7.2/animate.xaringan.css" rel="stylesheet" />
     <link href="libs/tachyons-4.12.0/tachyons.min.css" rel="stylesheet" />
-    <link href="libs/xaringanExtra-extra-styles-0.2.3.9000/xaringanExtra-extra-styles.css" rel="stylesheet" />
-    <link href="libs/panelset-0.2.3.9000/panelset.css" rel="stylesheet" />
-    <script src="libs/panelset-0.2.3.9000/panelset.js"></script>
+    <link href="libs/xaringanExtra-extra-styles-0.2.1/xaringanExtra-extra-styles.css" rel="stylesheet" />
+    <link href="libs/panelset-0.2.1/panelset.css" rel="stylesheet" />
+    <script src="libs/panelset-0.2.1/panelset.js"></script>
     <link href="libs/js4shiny-0.0.28/css/_variables-fonts.css" rel="stylesheet" />
     <link href="libs/js4shiny-0.0.28/css/_variables.css" rel="stylesheet" />
     <link href="libs/js4shiny-0.0.28/css/code.css" rel="stylesheet" />
@@ -21,7 +21,7 @@
     <script src="libs/js4shiny-redirectConsoleLog-0.0.28/redirectConsoleLog.js"></script>
     <link href="libs/countdown-0.3.5/countdown.css" rel="stylesheet" />
     <script src="libs/countdown-0.3.5/countdown.js"></script>
-    <script src="libs/htmlwidgets-1.5.1.9002/htmlwidgets.js"></script>
+    <script src="libs/htmlwidgets-1.5.2/htmlwidgets.js"></script>
     <script src="libs/viz-1.8.2/viz.js"></script>
     <link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
     <script src="libs/grViz-binding-1.0.6.1/grViz.js"></script>
@@ -183,7 +183,7 @@ top: 0; bottom: 0; margin: auto; max-width: 100%; max-height: 100%; transform: s
 
 # A simple Shiny app
 
-#### No HTML/CSS/JS and it just works 😱! What kind of **magic** is this?
+#### No HTML/CSS/JS and it just works 😨! What kind of **magic** is this?
 
 &lt;iframe src="https://gallery.shinyapps.io/050-kmeans-example" height="400px" width="100%"&gt;&lt;/iframe&gt;
 
@@ -307,7 +307,7 @@ class: header_background
 # B. Discover Shiny dependencies
 ## Warm up 2
 
-Let's play 🎮:
+Let's play ⏯:
 
   1. Run the app `runExample("01_hello")`
   2. Open the HTML inspector
@@ -502,7 +502,7 @@ div(
 )
 ```
 
-What about 100 tags 😨?
+What about 100 tags 😱?
 
 ]
 
@@ -531,7 +531,7 @@ Main tasks:
   
 Lets' start! Open `shinybulma.Rmd` and enjoy 🐒
 
-<div class="countdown" id="timer_5f799ea2" style="right:0;bottom:0;" data-warnwhen="0">
+<div class="countdown" id="timer_5f7c8b2d" style="right:0;bottom:0;" data-warnwhen="0">
 <code class="countdown-time"><span class="countdown-digits minutes">25</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
 
@@ -788,7 +788,7 @@ In this part you'll need to fork the `{shinybulma}` [repository](https://github.
   
 John and I will review the PR after the workshop!
 
-<div class="countdown" id="timer_5f79a03d" style="right:0;bottom:0;" data-warnwhen="0">
+<div class="countdown" id="timer_5f7c88bb" style="right:0;bottom:0;" data-warnwhen="0">
 <code class="countdown-time"><span class="countdown-digits minutes">20</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
 
@@ -1054,7 +1054,7 @@ capability. Your mission: unleash the AdminLTE API to deliver box on steroids! O
 ]
 
 
-<div class="countdown" id="timer_5f79a0a6" style="right:0;bottom:0;" data-warnwhen="0">
+<div class="countdown" id="timer_5f7c8bf4" style="right:0;bottom:0;" data-warnwhen="0">
 <code class="countdown-time"><span class="countdown-digits minutes">20</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
 
@@ -1067,13 +1067,13 @@ background-size: cover
 
 ---
 class: header_background
-# A. Multi page applications 📄 📃 📄
+# A. Multi page applications 📃 📄 📄
 
 "Traditional" applications and websites
 
 .pull-left.w-70.mh-a[
-<div id="htmlwidget-070191e4c230116e9715" style="width:100%;height:432px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-070191e4c230116e9715">{"x":{"diagram":"\nstrict digraph{\n  graph[rankdir=LR fontsize = 10]\n  node [shape=record fontsize=10];\n  s [label=\"Server\" color=mediumpurple];\n  c [label=\"Client\" color=gold];\n  c -> s [color=dimGray arrowsize=.3 label=request fontsize = 9];\n  s -> c [color=dimGray arrowsize=.3 label=response fontsize = 9];\n\n  c1 [label=\"Client\" color=gold];\n  c1 -> s [color=dimGray arrowsize=.3 label=request fontsize = 9];\n  s -> c1 [color=dimGray arrowsize=.3 label=response fontsize = 9];\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-10dff1c62123611c12b0" style="width:100%;height:432px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-10dff1c62123611c12b0">{"x":{"diagram":"\nstrict digraph{\n  graph[rankdir=LR fontsize = 10]\n  node [shape=record fontsize=10];\n  s [label=\"Server\" color=mediumpurple];\n  c [label=\"Client\" color=gold];\n  c -> s [color=dimGray arrowsize=.3 label=request fontsize = 9];\n  s -> c [color=dimGray arrowsize=.3 label=response fontsize = 9];\n\n  c1 [label=\"Client\" color=gold];\n  c1 -> s [color=dimGray arrowsize=.3 label=request fontsize = 9];\n  s -> c1 [color=dimGray arrowsize=.3 label=response fontsize = 9];\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 ]
 
 .pull-right.w-70.mh-a[
@@ -1091,13 +1091,13 @@ class: header_background
 
 ---
 class: header_background
-# A.1.1 Single page applications 📃
+# A.1.1 Single page applications 📄
 
 A more recent web development.
 
 .pull-left.w-70.mh-a[
-<div id="htmlwidget-381e42a1ba4f2623a5fb" style="width:100%;height:432px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-381e42a1ba4f2623a5fb">{"x":{"diagram":"\ndigraph{\n  graph[rankdir=LR fontsize = 10]\n  node [shape=record fontsize=10];\n  s [label=\"Server\" color=mediumpurple];\n  c1 [label=\"Client\" color=gold];\n  c2 [label=\"Client\" color=gold];\n  c3 [label=\"Client\" color=gold];\n  c1 -> s [dir=both color=dimGray arrowsize=.3 label=messages fontsize = 9];\n  c2 -> s [dir=both color=dimGray arrowsize=.3 label=messages fontsize = 9];\n  c3 -> s [dir=both color=dimGray arrowsize=.3 label=messages fontsize = 9];\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-96a602614e945c8a5b5e" style="width:100%;height:432px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-96a602614e945c8a5b5e">{"x":{"diagram":"\ndigraph{\n  graph[rankdir=LR fontsize = 10]\n  node [shape=record fontsize=10];\n  s [label=\"Server\" color=mediumpurple];\n  c1 [label=\"Client\" color=gold];\n  c2 [label=\"Client\" color=gold];\n  c3 [label=\"Client\" color=gold];\n  c1 -> s [dir=both color=dimGray arrowsize=.3 label=messages fontsize = 9];\n  c2 -> s [dir=both color=dimGray arrowsize=.3 label=messages fontsize = 9];\n  c3 -> s [dir=both color=dimGray arrowsize=.3 label=messages fontsize = 9];\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 ]
 
 .pull-right.w-70.mh-a[
@@ -1315,7 +1315,7 @@ class: header_background
 
 Open and complete `http_excercise.Rmd`
 
-<div class="countdown" id="timer_5f79a0b3" style="right:0;bottom:0;" data-warnwhen="0">
+<div class="countdown" id="timer_5f7c8b8e" style="right:0;bottom:0;" data-warnwhen="0">
 <code class="countdown-time"><span class="countdown-digits minutes">10</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
 
@@ -1325,8 +1325,8 @@ class: header_background
 
 Serve data with an HTTP response, read it with JavaScript to produce the HTML output
 
-<div id="htmlwidget-86399ff973595f4b9620" style="width:100%;height:432px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-86399ff973595f4b9620">{"x":{"diagram":"\ndigraph{\n\n  graph[rankdir=LR fontsize = 10]\n  \n  node [shape=record fontsize=10];\n  server [label=\"Server\" color=mediumpurple];\n  json [label=\"JSON\" color=black];\n  javascript [label=\"JavaScript\" color=gold];\n  html [label=\"HTML output\" color=black]\n\n  server -> json [label=\"response\"]\n  json -> javascript [label=\"fetch\"]\n  javascript -> html\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-94c89ba59601c12cb19e" style="width:100%;height:432px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-94c89ba59601c12cb19e">{"x":{"diagram":"\ndigraph{\n\n  graph[rankdir=LR fontsize = 10]\n  \n  node [shape=record fontsize=10];\n  server [label=\"Server\" color=mediumpurple];\n  json [label=\"JSON\" color=black];\n  javascript [label=\"JavaScript\" color=gold];\n  html [label=\"HTML output\" color=black]\n\n  server -> json [label=\"response\"]\n  json -> javascript [label=\"fetch\"]\n  javascript -> html\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 
 ---
 class: header_background
@@ -1434,6 +1434,14 @@ box &lt;- function(data, title, value){
 
 Ideally `box` should "work" on its own, like `plot` or `datatable`, consider adding a method (more on this later).
 
+## Example
+
+```r
+df &lt;- data.frame(name = c("A", "B"), val = 1:2)
+
+box(df, name, val)
+```
+
 ---
 class: header_background
 # B.4.5 Level __boxOutput__ - _man page_
@@ -1457,7 +1465,7 @@ Returns a `&lt;nav&gt;` tag bearing input `id`
 &lt;br/&gt;
 &lt;br/&gt;
 ```html
-&lt;nav class="level"&gt;
+&lt;nav class="level box"&gt;
   &lt;!-- Level items --&gt;
 &lt;/nav&gt;
 ```
@@ -1510,6 +1518,7 @@ The `renderBox` function to render `box` in shiny.
 __Returns a function__
 
 ---
+class: header_background
 # B.4.8 Level __renderBox__ - _source code_ (1)
 
 `output$something &lt;-` what is assigned is a function!
@@ -1536,12 +1545,46 @@ function ()
 ]
 
 Use of function in console (e.g.: `plot`) != in shiny: `render*` is used to preprocess standard ouput and create a valid "renderer."
+
+_It's easier to rerun a function than an expression_
+
 ---
+class: header_background
 # B.4.9 Level __renderBox__ - _source code_ (2)
+
+1. It accepts an expression and the session
+2. It wraps the expression into a function
+
+```r
+renderBox &lt;- function(expr, session) {
+  func &lt;- shiny::exprToFunction(expr)
+}
+```
+
+---
+class: header_background
+# B.4.10 Level __renderBox__ - _source code_ (3)
+
+`renderBox` __must__ return a function
+
+```r
+renderBox &lt;- function(expr, session) {
+  func &lt;- shiny::exprToFunction(expr)
+
+  # must return a function
+  function(){
+    data &lt;- func()
+  }
+}
+```
+
+---
+class: header_background
+# B.4.11 Level __renderBox__ - _source code_ (4)
 
 .small[
 ```r
-renderBox &lt;- function(expr, session = shiny::getDefaultReactiveDomain()) {
+renderBox &lt;- function(expr, session) {
   func &lt;- shiny::exprToFunction(expr)
 
   function(){
@@ -1567,7 +1610,7 @@ renderBox &lt;- function(expr, session = shiny::getDefaultReactiveDomain()) {
 
 ---
 class: header_background
-# B.4.10 Level __binding__ 
+# B.4.12 Level __binding__ 
 
 Much of the JavaScript works just like inputs, __only simpler!__
 
@@ -1578,7 +1621,7 @@ Only two methods:
 
 ---
 class: header_background
-# B.4.11 Level __skeleton__ 
+# B.4.13 Level __skeleton__ 
 
 Eerily similar to inputs: 1) initialise, 2) extend, 3) register.
 
@@ -1600,7 +1643,7 @@ Shiny.outputBindings.register(boxBinding, "pharma.box");
 
 ---
 class: header_background
-# B.4.12 Level __renderValue__
+# B.4.14 Level __renderValue__
 
 The `renderValue` in the JavaScript binding the following:
 

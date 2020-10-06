@@ -1474,6 +1474,14 @@ box <- function(data, title, value){
 
 Ideally `box` should "work" on its own, like `plot` or `datatable`, consider adding a method (more on this later).
 
+## Example
+
+```r
+df <- data.frame(name = c("A", "B"), val = 1:2)
+
+box(df, name, val)
+```
+
 ---
 class: header_background
 # B.4.5 Level __boxOutput__ - _man page_
@@ -1497,7 +1505,7 @@ Returns a `<nav>` tag bearing input `id`
 <br/>
 <br/>
 ```html
-<nav class="level">
+<nav class="level box">
   <!-- Level items -->
 </nav>
 ```
@@ -1550,6 +1558,7 @@ The `renderBox` function to render `box` in shiny.
 __Returns a function__
 
 ---
+class: header_background
 # B.4.8 Level __renderBox__ - _source code_ (1)
 
 `output$something <-` what is assigned is a function!
@@ -1576,12 +1585,46 @@ function ()
 ]
 
 Use of function in console (e.g.: `plot`) != in shiny: `render*` is used to preprocess standard ouput and create a valid "renderer."
+
+_It's easier to rerun a function than an expression_
+
 ---
+class: header_background
 # B.4.9 Level __renderBox__ - _source code_ (2)
+
+1. It accepts an expression and the session
+2. It wraps the expression into a function
+
+```r
+renderBox <- function(expr, session) {
+  func <- shiny::exprToFunction(expr)
+}
+```
+
+---
+class: header_background
+# B.4.10 Level __renderBox__ - _source code_ (3)
+
+`renderBox` __must__ return a function
+
+```r
+renderBox <- function(expr, session) {
+  func <- shiny::exprToFunction(expr)
+
+  # must return a function
+  function(){
+    data <- func()
+  }
+}
+```
+
+---
+class: header_background
+# B.4.11 Level __renderBox__ - _source code_ (4)
 
 .small[
 ```r
-renderBox <- function(expr, session = shiny::getDefaultReactiveDomain()) {
+renderBox <- function(expr, session) {
   func <- shiny::exprToFunction(expr)
 
   function(){
@@ -1607,7 +1650,7 @@ renderBox <- function(expr, session = shiny::getDefaultReactiveDomain()) {
 
 ---
 class: header_background
-# B.4.10 Level __binding__ 
+# B.4.12 Level __binding__ 
 
 Much of the JavaScript works just like inputs, __only simpler!__
 
@@ -1618,7 +1661,7 @@ Only two methods:
 
 ---
 class: header_background
-# B.4.11 Level __skeleton__ 
+# B.4.13 Level __skeleton__ 
 
 Eerily similar to inputs: 1) initialise, 2) extend, 3) register.
 
@@ -1640,7 +1683,7 @@ Shiny.outputBindings.register(boxBinding, "pharma.box");
 
 ---
 class: header_background
-# B.4.12 Level __renderValue__
+# B.4.14 Level __renderValue__
 
 The `renderValue` in the JavaScript binding the following:
 

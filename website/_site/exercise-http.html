@@ -333,7 +333,8 @@ server &lt;- function(input, output, session){
     
     # print so we can see the path clearly
     print(path) 
-    # print it big so we can see it
+
+    # render it big so we can see it
     h1(
       tags$a(path, href = path)
     )
@@ -341,8 +342,8 @@ server &lt;- function(input, output, session){
 }
 shinyApp(ui, server)</code></pre>
 </div>
-<div id="exercise" class="section level2">
-<h2>Exercise</h2>
+<div id="exercise-1" class="section level2">
+<h2>Exercise 1</h2>
 <p>The idea of this exercise is to 1) familiarise yourself more with the function and 2) improve upon it.</p>
 <p>The <code>filterFunc</code> function passed to <code>registerDataObj</code> accepts <code>req</code>, the request, from which the <code>QUERY_STRING</code> can be obtained. The query string contains the URL parameters used when accessing the application, you might have indirectly used them with shiny’s bookmarking state system. Essentially one can pass parameters to a URL so they can be retrieved from the <code>QUERY_STRING</code>, these are placed after <code>?</code> all subsequent parameters are delimited by <code>&amp;</code>.</p>
 <p>For instance one could construct a URL such the one below.</p>
@@ -360,43 +361,75 @@ $lastName
 <li>Prints the <code>query</code> object</li>
 </ol>
 <p>What we would like you to do is to make use of this to pass a URL parameter that allows returning only a specific column, e.g.: <code>http://127.0.0.1:3000/xxxXxXxXX/dataobj/cars-data?column=qsec</code> (instead of returning the entire dataset).</p>
-<p>If you are still confused, run the application once, visit the endpoint and observe the parsed <code>query</code> printed in the console.</p>
+<p>Run the application below, it comes with a simple but convenient interface for you to add parameters to the URL parameters and test that it works.</p>
+<p><strong>Note</strong> The <code>filterFunc</code> is at the top of the code chunk, you should only need to make edit there.</p>
 <pre class="r"><code>library(shiny)
 
+# this is the filter function
+# it used later on with `registerDataObj`
+# the `data` is `mtcars`
+filterFunction &lt;- function(data, req){
+  query &lt;- parseQueryString(req$QUERY_STRING)
+  
+  # print the query so we can see it
+  print(query)
+
+  ######################### Your code here #########################
+
+  json &lt;- jsonlite::toJSON(data)
+  shiny:::httpResponse(content_type = &quot;application/json&quot;, content = json)
+}
+
+# Shiny app below
+# run it at will but don&#39;t change the code
 ui &lt;- fluidPage(
+  h1(&quot;1. Add parameter&quot;),
+  p(&quot;Give the parameter a name and value and it&#39;ll appear in the box below&quot;),
+  fluidRow(
+    column(3, textInput(&quot;name&quot;, &quot;Name of parameter&quot;)),
+    column(3, textInput(&quot;value&quot;, &quot;Value of input&quot;))
+  ),
+  h1(&quot;2. Visit the endpoint&quot;),
+  p(&quot;Visit the endpoint&quot;, strong(&quot;and its parameter(s)&quot;), &quot;by clicking the button&quot;),
+  h4(&quot;Add the URL parameter and click the button&quot;),
   uiOutput(&quot;intro&quot;)
 )
 
 server &lt;- function(input, output, session){
   # serve the response
   path &lt;- session$registerDataObj(
-    &quot;cars-data&quot;,
-    mtcars,
-    filterFunc = function(data, req){
-      query &lt;- parseQueryString(req$QUERY_STRING)
-      print(query)
-      ######################### Your code here #########################
-      ##################################################################
-      json &lt;- jsonlite::toJSON(data)
-      shiny:::httpResponse(content_type = &quot;application/json&quot;, content = json)
-    }
+    name = &quot;cars-data&quot;, 
+    data = mtcars, 
+    filterFunc = filterFunction
   )
-  # print path
+
+  # this is just for convenience
+  # no need to look here 
   output$intro &lt;- renderUI({
-    
-    # print so we can see the path clearly
-    print(path) 
+
+    if(input$name != &quot;&quot; &amp; input$value != &quot;&quot;)
+      path &lt;- sprintf(&quot;%s&amp;%s=%s&quot;, path, input$name, input$value)
+
     # print it big so we can see it
-    h1(
-      tags$input(
-        value = path, 
-        width = &quot;100%&quot;, 
-        class = &quot;form-control&quot;,
-        style = &quot;font-size:24px;&quot;
+    tagList(
+      h2(
+        tags$input(
+          id = &quot;path&quot;,
+          value = path, 
+          width = &quot;100%&quot;, 
+          class = &quot;form-control&quot;,
+          style = &quot;font-size:20px;&quot;
+        )
+      ),
+      tags$a(
+        class = &quot;btn btn-primary&quot;, 
+        onClick = &quot;window.location = $(&#39;#path&#39;).val();&quot;,
+        &quot;Visit&quot;
       )
     )
   })
 }
+
 shinyApp(ui, server)</code></pre>
 </div>
 </div>

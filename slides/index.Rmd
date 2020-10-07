@@ -1015,13 +1015,13 @@ class: header_background
 
 A brief plan of this part of the workshop
 
+The grand scheme: Serve data as an __HTTP response__ and read it in JavaScript to produce the __output.__ 
+
 1. Discover HTTP 1.1 `r ji('globe_with_meridians')`.
 2. Learn to serve HTTP 1.1 in shiny
 3. Exercise in `Unleash-Shiny-Exercises-Part-3` RStudio Cloud.
 4. Discover shiny outputs `r emo::ji("arrow_right")`
 5. Run the output + Q&A `r ji("question")`
-
-Serve data as an __HTTP response__ and read it in JavaScript to produce the __output.__ 
 
 ---
 class: header_background

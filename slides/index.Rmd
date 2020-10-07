@@ -1011,6 +1011,20 @@ background-size: cover
 
 ---
 class: header_background
+# A.1 Structure
+
+A brief plan of this part of the workshop
+
+1. Discover HTTP 1.1 `r ji('globe_with_meridians')`.
+2. Learn to serve HTTP 1.1 in shiny
+3. Exercise in `Unleash-Shiny-Exercises-Part-3` RStudio Cloud.
+4. Discover shiny outputs `r emo::ji("arrow_right")`
+5. Run the output + Q&A `r ji("question")`
+
+Serve data as an __HTTP response__ and read it in JavaScript to produce the __output.__ 
+
+---
+class: header_background
 # A.1 Multi page applications `r ji("page")` `r ji("page")` `r ji("page")`
 
 "Traditional" applications and websites
@@ -1331,7 +1345,28 @@ digraph{
 
 ---
 class: header_background
-# B.3 Outputs
+# B.3 Level
+
+Let's make bulma's "level layout" a custom output!
+
+<img src="assets/img/level.png" class="shade"/>
+
+`r ji("link")` <a href="https://bulma.io/documentation/layout/level/#centered-level">bulma.io/documentation/layout/level</a>
+
+```html
+<nav class="level">
+  <div class="level-item has-text-centered">
+    <div>
+      <p class="heading">Tweets</p>
+      <p class="title">3,456</p>
+    </div>
+  </div>
+</nav>
+```
+
+---
+class: header_background
+# B.4 Outputs
 
 Examples:
 
@@ -1362,27 +1397,6 @@ Always comprises of __3 functions:__
 1. One function to create the output
 2. One function to render it in shiny
 4. One function to create the UI
-
----
-class: header_background
-# B.4 Level
-
-Let's make bulma's "level layout" a custom output!
-
-<img src="assets/img/level.png" class="shade"/>
-
-`r ji("link")` <a href="https://bulma.io/documentation/layout/level/#centered-level">bulma.io/documentation/layout/level</a>
-
-```html
-<nav class="level">
-  <div class="level-item has-text-centered">
-    <div>
-      <p class="heading">Tweets</p>
-      <p class="title">3,456</p>
-    </div>
-  </div>
-</nav>
-```
 
 ---
 class: header_background
@@ -1469,6 +1483,12 @@ Returns a `<nav>` tag bearing input `id`
 <nav class="level box">
   <!-- Level items -->
 </nav>
+```
+
+## Example
+
+```r
+boxOutput("myBoxes")
 ```
 ]
 

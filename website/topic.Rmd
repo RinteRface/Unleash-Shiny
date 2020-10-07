@@ -2,7 +2,7 @@
 title: Topic
 ---
 
-<div class="container" style="min-height:75vh;">¨
+<div class="container" style="min-height:75vh;">
 
 <h1>Topic</h1>
 

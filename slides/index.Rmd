@@ -320,7 +320,19 @@ knitr::include_graphics("assets/img/html_DOM.png")
 
 ---
 class: header_background
-# B. Discover Shiny dependencies
+# B. Unleash `{htmltools}` 
+`{htmltools}` is a R package designed to:
+  - **Generate** HTML tags from R
+  - Handle **web dependencies**: add, remove, resolve, ...
+
+Historically, `{htmltools}` was extracted out of `{shiny}` to extend it. That's why, both packages have many common functions! 
+
+At the moment, `{htmltools}` does not have any user guide, although being an important package for all web things
+[![](https://cranlogs.r-pkg.org/badges/htmltools)](https://cran.r-project.org/package=htmltools)
+
+---
+class: header_background
+# C. Discover Shiny dependencies
 ## Warm up 2
 
 Let's play `r ji("play")`:
@@ -330,18 +342,11 @@ Let's play `r ji("play")`:
   3. Delete the bootstrap.min.css and ion.rangeSlider.css
   4. Conclusions
 
+The `htmtools::findDependencies` function allows to get the dependencies from a tag.
 
----
-class: header_background
-# C. Unleash `{htmltools}` 
-`{htmltools}` is a R package designed to:
-  - **Generate** HTML tags from R
-  - Handle **web dependencies**: add, remove, resolve, ...
-
-Historically, `{htmltools}` was extracted out of `{shiny}` to extend it. That's why, both packages have many common functions! 
-
-At the moment, `{htmltools}` does not have any user guide, although being an important package for all web things
-[![](https://cranlogs.r-pkg.org/badges/htmltools)](https://cran.r-project.org/package=htmltools)
+```r
+findDependencies(fluidPage())
+``` 
 
 ---
 class: header_background
@@ -368,7 +373,7 @@ fluidPage(
 ]
 
 .pull-right.w-70.mh-a.small[
-With `{htmltools}`, we define the dependency, then attach it to a tag with `tagList`:
+With `{htmltools}`, we define the dependency with `htmlDependency`, then attach it to a tag with `tagList`:
 
 ```r
 use_bs4_dep <- function(tag) {

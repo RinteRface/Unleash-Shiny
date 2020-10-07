@@ -527,7 +527,7 @@ Main tasks:
   - Import [bulma](https://bulma.io/) dependencies
   - Generate the main `page` function 
   
-Lets' start! Open `shinybulma.Rmd` and enjoy `r ji("monkey")`
+Lets' start! Open [`shinybulma.Rmd`](https://rstudio.cloud/spaces/92568/project/1729918) and enjoy `r ji("monkey")`
 
 `r countdown(25)`
 
@@ -787,12 +787,12 @@ knitr::include_graphics("assets/img/shiny-custom-message.png")
 ---
 class: header_background
 # A.4 Bulma JS for Shiny
-In this part you'll need to fork the `{shinybulma}` [repository](https://github.com/RinteRface/shinybulma) and work on the `bulma-js` branch. We split the audience in 4 groups (1 instructor per group). Each group will choose between:
+In this part you'll need to work on the following RStudio Cloud [project](https://rstudio.cloud/spaces/92568/project/1729929). We split the audience in 3 groups (1 instructor per group). Each group will choose between:
 
   - Notifications, doc [here](https://bulmajs.tomerbe.co.uk/docs/0.11/2-core-components/notification/)
   - Modal, doc [here](https://bulmajs.tomerbe.co.uk/docs/0.11/2-core-components/modal/)
   
-John and I will review the PR after the workshop!
+After the workshop, you'll have the **opportunity** to bring this change to the [shinybulma](https://github.com/RinteRface/shinybulma/tree/master) repository.
 
 `r countdown(20)`
 
@@ -996,7 +996,7 @@ class: header_background
 # B.3 Box on Steroids!
 .mt-4[
 Boxes are a center element of `{shinydashboard}`. Yet the latter only exploit 10% of their
-capability. Your mission: unleash the AdminLTE API to deliver box on steroids! Open `box_on_steroids.Rmd`.
+capability. Your mission: unleash the AdminLTE API to deliver box on steroids! Open [`box_on_steroids.Rmd`](https://rstudio.cloud/spaces/92568/project/1729937).
 ]
 
 

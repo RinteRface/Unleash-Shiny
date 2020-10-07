@@ -132,6 +132,10 @@ https://rstudio.cloud/spaces/92568/join?access_code=kqUUGAOZMMHSZoAQBrQ1GHSOBxSE
   
   - To avoid **connection issues**, disconnect from your **VPN**!
   - Somes slides contain code that you may run (a **sandbox** space is available in RStudio Cloud)
+  
+```{r rstudio-cloud-init, echo=FALSE, out.width='100%'}
+knitr::include_graphics("assets/img/rstudio_cloud_project.jpg")
+```
 
 ---
 class: break center middle

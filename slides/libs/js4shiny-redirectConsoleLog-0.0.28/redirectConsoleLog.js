@@ -1,5 +1,3 @@
-var global = {}
-
 const nodeListInclude = ['id', 'tagName', 'className', 'childNodes']
 
 function domToObj (del) {

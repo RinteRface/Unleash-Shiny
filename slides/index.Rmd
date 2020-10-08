@@ -1108,10 +1108,10 @@ But one (probably) more than the other...
 
 When you visit a shiny app: 
 
-1. Your browser makes an HTTP request to the shiny `server` which responds with the initial `ui`.
+1. Your browser makes an HTTP __request__ to the shiny `server` which __responds__ with the initial `ui`.
 2. All subsequent communication is done via websocket (`input`, `output`).
 
-_(no other `/page` is ever visited)_
+_No other `/page` is ever visited in shiny_
 
 ---
 class: header_background
@@ -1131,7 +1131,7 @@ Importantly:
 
 There are dozens of other headers one can pass.
 
-__Note__ A websocket _always_ sends binary data (in small packages) = no need for headers.
+A websocket sends __binary data__ so there is no need for headers.
 
 
 ---
@@ -1152,7 +1152,7 @@ path <- session$registerDataObj(
 
 .pull-right[
   Arguments
-1. `name`: the name of the endpoint
+1. `name`: the name of the path
 2. `data`: data objects of use in `filterFunc`
 3. `filterFunc`: Function, accepts `data` and `request`
 ]
@@ -1169,7 +1169,7 @@ path <- session$registerDataObj(name = "about", data, filterFunc)
 
 Since the response if only valid for a single session the _path_ returned is __dynamically generated.__
 
-Paths for different sessions:
+Example paths for different sessions:
 
 1. `session/0a6ed2556d97dcaa1ddeb615dc04cd1e/dataobj/about`
 2. `session/259b8dc2f18ffc975b246d206b60073f/dataobj/about`
@@ -1198,6 +1198,7 @@ path <- session$registerDataObj(name = "about", data = "<h1>Hello!</h1>", filter
 The core of it all: it actually serves the HTTP response.
 
 ```r
+# filterFunc
 function(data, req){
   shiny:::httpResponse(
     status = 200, # default
@@ -1346,12 +1347,20 @@ DiagrammeR::grViz("
 digraph{
 
   graph[rankdir=LR fontsize = 10]
-  
   node [shape=record fontsize=10];
-  server [label='Server' color=mediumpurple];
-  json [label='JSON' color=black];
-  javascript [label='JavaScript' color=gold];
-  html [label='HTML output' color=black]
+
+  subgraph cluster_1 {
+    server [label='Server' color=mediumpurple];
+    json [label='JSON' color=black];
+    label = 'Done!'
+  }
+  
+  subgraph cluster_2 {
+    javascript [label='JavaScript' color=gold];
+    html [label='HTML output' color=black]
+
+    label = 'Custom output'
+  }
 
   server -> json [label='response']
   json -> javascript [label='fetch']
@@ -1362,24 +1371,13 @@ digraph{
 
 ---
 class: header_background
-# B.3 Level
+# B.3 Level Layout
 
-Let's make bulma's "level layout" a custom output!
+Meet __"box"__ our soon-to-be custom output `r ji("exclamation")`
 
 <img src="assets/img/level.png" class="shade"/>
 
 `r ji("link")` <a href="https://bulma.io/documentation/layout/level/#centered-level">bulma.io/documentation/layout/level</a>
-
-```html
-<nav class="level">
-  <div class="level-item has-text-centered">
-    <div>
-      <p class="heading">Tweets</p>
-      <p class="title">3,456</p>
-    </div>
-  </div>
-</nav>
-```
 
 ---
 class: header_background
@@ -1409,27 +1407,15 @@ Examples:
 - `renderPlotly`
 ]
 
-Always comprises of __3 functions:__
+Our __3 functions:__
 
-1. One function to create the output
-2. One function to render it in shiny
-4. One function to create the UI
-
----
-class: header_background
-# B.4.1 Level __functions__
-
-Meet the "box"
-
-1. `box`
-2. `renderBox`
-3. `boxOutput`
-
-The three function's we're about to write together to produce the "level layout."
+1. `box` - captures the data
+2. `boxOutput` - places the output HTML
+4. `renderBox` - serves the data as JSON
 
 ---
 class: header_background
-# B.4.2 Level __box__ - _man page_
+# B.4.2 Level `box.Rd`
 
 .pull-left[
 <br/>
@@ -1450,33 +1436,21 @@ Returns a data.frame
   <br/>
   <br/>
   <img src="assets/img/level.png" class="shade"/>
+
+Example of `data` to produce the above.
+
+```{r, echo=FALSE}
+df <- data.frame(
+  title = c("tweets", "following", "followers", "likes"),
+  value = c(3456, 123, 456000, 789)
+)
+knitr::kable(df)
+```
 ]
 
 ---
 class: header_background
-# B.4.4 Level __box__ - _source code_
-
-The function takes a dataframe and selects two columns.
-
-```r
-box <- function(data, title, value){
-  dplyr::select(data, title = {{title}}, value = {{value}})
-}
-```
-
-Ideally `box` should "work" on its own, like `plot` or `datatable`, consider adding a method (more on this later).
-
-## Example
-
-```r
-df <- data.frame(name = c("A", "B"), val = 1:2)
-
-box(df, name, val)
-```
-
----
-class: header_background
-# B.4.5 Level __boxOutput__ - _man page_
+# B.4.5 Level `boxOutput.Rd`
 
 .pull-left[
 <br/>
@@ -1496,155 +1470,114 @@ Returns a `<nav>` tag bearing input `id`
 .pull-right[
 <br/>
 <br/>
-```html
-<nav class="level box">
-  <!-- Level items -->
-</nav>
-```
 
 ## Example
 
 ```r
-boxOutput("myBoxes")
+boxOutput("myBox")
+```
+
+```html
+<nav id="myBox" class="level box">
+  <!-- Level items -->
+</nav>
 ```
 ]
 
 ---
 class: header_background
-# B.4.6 Level __boxOutput__ - _source code_
+# B.4.7 Level `renderBox.Rd`
 
-.pull-left-70[
-```r
-boxOutput <- function(id){
-  el <- shiny::tags$nav(id = id, class = "box level")
+<br>
 
-  path <- normalizePath("assets")
-
-  deps <- list(
-    htmltools::htmlDependency(
-      name = "box",
-      version = "1.0.0",
-      src = c(file = path),
-      script = c("binding.js")
-    )
-  )
-
-  htmltools::attachDependencies(el, deps)
-}
-```
-]
-
-.pull-right-30[
-1. Creates the `<nav>` with classes and id
-2. Attaches dependencies
-]
-
----
-class: header_background
-# B.4.7 Level __renderBox__ - _man page_
-
+.pull-left[
 ## renderBox
 
-The `renderBox` function to render `box` in shiny. 
+Render `box` in shiny. 
 
 ### Usage
 
-`renderBox(expr, env = parent.frame(), quoted = FALSE)`
+`renderBox(expr)`
 
 ### Value
 
-__Returns a function__
+Returns a function
+]
+
+.pull-right[
+
+Preprocesses the output of `box` and sends that data to the client.
+
+`r ji("exclamation")`What`r ji("question")`
+
+1. It accepts an _expression_ 
+2. It returns a _function_ 
+
+`r ji("fear")` `r ji("fear")` `r ji("fear")`
+]
 
 ---
 class: header_background
-# B.4.8 Level __renderBox__ - _source code_ (1)
+# B.4.8 Level `renderBox.R` (1)
 
-`output$something <-` what is assigned is a function!
-
-Internally theses `render*` functions return `function()` that is produced with `shiny::exprToFunction`: _does what is says on the tin._
+Internally __all__ `render*` functions return another `function()``r ji("exclamation")`
 
 .pull-left[
-```r
+It's a function! `r ji("tada")`
+
+```{r, eval = TRUE}
 shiny::exprToFunction({
-  dat <- head(cars, 10)
-  plot(dat)
+  head(cars, 10)
 })
 ```
 ]
 
 .pull-right[
-```r
-function () 
-{
-  dat <- head(cars, 10)
-  plot(dat)
-}
+We can run it `r ji("tada")`
+
+```{r, eval = TRUE}
+fn <- shiny::exprToFunction({
+  x <- 1
+  x + 3
+})
+
+fn()
 ```
 ]
 
-Use of function in console (e.g.: `plot`) != in shiny: `render*` is used to preprocess standard ouput and create a valid "renderer."
+__Shiny = Reactivity:__ functions are easier to rerun
 
-_It's easier to rerun a function than an expression_
-
----
-class: header_background
-# B.4.9 Level __renderBox__ - _source code_ (2)
-
-1. It accepts an expression and the session
-2. It wraps the expression into a function
-
-```r
-renderBox <- function(expr, session) {
-  func <- shiny::exprToFunction(expr)
-}
-```
+`output$something <-` you actually assign a `function` `r ji("exclamation")`
 
 ---
 class: header_background
-# B.4.10 Level __renderBox__ - _source code_ (3)
+# B.4.9 Level `renderBox.R` (2)
 
-`renderBox` __must__ return a function
+Great, `render*` returns a function, but what about that one then `r ji("confused")`
 
 ```r
-renderBox <- function(expr, session) {
+renderSomething <- function(expr){
   func <- shiny::exprToFunction(expr)
 
-  # must return a function
+  # assigned to `output`
   function(){
-    data <- func() # output of box()!
+    data <- func()
+
+    # sent to the JavaScript binding
+    return(data + 1)
   }
 }
 ```
 
+The result of `render*` is a function, the result of which is __sent to the JavaScript binding__ `r ji("bulb")`
 ---
 class: header_background
-# B.4.11 Level __renderBox__ - _source code_ (4)
+# B.1 Make Box!
 
-.small[
-```r
-renderBox <- function(expr, session) {
-  func <- shiny::exprToFunction(expr)
+Open and complete `custom-output.Rmd`.
 
-  function(){
-    data <- func() # output of box()!
+`r countdown(15)`
 
-    # generate random endpoint name
-    endpoint <- paste0(sample(letters, 26), collapse = "")
-
-    path <- session$registerDataObj(
-      endpoint, 
-      data, 
-      function(data, req){
-        response <- jsonlite::toJSON(data)
-        shiny:::httpResponse(200, "application/json", response)
-      }
-    )
-
-    return(path)
-  }
-}
-```
-]
 
 ---
 class: header_background
@@ -1654,8 +1587,8 @@ Much of the JavaScript works just like inputs, __only simpler!__
 
 Only two methods:
 
-1. `find` - does the same as for inputs.
-2. `renderValue` - renders the output.
+1. `r emo::ji("search")` `find` - does the same as for inputs.
+2. `r emo::ji("arrow_right")` `renderValue` - renders the output.
 
 ---
 class: header_background
@@ -1689,11 +1622,11 @@ The `renderValue` in the JavaScript binding the following:
 ```js
 function(el, data) {
 
-  // httr::GET
+  // httr::GET (1)
   fetch(data)
-    // httr::content
+    // httr::content (2)
     .then(response => response.json())
-    // lapply | purrr::map
+    // lapply | purrr::map (3)
     .then(data => { 
       data.map((row)=>{
         let div = createElement(row);
@@ -1705,20 +1638,21 @@ function(el, data) {
 ]
 
 .pull-right-30[
+.small[
+_Args_
+
+- `el` the element (`boxOutput`)
+- `data` the path sent by `renderBox`
+
+_Logic_
+
 1. Fetch the data
 2. Extract JSON from response
 3. Loop over data
   1. Create `level-item`
   2. Append to `<nav>`
 ]
-
----
-class: break center middle
-background-image: url('https://rstudio.com/assets/img/og/rstudio-og-fb-1.jpg')
-background-size: cover
-
-<h3 class="white n rstudio">Demo + Q&A</h3>
-<p class="rstudio-comment">Open <code>custom-output/app.R</code></p>
+]
 
 ---
 class: header_background

@@ -1014,14 +1014,16 @@ class: header_background
 
 A brief plan of this part of the workshop
 
-The grand scheme: Serve data as an __HTTP response__ and read it in JavaScript to produce the __output.__ 
+Serve data as an __HTTP response__ and read it in JavaScript to produce an HTML __output.__`r emo::ji("impressed")`
 
 1. Discover HTTP 1.1 `r ji('globe_with_meridians')`.
 2. Learn to serve HTTP 1.1 in shiny
 3. Exercise in `Unleash-Shiny-Exercises-Part-3` RStudio Cloud.
 4. Discover shiny outputs `r emo::ji("arrow_right")`
-5. Run the output together
+5. Exercise in `Unleash-Shiny-Exercises-Part-3` RStudio Cloud.
 6. Q&A `r ji("question")`
+
+_Have `Unleash-Shiny-Exercises-Part-3` ready, it will come in handy._
 
 ---
 class: header_background
@@ -1126,10 +1128,10 @@ Importantly:
   - `200` all good
   - `500` server-side error
   - `301` redirect
-- `Content-Type` - type of content (HTML, JSON, etc.)
+- `Content-Type` - type of content ('text/html', 'application/json', etc.)
 - `Content` - content to render
 
-There are dozens of other headers one can pass.
+These are all standardized, we don't get to choose.
 
 A websocket sends __binary data__ so there is no need for headers.
 
@@ -1161,7 +1163,7 @@ path <- session$registerDataObj(
 
 ---
 class: header_background
-# A.1.3.1 HTTP response __name__
+# A.1.3.1 HTTP response __name__ & __path__
 
 ```r
 path <- session$registerDataObj(name = "about", data, filterFunc)
@@ -1175,21 +1177,16 @@ Example paths for different sessions:
 2. `session/259b8dc2f18ffc975b246d206b60073f/dataobj/about`
 3. `session/72abd5a5da9a1651bee32d25a908a0cd/dataobj/about`
 
----
-class: header_background
-# A.1.3.2 HTTP response __Data__
+<br>
+<br>
 
-```r
-path <- session$registerDataObj(name = "about", data = "<h1>Hello!</h1>", filterFunc)
-```
+What is this `path` anyway`r ji("question")`
 
-The `data` is simply passed to `filterFunc` (up next).
-
-It can be pretty much any object you like; `data.frame`, `list`, a `character` string, etc. 
+It's where the HTTP response is served`r ji("exclamation")`
 
 ---
 class: header_background
-# A.1.3.3 HTTP response __filterFunc__
+# A.1.3.2 HTTP response __filterFunc__ & __data__
 
 ```r
 path <- session$registerDataObj(name = "about", data = "<h1>Hello!</h1>", filterFunc)
@@ -1212,7 +1209,7 @@ __Note__: `httpResponse` is not exported, hence the `:::`
 
 ---
 class: header_background
-# A.1.3.4 HTTP response __HTML__
+# A.1.3.3 HTTP response __HTML__
 
 By default `httpResponse` returns a HTML.
 
@@ -1238,7 +1235,7 @@ path <- session$registerDataObj(
 
 ---
 class: header_background
-# A.1.3.5 HTTP response __JSON__
+# A.1.3.4 HTTP response __JSON__
 
 Minor changes to return JSON data.
 
@@ -1279,7 +1276,7 @@ path <- session$registerDataObj(
 
 ---
 class: header_background
-# A.1.3.6 HTTP response __JSON__
+# A.1.3.5 HTTP response __JSON__
 
 <div class="confusing">
 <h1 class="confusing-text">Too confusing!</h1>

@@ -95,12 +95,11 @@ We're in for 4 hours of **fun**!
 1. Intro + Quiz (5 min)
 2. Develop **custom templates** with Shiny (45 min)
 3. ☕ + ❓ (10 min) (total: 1h)
-4. Demystify and develop **custom inputs** (60 min)
-5. ☕ + ❓ (10 min) (total: 2h10)
+4. Unleash Shiny's interactivity (80 min)
+5. ☕ + ❓ (10 min) (total: 2h30)
 6. Innovative approach to **custom outputs** (60 min)
-7. ☕ + ❓ (10 min) (total: 3h20)
-8. Shiny's **hidden** or **less documented** features  (20 min)
-9. Q &amp; A (20 min) (total: 4h)
+7. ☕ + ❓ (10 min) (total: 3h40)
+8. Shiny's **hidden** or **less documented** features  (20 min) (total: 4h)
 
 .footnote[
 Disclaimer: this workshop is not about **building** Shiny Apps!!!
@@ -182,7 +181,7 @@ top: 0; bottom: 0; margin: auto; max-width: 100%; max-height: 100%; transform: s
 
 # A simple Shiny app
 
-#### No HTML/CSS/JS and it just works 😱! What kind of **magic** is this?
+#### No HTML/CSS/JS and it just works 😨! What kind of **magic** is this?
 
 &lt;iframe src="https://gallery.shinyapps.io/050-kmeans-example" height="400px" width="100%"&gt;&lt;/iframe&gt;
 
@@ -318,7 +317,7 @@ class: header_background
 # C. Discover Shiny dependencies
 ## Warm up 2
 
-Let's play ▶️:
+Let's play ⏯:
 
   1. Run the app `runExample("01_hello")`
   2. Open the HTML inspector
@@ -535,7 +534,7 @@ Main tasks:
   
 Lets' start! Open [`shinybulma.Rmd`](https://rstudio.cloud/spaces/92568/project/1729918) and enjoy 🐒
 
-<div class="countdown" id="timer_5f7f1605" style="right:0;bottom:0;" data-warnwhen="0">
+<div class="countdown" id="timer_5f7f24a7" style="right:0;bottom:0;" data-warnwhen="0">
 <code class="countdown-time"><span class="countdown-digits minutes">25</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
 
@@ -792,7 +791,7 @@ In this part you'll need to work on the following RStudio Cloud [project](https:
   
 After the workshop, you'll have the **opportunity** to bring this change to the [shinybulma](https://github.com/RinteRface/shinybulma/tree/master) repository.
 
-<div class="countdown" id="timer_5f7f15aa" style="right:0;bottom:0;" data-warnwhen="0">
+<div class="countdown" id="timer_5f7f21bb" style="right:0;bottom:0;" data-warnwhen="0">
 <code class="countdown-time"><span class="countdown-digits minutes">20</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
 
@@ -996,7 +995,7 @@ capability. Your mission: unleash the AdminLTE API to deliver box on steroids! O
 ]
 
 
-<div class="countdown" id="timer_5f7f18c7" style="right:0;bottom:0;" data-warnwhen="0">
+<div class="countdown" id="timer_5f7f2145" style="right:0;bottom:0;" data-warnwhen="0">
 <code class="countdown-time"><span class="countdown-digits minutes">20</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
 
@@ -1023,13 +1022,13 @@ The grand scheme: Serve data as an __HTTP response__ and read it in JavaScript t
 
 ---
 class: header_background
-# A.1 Multi page applications 📄 📃 📄
+# A.1 Multi page applications 📃 📃 📄
 
 "Traditional" applications and websites
 
 .pull-left.w-70.mh-a[
-<div id="htmlwidget-06abb7ce93ea280b3808" style="width:100%;height:432px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-06abb7ce93ea280b3808">{"x":{"diagram":"\nstrict digraph{\n  graph[rankdir=LR fontsize = 10]\n  node [shape=record fontsize=10];\n  s [label=\"Server\" color=mediumpurple];\n  c [label=\"Client\" color=gold];\n  c -> s [color=dimGray arrowsize=.3 label=request fontsize = 9];\n  s -> c [color=dimGray arrowsize=.3 label=response fontsize = 9];\n\n  c1 [label=\"Client\" color=gold];\n  c1 -> s [color=dimGray arrowsize=.3 label=request fontsize = 9];\n  s -> c1 [color=dimGray arrowsize=.3 label=response fontsize = 9];\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-0210fbd79fea93093142" style="width:100%;height:432px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-0210fbd79fea93093142">{"x":{"diagram":"\nstrict digraph{\n  graph[rankdir=LR fontsize = 10]\n  node [shape=record fontsize=10];\n  s [label=\"Server\" color=mediumpurple];\n  c [label=\"Client\" color=gold];\n  c -> s [color=dimGray arrowsize=.3 label=request fontsize = 9];\n  s -> c [color=dimGray arrowsize=.3 label=response fontsize = 9];\n\n  c1 [label=\"Client\" color=gold];\n  c1 -> s [color=dimGray arrowsize=.3 label=request fontsize = 9];\n  s -> c1 [color=dimGray arrowsize=.3 label=response fontsize = 9];\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 ]
 
 .pull-right.w-70.mh-a[
@@ -1052,8 +1051,8 @@ class: header_background
 A more recent web development.
 
 .pull-left.w-70.mh-a[
-<div id="htmlwidget-307bd010555222ed3e26" style="width:100%;height:432px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-307bd010555222ed3e26">{"x":{"diagram":"\ndigraph{\n  graph[rankdir=LR fontsize = 10]\n  node [shape=record fontsize=10];\n  s [label=\"Server\" color=mediumpurple];\n  c1 [label=\"Client\" color=gold];\n  c2 [label=\"Client\" color=gold];\n  c3 [label=\"Client\" color=gold];\n  c1 -> s [dir=both color=dimGray arrowsize=.3 label=messages fontsize = 9];\n  c2 -> s [dir=both color=dimGray arrowsize=.3 label=messages fontsize = 9];\n  c3 -> s [dir=both color=dimGray arrowsize=.3 label=messages fontsize = 9];\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-f3d5afdcf79aa9cc48e5" style="width:100%;height:432px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-f3d5afdcf79aa9cc48e5">{"x":{"diagram":"\ndigraph{\n  graph[rankdir=LR fontsize = 10]\n  node [shape=record fontsize=10];\n  s [label=\"Server\" color=mediumpurple];\n  c1 [label=\"Client\" color=gold];\n  c2 [label=\"Client\" color=gold];\n  c3 [label=\"Client\" color=gold];\n  c1 -> s [dir=both color=dimGray arrowsize=.3 label=messages fontsize = 9];\n  c2 -> s [dir=both color=dimGray arrowsize=.3 label=messages fontsize = 9];\n  c3 -> s [dir=both color=dimGray arrowsize=.3 label=messages fontsize = 9];\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 ]
 
 .pull-right.w-70.mh-a[
@@ -1287,7 +1286,7 @@ class: header_background
 
 Open and complete `http_excercise.Rmd`
 
-<div class="countdown" id="timer_5f7f1622" style="right:0;bottom:0;" data-warnwhen="0">
+<div class="countdown" id="timer_5f7f2375" style="right:0;bottom:0;" data-warnwhen="0">
 <code class="countdown-time"><span class="countdown-digits minutes">10</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
 
@@ -1297,8 +1296,8 @@ class: header_background
 
 Serve data with an HTTP response, read it with JavaScript to produce the HTML output
 
-<div id="htmlwidget-f7ee7af94736919cb907" style="width:100%;height:432px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-f7ee7af94736919cb907">{"x":{"diagram":"\ndigraph{\n\n  graph[rankdir=LR fontsize = 10]\n  \n  node [shape=record fontsize=10];\n  server [label=\"Server\" color=mediumpurple];\n  json [label=\"JSON\" color=black];\n  javascript [label=\"JavaScript\" color=gold];\n  html [label=\"HTML output\" color=black]\n\n  server -> json [label=\"response\"]\n  json -> javascript [label=\"fetch\"]\n  javascript -> html\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-4175b59def0da99a5f28" style="width:100%;height:432px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-4175b59def0da99a5f28">{"x":{"diagram":"\ndigraph{\n\n  graph[rankdir=LR fontsize = 10]\n  \n  node [shape=record fontsize=10];\n  server [label=\"Server\" color=mediumpurple];\n  json [label=\"JSON\" color=black];\n  javascript [label=\"JavaScript\" color=gold];\n  html [label=\"HTML output\" color=black]\n\n  server -> json [label=\"response\"]\n  json -> javascript [label=\"fetch\"]\n  javascript -> html\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 
 ---
 class: header_background

@@ -109,12 +109,11 @@ We're in for 4 hours of **fun**!
 1. Intro + Quiz (5 min)
 2. Develop **custom templates** with Shiny (45 min)
 3. `r ji("coffee")` + `r ji("question")` (10 min) (total: 1h)
-4. Demystify and develop **custom inputs** (60 min)
-5. `r ji("coffee")` + `r ji("question")` (10 min) (total: 2h10)
+4. Unleash Shiny's interactivity (80 min)
+5. `r ji("coffee")` + `r ji("question")` (10 min) (total: 2h30)
 6. Innovative approach to **custom outputs** (60 min)
-7. `r ji("coffee")` + `r ji("question")` (10 min) (total: 3h20)
-8. Shiny's **hidden** or **less documented** features  (20 min)
-9. Q & A (20 min) (total: 4h)
+7. `r ji("coffee")` + `r ji("question")` (10 min) (total: 3h40)
+8. Shiny's **hidden** or **less documented** features  (20 min) (total: 4h)
 
 .footnote[
 Disclaimer: this workshop is not about **building** Shiny Apps!!!

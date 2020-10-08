@@ -826,7 +826,7 @@ An input binding:
  - Allows Shiny to **identify** each **instance** of a given input 
  - Describes what you **may do** with it.
  - **Receives messages** from R ...
- - ... tells **when** Shiny have to update the value for R
+ - ... tells **when** Shiny has to update the value for R
  
 🗒 Bindings rely on a JS class defined in the input_binding.js [file](https://github.com/rstudio/shiny/blob/master/srcjs/input_binding.js)
 

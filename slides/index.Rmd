@@ -1020,7 +1020,8 @@ The grand scheme: Serve data as an __HTTP response__ and read it in JavaScript t
 2. Learn to serve HTTP 1.1 in shiny
 3. Exercise in `Unleash-Shiny-Exercises-Part-3` RStudio Cloud.
 4. Discover shiny outputs `r emo::ji("arrow_right")`
-5. Run the output + Q&A `r ji("question")`
+5. Run the output together
+6. Q&A `r ji("question")`
 
 ---
 class: header_background
@@ -1114,6 +1115,27 @@ _(no other `/page` is ever visited)_
 
 ---
 class: header_background
+# A.1.2 HTTP response __Headers__
+
+HTTP header ~ meta data: gives _necessary_ information to the browser.
+
+Importantly:
+
+- `Status` - How is the response? 
+  - `404` not found
+  - `200` all good
+  - `500` server-side error
+  - `301` redirect
+- `Content-Type` - type of content (HTML, JSON, etc.)
+- `Content` - content to render
+
+There are dozens of other headers one can pass.
+
+__Note__ A websocket _always_ sends binary data (in small packages) = no need for headers.
+
+
+---
+class: header_background
 # A.1.3 HTTP response
 
 Let's discover how to serve an HTTP response with `registerDataObj`.
@@ -1135,58 +1157,54 @@ path <- session$registerDataObj(
 3. `filterFunc`: Function, accepts `data` and `request`
 ]
 
-__Notes__ 
-
-1. Served from the `session` object: _only valid for that session_, hence it
-2. Returns a `path`
-3. `filterFunc` must return a valid response
+> Let's break this down
 
 ---
 class: header_background
-# A.1.3.1 HTTP response __Session__
+# A.1.3.1 HTTP response __name__
 
-Note that the path returned by `registerDataObj` is __unique to the session.__
+```r
+path <- session$registerDataObj(name = "about", data, filterFunc)
+```
 
-Therefore refreshing the browser (changes the session) and returns a different path.
+Since the response if only valid for a single session the _path_ returned is __dynamically generated.__
 
-1. `session/0a6ed2556d97dcaa1ddeb615dc04cd1e/dataobj/nameOfEndpoint`
-2. `session/259b8dc2f18ffc975b246d206b60073f/dataobj/nameOfEndpoint`
-3. `session/72abd5a5da9a1651bee32d25a908a0cd/dataobj/nameOfEndpoint`
+Paths for different sessions:
 
-This also indicates that the endpoint cannot be accessed outside of the session: a user must be connected on that session for it to be accessible.
+1. `session/0a6ed2556d97dcaa1ddeb615dc04cd1e/dataobj/about`
+2. `session/259b8dc2f18ffc975b246d206b60073f/dataobj/about`
+3. `session/72abd5a5da9a1651bee32d25a908a0cd/dataobj/about`
 
 ---
 class: header_background
-# A.1.3.2 HTTP response __Header__ & __Content__
+# A.1.3.2 HTTP response __Data__
 
-HTTP header ~ meta data: gives _necessary_ information to the browser.
+```r
+path <- session$registerDataObj(name = "about", data = "<h1>Hello!</h1>", filterFunc)
+```
 
-Importantly:
+The `data` is simply passed to `filterFunc` (up next).
 
-- `Status` - How is the response? 
-  - `404` not found
-  - `200` all good
-  - `500` server-side error
-  - `301` redirect
-- `Content-Type` - type of content (HTML, JSON, etc.)
-- `Content` - content to render
-
-There are dozens of other headers one can pass.
-
-__Note__ A websocket _always_ sends binary data (in small packages) = no need for headers.
+It can be pretty much any object you like; `data.frame`, `list`, a `character` string, etc. 
 
 ---
 class: header_background
 # A.1.3.3 HTTP response __filterFunc__
 
-Let's delve into the `filterFunc`: what does an HTTP response look like with shiny?
+```r
+path <- session$registerDataObj(name = "about", data = "<h1>Hello!</h1>", filterFunc)
+```
+
+The core of it all: it actually serves the HTTP response.
 
 ```r
-shiny:::httpResponse(
-  status = 200,
-  content_type = "text/html", 
-  content = "<h1>Hello!</h1>"
-)
+function(data, req){
+  shiny:::httpResponse(
+    status = 200, # default
+    content_type = "text/html", # default
+    content = data
+  )
+}
 ```
 
 __Note__: `httpResponse` is not exported, hence the `:::`
@@ -1313,7 +1331,7 @@ background-size: cover
 class: header_background
 # B.1 Master HTTP
 
-Open and complete `http_excercise.Rmd`
+Open and complete `http-excercise.Rmd`.
 
 `r countdown(10)`
 
@@ -1593,7 +1611,7 @@ renderBox <- function(expr, session) {
 
   # must return a function
   function(){
-    data <- func()
+    data <- func() # output of box()!
   }
 }
 ```
@@ -1608,12 +1626,12 @@ renderBox <- function(expr, session) {
   func <- shiny::exprToFunction(expr)
 
   function(){
-    data <- func()
+    data <- func() # output of box()!
 
     # generate random endpoint name
     endpoint <- paste0(sample(letters, 26), collapse = "")
 
-    uri <- session$registerDataObj(
+    path <- session$registerDataObj(
       endpoint, 
       data, 
       function(data, req){
@@ -1622,7 +1640,7 @@ renderBox <- function(expr, session) {
       }
     )
 
-    return(uri)
+    return(path)
   }
 }
 ```
@@ -1671,15 +1689,17 @@ The `renderValue` in the JavaScript binding the following:
 ```js
 function(el, data) {
 
+  // httr::GET
   fetch(data)
+    // httr::content
     .then(response => response.json())
-    .then(data => {
+    // lapply | purrr::map
+    .then(data => { 
       data.map((row)=>{
         let div = createElement(row);
         $(el).append(div);
       })
     })
-
 }
 ```
 ]
@@ -1698,7 +1718,7 @@ background-image: url('https://rstudio.com/assets/img/og/rstudio-og-fb-1.jpg')
 background-size: cover
 
 <h3 class="white n rstudio">Demo + Q&A</h3>
-<p class="rstudio-comment">Open <code>Unleash-Shiny-Output</code> project</p>
+<p class="rstudio-comment">Open <code>custom-output/app.R</code></p>
 
 ---
 class: header_background

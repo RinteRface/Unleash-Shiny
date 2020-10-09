@@ -1,0 +1,160 @@
+---
+title: "Shiny HTTP response"
+author: "John Coene"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+# HTTP Response
+
+An exercise to get at ease with HTTP responses in shiny.
+
+## Recap
+
+Start from the application we put together previously (below). The application serves some data over HTTP, run it to refresh your memory.
+
+```{r}
+library(shiny)
+
+ui <- fluidPage(
+  uiOutput("intro")
+)
+
+server <- function(input, output, session){
+  # serve the response
+  path <- session$registerDataObj(
+    name = "cars-data",
+    data = mtcars,
+    filterFunc = function(data, req){
+      json <- jsonlite::toJSON(data)
+      shiny:::httpResponse(content_type = "application/json", content = json)
+    }
+  )
+  # print path
+  output$intro <- renderUI({
+    
+    # print so we can see the path clearly
+    print(path) 
+
+    # render it big so we can see it
+    h1(
+      tags$a(path, href = path)
+    )
+  })
+}
+shinyApp(ui, server)
+```
+
+## Exercise 1
+
+The idea of this exercise is to 1) familiarise yourself more with the function and 2) improve upon it.
+
+The `filterFunc` function passed to `registerDataObj` accepts `req`, the request, from which the `QUERY_STRING` can be obtained. The query string contains the URL parameters used when accessing the application, you might have indirectly used them with shiny's bookmarking state system. Essentially one can pass parameters to a URL so they can be retrieved from the `QUERY_STRING`, these are placed after `?` all subsequent parameters are delimited by `&`.
+
+For instance one could construct a URL such the one below.
+
+`http://127.0.0.1:3000?firstName=Bob&lastName=Doe`
+
+Shiny comes with a function to parse the `QUERY_STRING` and obtain a structured list. Parsing the URL above would return a named `list`.
+
+```r
+parseQueryString(req$QUERY_STRING)
+```
+
+```
+$firstName
+[1] "Bob"
+$lastName
+[1] "Doe"
+```
+
+The original application has been slightly modified:
+
+1. It parses the `QUERY_STRING`
+2. Assigns it to an object named `query`
+3. Prints the `query` object
+
+What we would like you to do is to make use of this to pass a URL parameter that allows __returning only a specific column__, e.g.: `http://127.0.0.1:3000/xxxXxXxXX/dataobj/cars-data?column=qsec` (instead of returning the entire dataset).
+
+As a reminder here are some column names of the `mtcars` are:
+
+- `mpg`
+- `qsec`
+- `disp`
+- `drat`
+
+Run the application below, it comes with a simple but convenient interface for you to add parameters to the URL parameters and test that it works.
+
+<strong>Note</strong> The `filterFunc` is at the top of the code chunk, you should only need to make edit there.
+
+```{r}
+library(shiny)
+
+# this is the filter function
+# it used later on with `registerDataObj`
+# the `data` is `mtcars`
+filterFunction <- function(data, req){
+  query <- parseQueryString(req$QUERY_STRING)
+  
+  # print the query so we can see it
+  print(query)
+
+  ######################### Your code here #########################
+
+  # use `column` are parameter name
+  json <- jsonlite::toJSON(data[[query$column]])
+  shiny:::httpResponse(content_type = "application/json", content = json)
+}
+
+# Shiny app below
+# run it at will but don't change the code
+ui <- fluidPage(
+  h1("1. Add parameter"),
+  p("Give the parameter a name and value and it'll appear in the box below"),
+  fluidRow(
+    column(3, textInput("name", "Name of parameter")),
+    column(3, textInput("value", "Value of input"))
+  ),
+  h1("2. Visit the endpoint"),
+  p("Visit the endpoint", strong("and its parameter(s)"), "by clicking the button"),
+  h4("Add the URL parameter and click the button"),
+  uiOutput("generatedPath")
+)
+
+server <- function(input, output, session){
+  # serve the response
+  path <- session$registerDataObj(
+    name = "cars-data", 
+    data = mtcars, 
+    filterFunc = filterFunction
+  )
+
+  # this is just for convenience
+  # no need to look here 
+  output$generatedPath <- renderUI({
+
+    if(input$name != "" & input$value != "")
+      path <- sprintf("%s&%s=%s", path, input$name, input$value)
+
+    # print it big so we can see it
+    tagList(
+      h2(
+        tags$input(
+          id = "path",
+          value = path, 
+          width = "100%", 
+          class = "form-control",
+          style = "font-size:20px;"
+        )
+      ),
+      tags$a(
+        class = "btn btn-primary", 
+        onClick = "window.location = $('#path').val();",
+        "Visit"
+      )
+    )
+  })
+}
+
+shinyApp(ui, server)
+```

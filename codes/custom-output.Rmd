@@ -1,0 +1,129 @@
+---
+title: "Shiny Custom Output"
+author: "John Coene"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+# Custom Output
+
+In this exercise we build the custom "box" output.
+
+__Make sure you run every block once you have done them__ so the functions you write are loaded in the environment and can be used in the example at the end.
+
+Below is some sample data in the event you would want to try things as you go, run it to load the data.
+
+```{r}
+# data to test
+boxes <- data.frame(
+  name = c("Beans", "Potatoes", "Cakes", "Flowers", "More cakes"),
+  val = sample(1:1000, 5)
+)
+```
+
+## box
+
+The `box` function should accept `data` (like the sample above) and from it simply select two columns that we will need to display: the `title` and the `value`. Fill in the `...` with the right code.
+
+```{r}
+box <- function(data, title, value){
+
+  # checks
+  if(missing(title)) stop("missing title")
+  if(missing(value)) stop("missing value")
+
+  # select the columns
+  dplyr::select(data, title = {{ title }}, value = {{ value }})
+}
+```
+
+_HELP: Above we use `dplyr` if you are not comfortable with it feel free to use something else, but make sure the output remains identical (a data.frame with `title` and `value`)_
+
+## boxOutput
+
+Now we need to build the `boxOutput` functieon, this function is destined for the shiny UI and will allow you to choose where the "box" will be placed. Note the use of the `box` class which we will need later on (in JavaScript).
+
+The function below is incomplete, fill the `...`.
+
+```{r}
+boxOutput <- function(id){
+  el <- shiny::tags$nav(id = id, class = "level box")
+
+  deps <- list(
+    htmltools::htmlDependency(
+      name = "box",
+      version = "1.0.0",
+      src = c(file = "assets"),
+      script = c("binding.js")
+    )
+  )
+
+  # attach the dependencies
+ tagList(el, deps)
+}
+```
+  
+HINT: You can attach dependencies with one of two functions from the {htmltools} package.
+
+## renderBox
+
+Now onto the `renderBox` function. As we've explored, it should itself return a `function`, this function should send the path to the JavaScript binding where it will be read to generate the output. The only problem is that it is not done, no response is served: use `shiny:::httpResponse` below to fix that (again the missing code is indicated by the `...`).
+
+_Feel free to go back to the previous exercise (`http-exercise.Rmd`) to remind yourself how it was done_
+
+```{r}
+renderBox <- function(expr, session = shiny::getDefaultReactiveDomain()) {
+  func <- shiny::exprToFunction(expr)
+
+  function(){
+    data <- func()
+
+    # serve the data as HTTP response
+    path <- session$registerDataObj(
+      "box", 
+      data, 
+      function(data, req){
+        response <- jsonlite::toJSON(data)
+        
+        # send the response!
+        shiny:::httpResponse(
+          content_type = "application/json", 
+          content = response
+        )
+      }
+    )
+
+    # send the path to the JavaScript binding
+    return(path)
+  }
+}
+```
+
+## Test
+
+Fill in the `...` in the `box` function in the application below then test it: fingers' crossed!
+
+```{r}
+library(shiny)
+library(shinybulma)
+
+# data to test
+boxes <- data.frame(
+  name = c("Beans", "Potatoes", "Cakes", "Flowers", "More cakes"),
+  val = sample(1:1000, 5)
+)
+
+ui <- bulmaPage(
+  bulmaContainer(
+    boxOutput("test")
+  )
+)
+
+server <- function(input, output){
+  output$test <- renderBox({
+    box(boxes, title = name, value = val)
+  })
+}
+
+shinyApp(ui, server)
+```

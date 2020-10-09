@@ -1608,7 +1608,7 @@ Numerous improvements could be made.
 
 - The `box` function could accept a model and extract relevant statistics
 - The output could use other JavaScript libraries to [animate the numbers](https://inorganik.github.io/countUp.js/) for instance
-- Or the value could be colored dependening on threshold (e.g.: confidence)
+- Or the value could be colored dependening on a threshold
 - Add methods so `box` accepts different kinds of objects (e.g.: `xts`)
 - Add an inline chart
 

@@ -1276,57 +1276,6 @@ path <- session$registerDataObj(
 
 ---
 class: header_background
-# A.1.3.5 HTTP response __JSON__
-
-<div class="confusing">
-<h1 class="confusing-text">Too confusing!</h1>
-</div>
-
-Minor changes to return JSON data.
-
-.pull-left-70[
-
-```r
-path <- session$registerDataObj(
-  name = "cars-data", 
-  data = cars,
-  function(data, req) {
-    # seralise to JSON
-    res <- jsonlite::toJSON(data)
-    shiny:::httpResponse(
-      content_type = "application/json", 
-      content = res
-    )
-  }
-)
-```
-
-]
-
-.pull-right-30[
-```json
-[
-  {
-    "speed": 4,
-    "dist": 2
-  },
-  {
-    "speed": 4,
-    "dist": 10
-  }
-]
-```
-]
-
----
-class: break center middle
-background-image: url('https://rstudio.com/assets/img/og/rstudio-og-fb-1.jpg')
-background-size: cover
-
-<h3 class="white n rstudio">Code along</h3>
-<p class="rstudio-comment">Open <code>http-intro.R</code></p>
----
-class: header_background
 # B.1 Master HTTP
 
 Open and complete `http-excercise.Rmd`.

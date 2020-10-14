@@ -3,7 +3,7 @@ R/Pharma workshop (4hours)
 
 ## Requirements
 - R (lists, functions, R6, package development, ...)
-- Advanced level in Shiny required (> 10 apps)
+- Advanced level in Shiny required (> 50 apps, modules, ...)
 - JavaScript knowledge: basics (variables, objects, event listeners)
 - jQuery basics (tag selection, ...)
 

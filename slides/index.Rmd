@@ -744,7 +744,17 @@ knitr::include_graphics("assets/img/shiny-object.png")
 
 ---
 class: header_background
-# A.3.3 The websocket
+# A.3.3.1 Websockets
+
+.center[
+```{r websocket-intro, echo=FALSE, out.width='90%'}
+knitr::include_graphics("assets/img/websocket-intro.png")
+```
+]
+
+---
+class: header_background
+# A.3.3.2 Shiny and Websocket
 This is the magic piece allowing **bidirectional** communication between R and JavaScript. The technology behind is provided by `{httpuv}` and `{websocket}`.
 
 .pull-left.w-50[
